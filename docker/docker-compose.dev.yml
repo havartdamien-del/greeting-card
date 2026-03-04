@@ -1,0 +1,92 @@
+version: '3.9'
+
+services:
+  # Service MySQL Database
+  mysql:
+    build:
+      context: ..
+      dockerfile: docker/mysql/Dockerfile
+    container_name: greeting-card-mysql-dev
+    image: greeting-card-mysql-v1.0.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${DB_DATABASE:-greeting_card}
+      MYSQL_USER: ${DB_USER:-user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - greeting-card-network-dev
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+    restart: unless-stopped
+    sysctls:
+      - net.ipv4.ip_local_port_range=1024 65535
+
+  # Service Backend Symfony + API Platform (Development)
+  php:
+    build:
+      context: ..
+      dockerfile: docker/php/Dockerfile
+    container_name: greeting-card-php-dev
+    image: greeting-card-php-v1.0.0
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - APP_ENV=${APP_ENV:-dev}
+      - APP_DEBUG=${APP_DEBUG:-1}
+      - APP_SECRET=${APP_SECRET:-dev-secret-key}
+      - DATABASE_URL=mysql://${DB_USER:-user}:${DB_PASSWORD:-password}@mysql:3306/${DB_DATABASE:-greeting_card}?serverVersion=8.0
+      - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
+    ports:
+      - "${PHP_PORT:-9000}:9000"
+    volumes:
+      - ../symfony:/app
+      - ./php/php.ini:/usr/local/etc/php/conf.d/app.ini:ro
+      - ./php/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
+    networks:
+      - greeting-card-network-dev
+    restart: unless-stopped
+    command: >
+      sh -c "
+        php-fpm
+      "
+
+  # Service Nginx + Frontend Angular (Development avec npm start)
+  angular:
+    build:
+      context: ..
+      dockerfile: docker/angular/Dockerfile
+      target: development
+    container_name: greeting-card-angular-dev
+    image: greeting-card-angular-dev-v1.0.0
+    ports:
+      - "${ANGULAR_PORT:-4200}:4200"
+    volumes:
+      - ../angular:/app
+      - /app/node_modules
+    networks:
+      - greeting-card-network-dev
+    depends_on:
+      - php
+    restart: unless-stopped
+    environment:
+      - NG_HOST=0.0.0.0
+      - NG_PORT=4200
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  greeting-card-network-dev:
+    driver: bridge
