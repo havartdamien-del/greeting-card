@@ -51,7 +51,7 @@ check_docker() {
 }
 
 check_docker_compose() {
-    if ! command -v docker-compose &> /dev/null; then
+    if ! command -v docker compose &> /dev/null; then
         print_error "Docker Compose n'est pas installé"
         exit 1
     fi
@@ -104,7 +104,7 @@ cmd_up() {
     check_docker_compose
     check_env_file
     cd "$DOCKER_DIR"
-    docker-compose -f docker-compose.yml up -d
+    docker compose -f docker compose.yml up -d
     print_success "Services démarrés"
     echo ""
     echo "URLs d'accès:"
@@ -119,7 +119,7 @@ cmd_up_dev() {
     check_docker_compose
     check_env_file
     cd "$DOCKER_DIR"
-    docker-compose -f docker-compose.dev.yml up -d
+    docker compose -f docker compose.dev.yml up -d
     print_success "Services démarrés (mode développement)"
     echo ""
     echo "URLs d'accès:"
@@ -131,40 +131,40 @@ cmd_up_dev() {
 cmd_down() {
     print_header "Arrêt des services"
     cd "$DOCKER_DIR"
-    docker-compose down
+    docker compose down
     print_success "Services arrêtés"
 }
 
 cmd_restart() {
     print_header "Redémarrage des services"
     cd "$DOCKER_DIR"
-    docker-compose restart
+    docker compose restart
     print_success "Services redémarrés"
 }
 
 cmd_logs() {
     cd "$DOCKER_DIR"
-    docker-compose logs -f
+    docker compose logs -f
 }
 
 cmd_logs_php() {
     cd "$DOCKER_DIR"
-    docker-compose logs -f php
+    docker compose logs -f php
 }
 
 cmd_logs_mysql() {
     cd "$DOCKER_DIR"
-    docker-compose logs -f mysql
+    docker compose logs -f mysql
 }
 
 cmd_logs_ng() {
     cd "$DOCKER_DIR"
-    docker-compose logs -f angular
+    docker compose logs -f angular
 }
 
 cmd_ps() {
     cd "$DOCKER_DIR"
-    docker-compose ps
+    docker compose ps
 }
 
 cmd_build() {
@@ -172,7 +172,7 @@ cmd_build() {
     check_docker
     check_docker_compose
     cd "$DOCKER_DIR"
-    docker-compose build --no-cache
+    docker compose build --no-cache
     print_success "Images reconstruites"
 }
 
@@ -181,46 +181,46 @@ cmd_build_dev() {
     check_docker
     check_docker_compose
     cd "$DOCKER_DIR"
-    docker-compose -f docker-compose.dev.yml build --no-cache
+    docker compose -f docker compose.dev.yml build --no-cache
     print_success "Images reconstruites (dev)"
 }
 
 cmd_shell_php() {
     print_info "Connexion au shell PHP..."
     cd "$DOCKER_DIR"
-    docker-compose exec php sh
+    docker compose exec php sh
 }
 
 cmd_shell_ng() {
     print_info "Connexion au shell Angular..."
     cd "$DOCKER_DIR"
-    docker-compose exec angular sh
+    docker compose exec angular sh
 }
 
 cmd_shell_mysql() {
     print_info "Connexion au shell MySQL..."
     cd "$DOCKER_DIR"
-    docker-compose exec mysql sh
+    docker compose exec mysql sh
 }
 
 cmd_db_migrate() {
     print_header "Exécution des migrations Doctrine"
     cd "$DOCKER_DIR"
-    docker-compose exec php php bin/console doctrine:migrations:migrate --no-interaction
+    docker compose exec php php bin/console doctrine:migrations:migrate --no-interaction
     print_success "Migrations exécutées"
 }
 
 cmd_db_fixtures() {
     print_header "Chargement des fixtures Doctrine"
     cd "$DOCKER_DIR"
-    docker-compose exec php php bin/console doctrine:fixtures:load --no-interaction
+    docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
     print_success "Fixtures chargées"
 }
 
 cmd_clean() {
     print_header "Nettoyage des conteneurs et images"
     cd "$DOCKER_DIR"
-    docker-compose down -v
+    docker compose down -v
     print_success "Nettoyage terminé"
 }
 

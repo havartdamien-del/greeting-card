@@ -4,13 +4,17 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Copie des fichiers package
-COPY angular/package.json angular/package-lock.json* ./
+# COPY angular/package.json angular/package-lock.json* ./
 
 # Installation des dépendances
-RUN npm ci
+# RUN npm ci
 
 # Copie du code source
 COPY angular/ ./
+
+RUN if [ -f package-lock.json ]; then npm ci; \
+    elif [ -f package.json ]; then npm install; \
+    fi
 
 # Stage 2: Runtime pour développement
 FROM node:20-alpine AS development

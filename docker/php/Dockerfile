@@ -3,6 +3,9 @@ FROM php:8.2-fpm-alpine AS builder
 
 # Installation des dépendances système pour le build
 RUN apk add --no-cache \
+    bash \
+    ss \
+    netstat \
     curl \
     git \
     zip \

@@ -1,0 +1,18 @@
+routes:
+  path: /api
+  namespace: App\Controller
+  prefix: /api
+
+_internal:
+  resource: FrameworkBundle/Resources/config/routing/internal.xml
+  prefix: /_internal
+
+health_check:
+  path: /health
+  controller: App\Controller\HealthController::check
+  methods: [GET]
+
+welcome:
+  path: /
+  controller: App\Controller\WelcomeController::index
+  methods: [GET]

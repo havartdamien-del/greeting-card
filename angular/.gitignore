@@ -1,0 +1,26 @@
+# Build Environment
+*.log
+dist/
+out-tsc/
+node_modules/
+package-lock.json
+.angular/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Tests
+coverage/
+*.spec.ts

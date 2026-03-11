@@ -1,0 +1,10 @@
+Node {
+  font-family: 'Courier New', monospace;
+}
+
+.prettierignore {
+  node_modules/
+  dist/
+  .angular/
+  coverage/
+}

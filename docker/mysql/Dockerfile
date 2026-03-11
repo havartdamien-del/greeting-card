@@ -1,5 +1,5 @@
 # Dockerfile pour MySQL 8.0
-FROM mysql:8.0-alpine
+FROM mysql:8.0
 
 ENV MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root}
 ENV MYSQL_DATABASE=${DB_DATABASE:-greeting_card}
