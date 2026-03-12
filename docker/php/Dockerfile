@@ -4,8 +4,8 @@ FROM php:8.2-fpm-alpine AS builder
 # Installation des dépendances système pour le build
 RUN apk add --no-cache \
     bash \
-    ss \
-    netstat \
+    # ss \
+    # netstat \
     curl \
     git \
     zip \
@@ -38,6 +38,42 @@ COPY symfony/composer.json symfony/composer.lock* ./
 
 # Installation des dépendances PHP
 RUN composer install --no-dev --no-scripts --prefer-dist
+
+
+
+# Stage 2: Runtime PHP-FPM
+# FROM php:8.2-fpm-alpine
+
+# LABEL version="1.0.0" \
+#       description="PHP 8.2 FPM for Greeting Card API with Symfony"
+
+
+# # Libs de BUILD (headers) séparées des libs RUNTIME
+# RUN apk add --no-cache \
+#     postgresql-dev \
+#     mysql-dev \
+#     libxml2-dev \
+#     oniguruma-dev \
+#     # libzip-dev \
+#     icu-dev && \
+#     docker-php-ext-install \
+#         pdo \
+#         pdo_mysql \
+#         pdo_pgsql \
+#         zip \
+#         xml \
+#         mbstring \
+#         bcmath \
+#         intl && \
+#     # Supprimer UNIQUEMENT les headers (-dev), pas les libs runtime
+#     # apk del postgresql-dev mysql-dev libxml2-dev oniguruma-dev libzip-dev icu-dev && \
+#     # Réinstaller uniquement les libs runtime nécessaires
+#     apk add --no-cache \
+#         libpq \
+#         libzip \
+#         icu-libs \
+#         libxml2 \
+#         oniguruma
 
 # Stage 2: Runtime PHP-FPM
 FROM php:8.2-fpm-alpine

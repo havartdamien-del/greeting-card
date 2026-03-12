@@ -1,0 +1,48 @@
+# Docker Compose Configuration for Production
+# To use: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+services:
+  # Service MySQL Database (Production)
+  mysql:
+    container_name: greeting-card-mysql
+    networks:
+      - greeting-card-network
+
+  # Service Backend Symfony + API Platform (Production)
+  php:
+    build:
+      target: builder
+    container_name: greeting-card-php
+    image: greeting-card-php-v1.0.0
+    environment:
+      - APP_ENV=${APP_ENV:-prod}
+      - APP_DEBUG=${APP_DEBUG:-0}
+      - APP_SECRET=${APP_SECRET:-change-me-in-production}
+    ports:
+      - "${PHP_PORT:-9000}:9000"
+    networks:
+      - greeting-card-network
+
+  # Service Nginx Reverse Proxy for API (Production)
+  nginx-api:
+    container_name: greeting-card-nginx-api
+    image: greeting-card-nginx-api-v1.0.0
+    ports:
+      - "${NGINX_API_PORT:-8080}:80"
+    networks:
+      - greeting-card-network
+
+  # Service Nginx + Frontend Angular (Production)
+  angular:
+    build:
+      target: production
+    container_name: greeting-card-angular
+    image: greeting-card-angular-prod-v1.0.0
+    ports:
+      - "${ANGULAR_PORT:-4200}:80"
+    networks:
+      - greeting-card-network
+
+networks:
+  greeting-card-network:
+    driver: bridge
