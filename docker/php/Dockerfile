@@ -105,6 +105,8 @@ RUN apk add --no-cache \
     mbstring \
     bcmath \
     intl && \
+    libzip \
+    icu-libs \
     apk del postgresql-dev mysql-dev libxml2-dev oniguruma-dev libzip-dev
 
 # Configuration PHP
@@ -122,6 +124,10 @@ COPY --from=builder /app/vendor ./vendor
 
 # Copie du code source Symfony
 COPY symfony/ ./
+
+RUN apk add --no-cache \
+    libzip \
+    icu-libs
 
 # Création des répertoires nécessaires
 RUN mkdir -p \

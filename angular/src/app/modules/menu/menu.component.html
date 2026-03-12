@@ -1,0 +1,31 @@
+<nav class="menu-container">
+  <div class="menu-wrapper">
+    <div class="menu-title">
+      <span class="menu-logo">💌</span>
+      <span class="menu-text">Menu</span>
+    </div>
+    
+    <ul class="menu-list">
+      <li class="menu-item" [class.active]="isActive('')">
+        <a (click)="navigateTo('')" class="menu-link">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-label">Accueil</span>
+        </a>
+      </li>
+      
+      <li class="menu-item" [class.active]="isActive('/cards')">
+        <a (click)="navigateTo('/cards')" class="menu-link">
+          <span class="menu-icon">🎴</span>
+          <span class="menu-label">Toutes les Cards</span>
+        </a>
+      </li>
+      
+      <li class="menu-item" [class.active]="isActive('/tags')">
+        <a (click)="navigateTo('/tags')" class="menu-link">
+          <span class="menu-icon">🏷️</span>
+          <span class="menu-label">Tous les Tags</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

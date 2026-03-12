@@ -1,0 +1,31 @@
+<div class="cards-container">
+  <div class="cards-header">
+    <h1>🎴 Toutes les Cards</h1>
+    <p class="subtitle">Découvrez toutes les cartes disponibles</p>
+  </div>
+
+  <div class="cards-content">
+    <div *ngIf="loading" class="loading">
+      Chargement des cards...
+    </div>
+    
+    <div *ngIf="!loading && cards.length === 0" class="empty-state">
+      <p>Aucune card trouvée</p>
+    </div>
+
+    <div *ngIf="!loading && cards.length > 0" class="cards-grid">
+      <div *ngFor="let card of cards" class="card-item">
+        <div class="card-image">
+          <img *ngIf="card.picture" [src]="card.picture.value" [alt]="card.title" />
+        </div>
+        <div class="card-body">
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.description }}</p>
+          <div class="card-tags" *ngIf="card.tags && card.tags.length > 0">
+            <span *ngFor="let tag of card.tags" class="tag">{{ tag.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

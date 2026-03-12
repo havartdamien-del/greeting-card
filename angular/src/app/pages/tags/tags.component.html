@@ -1,0 +1,24 @@
+<div class="tags-container">
+  <div class="tags-header">
+    <h1>🏷️ Tous les Tags</h1>
+    <p class="subtitle">Explorez tous les tags disponibles</p>
+  </div>
+
+  <div class="tags-content">
+    <div *ngIf="loading" class="loading">
+      Chargement des tags...
+    </div>
+    
+    <div *ngIf="!loading && tags.length === 0" class="empty-state">
+      <p>Aucun tag trouvé</p>
+    </div>
+
+    <div *ngIf="!loading && tags.length > 0" class="tags-grid">
+      <div *ngFor="let tag of tags" class="tag-item">
+        <div class="tag-content">
+          <h3>{{ tag.name }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
