@@ -9,6 +9,11 @@
       Chargement des tags...
     </div>
     
+    <div *ngIf="error" class="error-message">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
+    </div>
+
     <div *ngIf="!loading && tags.length === 0" class="empty-state">
       <p>Aucun tag trouvé</p>
     </div>

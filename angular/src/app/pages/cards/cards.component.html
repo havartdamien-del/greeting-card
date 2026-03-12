@@ -9,6 +9,11 @@
       Chargement des cards...
     </div>
     
+    <div *ngIf="error" class="error-message">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
+    </div>
+
     <div *ngIf="!loading && cards.length === 0" class="empty-state">
       <p>Aucune card trouvée</p>
     </div>
