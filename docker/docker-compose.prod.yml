@@ -18,6 +18,7 @@ services:
       - APP_ENV=${APP_ENV:-prod}
       - APP_DEBUG=${APP_DEBUG:-0}
       - APP_SECRET=${APP_SECRET:-change-me-in-production}
+      - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
     ports:
       - "${PHP_PORT:-9000}:9000"
     networks:

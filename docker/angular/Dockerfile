@@ -61,7 +61,7 @@ LABEL version="1.0.0" \
 
 # Copie de la configuration Nginx
 COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx/php-proxy.conf /etc/nginx/conf.d/default.conf
 
 # Copie des fichiers buildés depuis le stage précédent
 COPY --from=production-builder /app/dist /usr/share/nginx/html
