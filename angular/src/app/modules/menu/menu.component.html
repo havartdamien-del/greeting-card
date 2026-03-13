@@ -19,6 +19,13 @@
           <span class="menu-label">Toutes les Cards</span>
         </a>
       </li>
+
+      <li class="menu-item" [class.active]="isActive('/create-card')">
+        <a (click)="navigateTo('/create-card')" class="menu-link">
+          <span class="menu-icon">➕</span>
+          <span class="menu-label">Ajouter une Card</span>
+        </a>
+      </li>
       
       <li class="menu-item" [class.active]="isActive('/tags')">
         <a (click)="navigateTo('/tags')" class="menu-link">

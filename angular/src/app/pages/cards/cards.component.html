@@ -14,6 +14,21 @@
       <p>{{ error }}</p>
     </div>
 
+    <!-- DEBUG DUMP -->
+    <div class="debug-dump">
+      <details>
+        <summary>🐛 Debug Info (cliquez pour voir)</summary>
+        <div class="debug-content">
+          <h4>Données reçues (cards):</h4>
+          <pre>{{ cards | json }}</pre>
+          <h4>Nombre de cards: {{ cards.length }}</h4>
+          <h4>État loading: {{ loading }}</h4>
+          <h4>État error: {{ error }}</h4>
+        </div>
+      </details>
+    </div>
+    <!-- FIN DEBUG DUMP -->
+
     <div *ngIf="!loading && cards.length === 0" class="empty-state">
       <p>Aucune card trouvée</p>
     </div>

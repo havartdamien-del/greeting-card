@@ -55,6 +55,10 @@ class Card
     #[Groups(['card:read', 'card:write'])]
     private ?Picture $picture = null;
 
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
+    #[Groups(['card:read', 'card:write'])]
+    private bool $isActif = true;
+
     /**
      * @var Collection<int, Tag>
      */
@@ -128,6 +132,18 @@ class Card
     public function removeTag(Tag $tag): static
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function isActif(): bool
+    {
+        return $this->isActif;
+    }
+
+    public function setIsActif(bool $isActif): static
+    {
+        $this->isActif = $isActif;
 
         return $this;
     }

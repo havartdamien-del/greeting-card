@@ -30,19 +30,35 @@ export class CardsComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.error = null;
     
-    this.connectionApiService.loadCards()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (cards: Card[]) => {
-          this.cards = cards;
-          this.loading = false;
-          console.log('Cards chargées:', cards);
-        },
-        error: (err) => {
-          console.error('Erreur lors du chargement des cards:', err);
-          this.error = 'Erreur lors du chargement des cards. Veuillez réessayer.';
-          this.loading = false;
-        }
-      });
+    // Debug: appel direct au service pour voir la réponse brute
+    this.connectionApiService.getCards().subscribe({
+      next: (response: any) => {
+        console.log('🔍 RESPONSE BRUTE DE L\'API:', response);
+        console.log('🔍 Type de response:', typeof response);
+        console.log('🔍 Response keys:', Object.keys(response));
+        
+        this.connectionApiService.loadCards()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (cards: Card[]) => {
+              this.cards = cards;
+              this.loading = false;
+              console.log('✅ Cards chargées:', cards);
+              console.log('✅ Nombre de cards:', cards.length);
+              console.log('✅ Structure première card:', cards[0]);
+            },
+            error: (err) => {
+              console.error('❌ Erreur lors du chargement des cards:', err);
+              this.error = 'Erreur lors du chargement des cards. Veuillez réessayer.';
+              this.loading = false;
+            }
+          });
+      },
+      error: (err) => {
+        console.error('❌ ERREUR LORS DE L\'APPEL BRUT:', err);
+        this.error = 'Erreur lors du chargement des cards. Veuillez réessayer.';
+        this.loading = false;
+      }
+    });
   }
 }
