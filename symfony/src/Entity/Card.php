@@ -13,6 +13,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CardRepository::class)]
@@ -23,6 +25,12 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new GetCollection(
             normalizationContext: ['groups' => ['card:read']],
+        ),
+        new GetCollection(
+            uriTemplate: '/cards_active',
+            name: 'cards_active',
+            normalizationContext: ['groups' => ['card:read']],
+            paginationEnabled: false,
         ),
         new Post(
             denormalizationContext: ['groups' => ['card:write']],
@@ -35,6 +43,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Delete(),
     ]
 )]
+#[ApiFilter(BooleanFilter::class, properties: ['isActif'])]
 class Card
 {
     #[ORM\Id]

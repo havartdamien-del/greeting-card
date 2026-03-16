@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ConnectionApiService } from '../../services/connection-api.service';
+import { TagDataService } from '../../services/tag-data.service';
+import { Tag } from '../../models/card.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -9,12 +10,12 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit, OnDestroy {
-  tags: any[] = [];
+  tags: Tag[] = [];
   loading = true;
   error: string | null = null;
   private destroy$ = new Subject<void>();
 
-  constructor(private connectionApiService: ConnectionApiService) {}
+  constructor(private tagDataService: TagDataService) {}
 
   ngOnInit(): void {
     this.loadTags();
@@ -29,10 +30,10 @@ export class TagsComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.error = null;
     
-    this.connectionApiService.loadTags()
+    this.tagDataService.loadTags()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (tags: any[]) => {
+        next: (tags: Tag[]) => {
           this.tags = tags;
           this.loading = false;
           console.log('Tags chargés:', tags);

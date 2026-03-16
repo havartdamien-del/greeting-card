@@ -38,6 +38,13 @@ export class ConnectionApiService {
   }
 
   /**
+   * Récupère UNIQUEMENT les cards actives (isActif = true)
+   */
+  getActiveCards(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/cards_active`, { headers: this.headers });
+  }
+
+  /**
    * Récupère une card spécifique par son ID
    */
   getCardById(id: number): Observable<Card> {
@@ -45,14 +52,26 @@ export class ConnectionApiService {
   }
 
   /**
-   * Récupère toutes les cards et met à jour le BehaviorSubject
+   * Récupère toutes les cards ACTIVES et met à jour le BehaviorSubject
+   * Retourne UNIQUEMENT le tableau des cards, pas toute la réponse API
    */
   loadCards(): Observable<any> {
     return new Observable(observer => {
-      this.getCards().subscribe({
+      this.getActiveCards().subscribe({
         next: (response: any) => {
-          // Gérer à la fois la réponse API Platform et les réponses simples
-          const cardsList = response['hydra:member'] || (Array.isArray(response) ? response : [response]);
+          // Extraire UNIQUEMENT le tableau des cards
+          let cardsList: Card[] = [];
+          
+          if (Array.isArray(response['member'])) {
+            cardsList = response['member'];
+          } else if (Array.isArray(response['hydra:member'])) {
+            // Si c'est une réponse API Platform avec hydra:member
+            cardsList = response['hydra:member'];
+          } else if (Array.isArray(response)) {
+            // Si c'est un tableau simple
+            cardsList = response;
+          }
+
           this.cardsSubject.next(cardsList);
           observer.next(cardsList);
           observer.complete();

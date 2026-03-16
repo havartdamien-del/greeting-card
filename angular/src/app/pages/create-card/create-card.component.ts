@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConnectionApiService } from '../../services/connection-api.service';
+import { CardDataService } from '../../services/card-data.service';
+import { TagDataService } from '../../services/tag-data.service';
 import { Card, Tag } from '../../models/card.model';
 
 @Component({
@@ -19,7 +20,8 @@ export class CreateCardComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private apiService: ConnectionApiService,
+    private cardDataService: CardDataService,
+    private tagDataService: TagDataService,
     private router: Router
   ) {}
 
@@ -39,7 +41,7 @@ export class CreateCardComponent implements OnInit {
   }
 
   loadTags(): void {
-    this.apiService.loadTags().subscribe({
+    this.tagDataService.loadTags().subscribe({
       next: (tags) => {
         this.availableTags = tags;
       },
@@ -91,7 +93,7 @@ export class CreateCardComponent implements OnInit {
       tags: formValue.tags
     };
 
-    this.apiService.createCard(newCard).subscribe({
+    this.cardDataService.createCard(newCard).subscribe({
       next: (response) => {
         this.loading = false;
         this.successMessage = 'Card créée avec succès!';
