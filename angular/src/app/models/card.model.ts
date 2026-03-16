@@ -12,7 +12,7 @@ export interface Tag {
 export interface Card {
   id?: number;
   title: string;
-  description: string;
+  description?: string;
   picture: Picture;
   tags: Tag[];
 }

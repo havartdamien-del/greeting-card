@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CardDataService } from '../../services/card-data.service';
 import { TagDataService } from '../../services/tag-data.service';
 import { Card, Tag } from '../../models/card.model';
@@ -17,23 +17,38 @@ export class CreateCardComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
   availableTags: Tag[] = [];
+  isEditMode = false;
+  editingCardId: number | null = null;
+  pageTitle = 'Ajouter une nouvelle Card';
 
   constructor(
     private formBuilder: FormBuilder,
     private cardDataService: CardDataService,
     private tagDataService: TagDataService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.loadTags();
+    
+    // Vérifier si on est en mode édition
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.isEditMode = true;
+        this.editingCardId = id;
+        this.pageTitle = 'Éditer une Card';
+        this.loadCardForEditing(id);
+      }
+    });
   }
 
   initForm(): void {
     this.cardForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
+      description: [''],
       pictureType: ['', Validators.required],
       pictureValue: ['', Validators.required],
       tags: this.formBuilder.array([])
@@ -47,6 +62,36 @@ export class CreateCardComponent implements OnInit {
       },
       error: (error) => {
         console.error('Erreur lors du chargement des tags:', error);
+      }
+    });
+  }
+
+  loadCardForEditing(id: number): void {
+    this.loading = true;
+    this.cardDataService.getCardById(id).subscribe({
+      next: (card) => {
+        // Remplir le formulaire avec les données de la card
+        this.cardForm.patchValue({
+          title: card.title,
+          description: card.description || '',
+          pictureType: card.picture?.type || '',
+          pictureValue: card.picture?.value || ''
+        });
+
+        // Sélectionner les tags de la card
+        if (card.tags && card.tags.length > 0) {
+          card.tags.forEach(tag => {
+            this.tagsFormArray.push(this.formBuilder.control(tag));
+          });
+        }
+
+        this.loading = false;
+        console.log('✅ Card chargée pour édition:', card);
+      },
+      error: (error) => {
+        this.loading = false;
+        this.errorMessage = 'Erreur lors du chargement de la card.';
+        console.error('Erreur:', error);
       }
     });
   }
@@ -83,7 +128,7 @@ export class CreateCardComponent implements OnInit {
     this.loading = true;
 
     const formValue = this.cardForm.value;
-    const newCard: Card = {
+    const cardData: Card = {
       title: formValue.title,
       description: formValue.description,
       picture: {
@@ -93,20 +138,39 @@ export class CreateCardComponent implements OnInit {
       tags: formValue.tags
     };
 
-    this.cardDataService.createCard(newCard).subscribe({
-      next: (response) => {
-        this.loading = false;
-        this.successMessage = 'Card créée avec succès!';
-        setTimeout(() => {
-          this.router.navigate(['/cards']);
-        }, 1500);
-      },
-      error: (error) => {
-        this.loading = false;
-        this.errorMessage = 'Erreur lors de la création de la card. Veuillez réessayer.';
-        console.error('Erreur:', error);
-      }
-    });
+    if (this.isEditMode && this.editingCardId) {
+      // Mode édition
+      this.cardDataService.updateCard(this.editingCardId, cardData).subscribe({
+        next: (response) => {
+          this.loading = false;
+          this.successMessage = 'Card modifiée avec succès!';
+          setTimeout(() => {
+            this.router.navigate(['/card', this.editingCardId]);
+          }, 1500);
+        },
+        error: (error) => {
+          this.loading = false;
+          this.errorMessage = 'Erreur lors de la modification de la card. Veuillez réessayer.';
+          console.error('Erreur:', error);
+        }
+      });
+    } else {
+      // Mode création
+      this.cardDataService.createCard(cardData).subscribe({
+        next: (response) => {
+          this.loading = false;
+          this.successMessage = 'Card créée avec succès!';
+          setTimeout(() => {
+            this.router.navigate(['/cards']);
+          }, 1500);
+        },
+        error: (error) => {
+          this.loading = false;
+          this.errorMessage = 'Erreur lors de la création de la card. Veuillez réessayer.';
+          console.error('Erreur:', error);
+        }
+      });
+    }
   }
 
   resetForm(): void {

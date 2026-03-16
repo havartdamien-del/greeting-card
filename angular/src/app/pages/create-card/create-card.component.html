@@ -1,6 +1,6 @@
 <div class="create-card-container">
   <div class="create-card-wrapper">
-    <h1 class="create-card-title">Ajouter une nouvelle Card</h1>
+    <h1 class="create-card-title">{{ pageTitle }}</h1>
     
     <div class="alerts">
       <div *ngIf="errorMessage" class="alert alert-error">
@@ -33,19 +33,14 @@
 
       <!-- Description -->
       <div class="form-group">
-        <label for="description" class="form-label">Description *</label>
+        <label for="description" class="form-label">Description <span class="optional">(optionnelle)</span></label>
         <textarea 
           id="description" 
           formControlName="description" 
           class="form-textarea"
-          placeholder="Entrez la description de la card"
+          placeholder="Entrez la description de la card (optionnelle)"
           rows="5"
-          [class.is-invalid]="submitted && cardForm.get('description')?.invalid"
         ></textarea>
-        <div *ngIf="submitted && cardForm.get('description')?.invalid" class="form-error">
-          <span *ngIf="cardForm.get('description')?.errors?.['required']">La description est requise</span>
-          <span *ngIf="cardForm.get('description')?.errors?.['minlength']">La description doit avoir au moins 10 caractères</span>
-        </div>
       </div>
 
       <!-- Image -->
@@ -120,8 +115,8 @@
           class="btn btn-primary"
           [disabled]="loading"
         >
-          <span *ngIf="!loading">Créer la Card</span>
-          <span *ngIf="loading">Création en cours...</span>
+          <span *ngIf="!loading">{{ isEditMode ? 'Mettre à jour' : 'Créer la Card' }}</span>
+          <span *ngIf="loading">{{ isEditMode ? 'Mise à jour en cours...' : 'Création en cours...' }}</span>
         </button>
         <button 
           type="button" 

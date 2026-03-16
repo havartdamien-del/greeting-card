@@ -52,4 +52,8 @@ export class CardsComponent implements OnInit, OnDestroy {
   navigateTo(route: string): void {
     this.router.navigate([route]);
   }
+
+  viewCardDetail(id: number): void {
+    this.router.navigate(['/card', id]);
+  }
 }

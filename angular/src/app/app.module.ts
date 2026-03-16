@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { MenuModule } from './modules/menu/menu.module';
 import { HomeComponent } from './pages/home/home.component';
 import { CardsComponent } from './pages/cards/cards.component';
+import { CardDetailComponent } from './pages/card-detail/card-detail.component';
 import { TagsComponent } from './pages/tags/tags.component';
 import { CreateCardComponent } from './pages/create-card/create-card.component';
 import { CorsInterceptor } from './interceptors/cors.interceptor';
@@ -18,6 +19,7 @@ import { CorsInterceptor } from './interceptors/cors.interceptor';
     AppComponent,
     HomeComponent,
     CardsComponent,
+    CardDetailComponent,
     TagsComponent,
     CreateCardComponent
   ],

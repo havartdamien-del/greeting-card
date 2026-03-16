@@ -56,7 +56,7 @@ class Card
     #[Groups(['card:read', 'card:write'])]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['card:read', 'card:write'])]
     private ?string $description = null;
 

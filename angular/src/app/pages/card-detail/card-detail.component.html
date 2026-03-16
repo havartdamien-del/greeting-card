@@ -1,0 +1,97 @@
+<div class="card-detail-container">
+  <div *ngIf="loading" class="loading">
+    <p>Chargement de la card...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <span class="error-icon">⚠️</span>
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!loading && card && !error" class="card-detail-wrapper">
+    <!-- Header -->
+    <div class="card-detail-header">
+      <button class="btn-back" (click)="goBack()">
+        <span class="back-icon">← Retour</span>
+      </button>
+      <h1 class="card-title">{{ card?.title }}</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="card-detail-content">
+      <!-- Image -->
+      <div *ngIf="card?.picture" class="card-image-section">
+        <img [src]="card?.picture?.value" [alt]="card?.title" class="card-image" />
+      </div>
+
+      <!-- Details -->
+      <div class="card-details-section">
+        <!-- Description -->
+        <div class="detail-block" *ngIf="card?.description">
+          <h2 class="detail-title">Description</h2>
+          <p class="detail-text">{{ card?.description }}</p>
+        </div>
+
+        <!-- Tags -->
+        <div class="detail-block" *ngIf="card?.tags?.length">
+          <h2 class="detail-title">Tags</h2>
+          <div class="tags-container">
+            <span *ngFor="let tag of card?.tags" class="tag-badge">{{ tag?.name }}</span>
+          </div>
+        </div>
+
+        <!-- Picture type info -->
+        <div class="detail-block" *ngIf="card?.picture">
+          <h2 class="detail-title">Type d'image</h2>
+          <p class="detail-text">{{ card?.picture?.type }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="card-detail-actions">
+      <button class="btn-back-primary" (click)="goBack()">
+        Retour à la liste
+      </button>
+      <button class="btn-edit" (click)="editCard()">
+        <span class="btn-icon">✏️</span>
+        <span class="btn-text">Éditer</span>
+      </button>
+      <button class="btn-delete" (click)="confirmDelete()" [disabled]="deleting">
+        <span class="btn-icon">🗑️</span>
+        <span class="btn-text">{{ deleting ? 'Suppression...' : 'Supprimer' }}</span>
+      </button>
+    </div>
+
+    <!-- Delete confirmation modal -->
+    <div *ngIf="showDeleteConfirm" class="modal-overlay" (click)="cancelDelete()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Confirmer la suppression</h2>
+        </div>
+        <div class="modal-body">
+          <p>Êtes-vous sûr de vouloir supprimer cette card ?</p>
+          <p class="card-title-confirm">{{ card?.title }}</p>
+          <p class="warning-text">Cette action ne peut pas être annulée.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" (click)="cancelDelete()" [disabled]="deleting">
+            Annuler
+          </button>
+          <button class="btn-delete-confirm" (click)="deleteCard()" [disabled]="deleting">
+            {{ deleting ? 'Suppression en cours...' : 'Supprimer' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !card && !error" class="empty-state">
+    <p>Aucune card trouvée</p>
+    <button class="btn-back-primary" (click)="goBack()">
+      Retour à la liste
+    </button>
+  </div>
+
+
+</div>

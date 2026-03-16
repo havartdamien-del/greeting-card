@@ -27,7 +27,7 @@
     </div>
 
     <div *ngIf="!loading && cards.length > 0" class="cards-grid">
-      <div *ngFor="let card of cards" class="card-item">
+      <div *ngFor="let card of cards" class="card-item" (click)="viewCardDetail(card.id!)" (keyup.enter)="viewCardDetail(card.id!)" tabindex="0">
         <div class="card-image">
           <img *ngIf="card.picture" [src]="card.picture.value" [alt]="card.title" />
         </div>
