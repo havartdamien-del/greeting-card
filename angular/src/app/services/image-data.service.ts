@@ -34,4 +34,41 @@ export class ImageDataService {
       tap(images => this.imagesSubject.next(images))
     );
   }
+
+  /**
+   * Upload une image vers l'API
+   */
+  uploadImage(file: File): Observable<any> {
+    console.log('uploadImage called with file:', {
+      name: file.name,
+      size: file.size,
+      type: file.type
+    });
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    console.log('FormData created with entries:');
+    formData.forEach((value, key) => {
+      console.log(`  ${key}:`, value);
+    });
+    
+
+    
+    return this.apiConnection.uploadFile2(file).pipe(
+      tap((response: any) => {
+        console.log('Upload response received, reloading images...');
+        // Recharger les images après l'upload
+        this.loadImages().subscribe();
+      })
+    );
+
+    /*return this.apiConnection.uploadFile(formData).pipe(
+      tap((response: any) => {
+        console.log('Upload response received, reloading images...');
+        // Recharger les images après l'upload
+        this.loadImages().subscribe();
+      })
+    );*/
+  }
 }

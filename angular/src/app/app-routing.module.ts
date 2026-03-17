@@ -6,6 +6,7 @@ import { CardDetailComponent } from './pages/card-detail/card-detail.component';
 import { TagsComponent } from './pages/tags/tags.component';
 import { CreateCardComponent } from './pages/create-card/create-card.component';
 import { ImagesComponent } from './pages/images/images.component';
+import { UploadImageComponent } from './pages/upload-image/upload-image.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'create-card/:id', component: CreateCardComponent },
   { path: 'tags', component: TagsComponent },
   { path: 'images', component: ImagesComponent },
+  { path: 'upload-image', component: UploadImageComponent },
   { path: '**', redirectTo: '' }
 ];
 

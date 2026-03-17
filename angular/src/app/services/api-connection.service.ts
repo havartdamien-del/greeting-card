@@ -88,6 +88,40 @@ export class ApiConnectionService {
   }
 
   /**
+   * Upload un fichier image
+   * @param formData - FormData contenant le fichier
+   */
+  uploadFile(formData: FormData): Observable<any> {
+    console.log('=== UPLOAD FILE DEBUG ===');
+    console.log('FormData entries:');
+    formData.forEach((value, key) => {
+      console.log(`  ${key}:`, value);
+    });
+    
+    return this.http.post<any>(`${this.apiUrl}/pictures/upload`, formData).pipe(
+      map(response => {
+        console.log('Upload success response:', response);
+        return response;
+      })
+    );
+  }
+
+  uploadFile2(file: File): Observable<any> {
+        console.log('=== UPLOAD FILE DEBUG ** 2 ===');
+    console.log('FormData entries:');
+    
+const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<any>(`${this.apiUrl}/pictures/upload`, formData).pipe(
+      map(response => {
+        console.log('Upload success response:', response);
+        return response;
+      })
+    );
+  }
+
+  /**
    * Extrait les données du format de réponse API Platform
    * @param response - Réponse de l'API
    */

@@ -17,10 +17,11 @@ export class CorsInterceptor implements HttpInterceptor {
     // Ajouter les headers CORS pour les requêtes vers les APIs autorisées
     if (this.isAllowedOrigin(req.url)) {
       // Cloner la requête et ajouter les headers si nécessaire
+      // ✅ Ne pas toucher au Content-Type si c'est un FormData (upload de fichier)
+      const isFormData = req.body instanceof FormData;
+
       req = req.clone({
-        setHeaders: {
-          'Content-Type': 'application/ld+json'
-        },
+        setHeaders: isFormData ? {} : { 'Content-Type': 'application/ld+json' },
         withCredentials: false
       });
     }

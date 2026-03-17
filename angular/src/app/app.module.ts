@@ -13,6 +13,7 @@ import { CardDetailComponent } from './pages/card-detail/card-detail.component';
 import { TagsComponent } from './pages/tags/tags.component';
 import { CreateCardComponent } from './pages/create-card/create-card.component';
 import { ImagesComponent } from './pages/images/images.component';
+import { UploadImageComponent } from './pages/upload-image/upload-image.component';
 import { CorsInterceptor } from './interceptors/cors.interceptor';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CorsInterceptor } from './interceptors/cors.interceptor';
     CardDetailComponent,
     TagsComponent,
     CreateCardComponent,
-    ImagesComponent
+    ImagesComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule,

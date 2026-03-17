@@ -1,7 +1,15 @@
 <div class="images-container">
   <div class="images-header">
-    <h1>🖼️ Tous les images</h1>
-    <p class="subtitle">Explorez toutes les images du site</p>
+    <div class="header-content">
+      <div class="header-title">
+        <h1>🖼️ Tous les images</h1>
+        <p class="subtitle">Explorez toutes les images du site</p>
+      </div>
+      <button class="btn-add-image" (click)="navigateTo('/upload-image')">
+        <span class="btn-icon">➕</span>
+        <span class="btn-text">Ajouter une Image</span>
+      </button>
+    </div>
   </div>
 
   <div class="images-content">
