@@ -9,6 +9,12 @@ export interface Tag {
   name: string;
 }
 
+export interface Image {
+  id?: number;
+  type: string;
+  value: string;
+}
+
 export interface Card {
   id?: number;
   title: string;

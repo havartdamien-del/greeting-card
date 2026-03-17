@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -21,7 +22,7 @@ class Picture
     #[Groups(['card:read', 'card:write'])]
     private ?string $type = null;
 
-    #[ORM\Column(length: 500)]
+    #[ORM\Column(type: Types::TEXT)]
     #[Groups(['card:read', 'card:write'])]
     private ?string $value = null;
 

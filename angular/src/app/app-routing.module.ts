@@ -5,6 +5,7 @@ import { CardsComponent } from './pages/cards/cards.component';
 import { CardDetailComponent } from './pages/card-detail/card-detail.component';
 import { TagsComponent } from './pages/tags/tags.component';
 import { CreateCardComponent } from './pages/create-card/create-card.component';
+import { ImagesComponent } from './pages/images/images.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'create-card', component: CreateCardComponent },
   { path: 'create-card/:id', component: CreateCardComponent },
   { path: 'tags', component: TagsComponent },
+  { path: 'images', component: ImagesComponent },
   { path: '**', redirectTo: '' }
 ];
 

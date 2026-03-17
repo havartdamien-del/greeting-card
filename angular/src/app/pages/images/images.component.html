@@ -1,0 +1,29 @@
+<div class="images-container">
+  <div class="images-header">
+    <h1>🖼️ Tous les images</h1>
+    <p class="subtitle">Explorez toutes les images du site</p>
+  </div>
+
+  <div class="images-content">
+    <div *ngIf="loading" class="loading">
+      Chargement des images...
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!loading && images.length === 0" class="empty-state">
+      <p>Aucune image trouvée</p>
+    </div>
+
+    <div *ngIf="!loading && images.length > 0" class="images-grid">
+      <div *ngFor="let image of images" class="image-item">
+        <div class="image-wrapper">
+          <img [src]="image.value" [alt]="image.type" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
