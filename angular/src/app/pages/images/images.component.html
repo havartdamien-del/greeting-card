@@ -21,7 +21,7 @@
     <div *ngIf="!loading && images.length > 0" class="images-grid">
       <div *ngFor="let image of images" class="image-item">
         <div class="image-wrapper">
-          <img [src]="image.value" [alt]="image.type" />
+          <img [src]="image.type === 'url' ? image.value : 'http://localhost:8080' + image.value" [alt]="image.type" />
         </div>
       </div>
     </div>

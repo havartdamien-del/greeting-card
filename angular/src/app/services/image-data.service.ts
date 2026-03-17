@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Image } from '../models/card.model';
-import { CardDataService } from './card-data.service';
+import { ApiConnectionService } from './api-connection.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageDataService {
+  private readonly TABLE_NAME = 'pictures';
+
   private imagesSubject = new BehaviorSubject<Image[]>([]);
   public images$ = this.imagesSubject.asObservable();
 
@@ -15,33 +17,13 @@ export class ImageDataService {
     return this.imagesSubject.value;
   }
 
-  constructor(private cardDataService: CardDataService) {}
+  constructor(private apiConnection: ApiConnectionService) {}
 
   /**
-   * Récupère toutes les images uniques des cartes depuis l'API
+   * Récupère toutes les images uniques depuis l'API
    */
   getImages(): Observable<Image[]> {
-    return this.cardDataService.getActiveCards().pipe(
-      map(cards => {
-        // Extraire les images uniques des cartes
-        const imagesMap = new Map<string, Image>();
-        
-        cards.forEach(card => {
-          if (card.picture) {
-            const key = card.picture.value; // Utiliser l'URL comme clé unique
-            if (!imagesMap.has(key)) {
-              imagesMap.set(key, {
-                id: card.picture.id,
-                type: card.picture.type,
-                value: card.picture.value
-              });
-            }
-          }
-        });
-
-        return Array.from(imagesMap.values());
-      })
-    );
+    return this.apiConnection.getData<Image>(this.TABLE_NAME);
   }
 
   /**
