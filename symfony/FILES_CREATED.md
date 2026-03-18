@@ -93,10 +93,10 @@ deploy_upload_feature.sh (NOUVEAU)
 
 ```bash
 # 1. Migration
-docker-compose exec symfony php bin/console doctrine:migrations:migrate
+docker compose exec php php bin/console doctrine:migrations:migrate
 
 # 2. Répertoire
-docker-compose exec symfony mkdir -p public/uploads
+docker compose exec php mkdir -p public/uploads
 
 # 3. Test
 ./test_upload.sh

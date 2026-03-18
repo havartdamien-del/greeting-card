@@ -115,7 +115,7 @@ class Version20260317150000 extends AbstractMigration
 
 **À exécuter:**
 ```bash
-docker-compose exec symfony php bin/console doctrine:migrations:migrate
+docker compose exec php php bin/console doctrine:migrations:migrate
 ```
 
 ---
@@ -269,7 +269,7 @@ APP_UPLOAD_BASE_URL=https://votredomaine.fr
 
 ### Vérifier le schéma de la base de données
 ```bash
-docker-compose exec mysql mysql -u root -proot greeting_card -e "DESCRIBE picture;"
+docker compose exec mysql mysql -u root -proot greeting_card -e "DESCRIBE picture;"
 ```
 
 **Résultat attendu:**
@@ -288,8 +288,8 @@ ls -la public/uploads/
 
 ### Vérifier la configuration Symfony
 ```bash
-docker-compose exec symfony php bin/console debug:config
-docker-compose exec symfony php bin/console debug:parameters | grep upload
+docker compose exec php php bin/console debug:config
+docker compose exec php php bin/console debug:parameters | grep upload
 ```
 
 ### Vérifier l'endpoint API
@@ -329,7 +329,7 @@ $allowedMimeTypes[] = 'image/votre-type';
 **Solution:**
 ```bash
 # Avec Docker
-docker-compose exec symfony chmod 755 public/uploads
+docker compose exec php chmod 755 public/uploads
 
 # Avec Apache/Nginx
 chown www-data:www-data public/uploads

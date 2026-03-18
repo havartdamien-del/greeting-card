@@ -45,13 +45,13 @@
 
 #### Étape 1: Appliquer la migration
 ```bash
-docker-compose exec symfony php bin/console doctrine:migrations:migrate
+docker compose exec php php bin/console doctrine:migrations:migrate
 ```
 
 #### Étape 2: Créer le répertoire d'uploads
 ```bash
-docker-compose exec symfony mkdir -p public/uploads
-docker-compose exec symfony chmod 755 public/uploads
+docker compose exec php mkdir -p public/uploads
+docker compose exec php chmod 755 public/uploads
 ```
 
 #### Étape 3: Tester

@@ -21,7 +21,7 @@ Exécutez la migration pour augmenter la colonne `value` de la table `picture`:
 
 ```bash
 # Avec Docker
-docker-compose exec symfony php bin/console doctrine:migrations:migrate
+docker compose exec php php bin/console doctrine:migrations:migrate
 
 # Sans Docker
 php bin/console doctrine:migrations:migrate
@@ -31,8 +31,8 @@ php bin/console doctrine:migrations:migrate
 
 ```bash
 # Avec Docker
-docker-compose exec symfony mkdir -p public/uploads
-docker-compose exec symfony chmod 755 public/uploads
+docker compose exec php mkdir -p public/uploads
+docker compose exec php chmod 755 public/uploads
 
 # Sans Docker
 mkdir -p public/uploads
@@ -61,10 +61,10 @@ DocumentRoot /path/to/project/public
 ### Test 1: Vérifier la migration
 ```bash
 # Avec Docker
-docker-compose exec symfony php bin/console doctrine:migrations:list
+docker compose exec php php bin/console doctrine:migrations:list
 
 # Vérifier dans la base de données
-docker-compose exec mysql mysql -u root -p'password' greeting_card -e "DESCRIBE picture;"
+docker compose exec mysql mysql -u root -p'password' greeting_card -e "DESCRIBE picture;"
 ```
 
 Vous devriez voir que la colonne `value` est maintenant de type `LONGTEXT`.

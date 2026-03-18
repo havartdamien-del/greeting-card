@@ -206,7 +206,7 @@ cd docker
 cd docker
 ./manage.sh shell-php
 # ou
-docker-compose exec php composer create-project symfony/skeleton .
+docker compose exec php composer create-project symfony/skeleton .
 ```
 
 ### 2. Initialiser Angular
@@ -215,7 +215,7 @@ docker-compose exec php composer create-project symfony/skeleton .
 cd docker
 ./manage.sh shell-ng
 # ou
-docker-compose exec angular ng new . --routing --skip-git
+docker compose exec angular ng new . --routing --skip-git
 ```
 
 ### 3. Démarrer le développement

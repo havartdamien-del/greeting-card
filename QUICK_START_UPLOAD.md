@@ -4,10 +4,10 @@
 
 ```bash
 # 1️⃣ Migration
-docker-compose exec symfony php bin/console doctrine:migrations:migrate
+docker compose exec php php bin/console doctrine:migrations:migrate
 
 # 2️⃣ Répertoire
-docker-compose exec symfony mkdir -p public/uploads
+docker compose exec php mkdir -p public/uploads
 
 # 3️⃣ Test
 chmod +x test_upload.sh && ./test_upload.sh
@@ -75,7 +75,7 @@ curl -X POST http://localhost:8080/api/cards \
 
 ```bash
 # Vérifier la migration
-docker-compose exec mysql mysql -u root -proot greeting_card -e "DESCRIBE picture;" | grep value
+docker compose exec mysql mysql -u root -proot greeting_card -e "DESCRIBE picture;" | grep value
 
 # Vérifier l'accès API
 curl http://localhost:8080/api/pictures

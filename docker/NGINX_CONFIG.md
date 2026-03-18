@@ -2,7 +2,7 @@
 
 ## ✅ Services Updated
 
-Both `docker-compose.yml` (production) and `docker-compose.dev.yml` (development) now include the **nginx-symfony** service.
+Both `docker-compose.yml` (production) and `docker-compose.dev.yml` (development) now include the **nginx-api** service.
 
 ## 📊 Application Architecture
 
@@ -192,10 +192,10 @@ cd docker
 ./manage.sh down
 
 # Restart a service
-docker-compose restart nginx-symfony
+docker compose restart nginx-api
 
 # Check Nginx config
-docker-compose exec nginx-symfony nginx -t
+docker compose exec nginx-api nginx -t
 ```
 
 ## 🎯 Next Steps

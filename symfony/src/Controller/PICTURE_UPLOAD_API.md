@@ -264,8 +264,8 @@ Si vous utilisez Docker, assurez-vous que le répertoire `public/uploads` existe
 
 ```bash
 # Dans le conteneur Symfony
-docker-compose exec symfony mkdir -p public/uploads
-docker-compose exec symfony chmod 755 public/uploads
+docker compose exec php mkdir -p public/uploads
+docker compose exec php chmod 755 public/uploads
 
 # Ou directement
 mkdir -p ./symfony/public/uploads

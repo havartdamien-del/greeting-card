@@ -12,10 +12,10 @@ Backend API pour l'application Greeting Card AI, construit avec Symfony 7.4 et A
 
 ```bash
 # Démarrer les conteneurs
-docker-compose up -d
+docker compose up -d
 
 # Appliquer les migrations
-docker-compose exec symfony php bin/console doctrine:migrations:migrate
+docker compose exec php php bin/console doctrine:migrations:migrate
 
 # Vérifier l'API
 curl http://localhost:8080/api
@@ -130,20 +130,20 @@ symfony/
 
 ```bash
 # Démarrer le serveur
-docker-compose up symfony
+docker compose up php
 
 # Migrations
-docker-compose exec symfony php bin/console doctrine:migrations:migrate
-docker-compose exec symfony php bin/console make:migration
+docker compose exec php php bin/console doctrine:migrations:migrate
+docker compose exec php php bin/console make:migration
 
 # Tests
-docker-compose exec symfony php bin/console test
+docker compose exec php php bin/console test
 
 # CLI Symfony
-docker-compose exec symfony php bin/console
+docker compose exec php php bin/console
 
 # Accès à la base de données
-docker-compose exec mysql mysql -u root -proot greeting_card
+docker compose exec mysql mysql -u root -proot greeting_card
 ```
 
 ## 📤 Upload d'images
@@ -195,8 +195,8 @@ Voir `CURL_EXAMPLES.md` pour 35+ exemples
 
 ### Logs
 ```bash
-docker-compose logs -f symfony
-docker-compose logs -f mysql
+docker compose logs -f php
+docker compose logs -f mysql
 ```
 
 ### Vérifier la santé
@@ -205,7 +205,7 @@ docker-compose logs -f mysql
 curl http://localhost:8080/api
 
 # Base de données?
-docker-compose exec mysql mysql -u root -proot greeting_card -e "SELECT VERSION();"
+docker compose exec mysql mysql -u root -proot greeting_card -e "SELECT VERSION();"
 
 # Fichiers uploadés?
 ls -la ./public/uploads/
@@ -251,14 +251,14 @@ ports:
 
 ### Erreurs de migration
 ```bash
-docker-compose exec symfony php bin/console doctrine:migrations:list
-docker-compose exec symfony php bin/console doctrine:migrations:status
+docker compose exec php php bin/console doctrine:migrations:list
+docker compose exec php php bin/console doctrine:migrations:status
 ```
 
 ### Problèmes de permission (uploads)
 ```bash
-docker-compose exec symfony chown -R www-data:www-data public/uploads
-docker-compose exec symfony chmod -R 755 public/uploads
+docker compose exec php chown -R www-data:www-data public/uploads
+docker compose exec php chmod -R 755 public/uploads
 ```
 
 ## 🤝 Contribution
