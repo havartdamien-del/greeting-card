@@ -12,6 +12,7 @@ import { CardsComponent } from './pages/page_listing/cards/cards.component';
 import { CardsListComponent } from './pages/page_listing/cards/cards-list.component';
 import { PageContainerListingComponent } from './pages/page_listing/page-container-listing/page-container-listing.component';
 import { CardDetailComponent } from './pages/page_detail/card-detail/card-detail.component';
+import { CardDetailContentComponent } from './pages/page_detail/card-detail/card-detail-content.component';
 import { TagsComponent } from './pages/page_listing/tags/tags.component';
 import { TagsListComponent } from './pages/page_listing/tags/tags-list.component';
 import { CreateCardComponent } from './pages/page_edit/create-card/create-card.component';
@@ -28,10 +29,13 @@ import { CorsInterceptor } from './interceptors/cors.interceptor';
     CardsListComponent,
     PageContainerListingComponent,
     CardDetailComponent,
+    CardDetailContentComponent,
     TagsComponent,
     TagsListComponent,
     CreateCardComponent,
-    ImagesComponent,    ImagesListComponent,    UploadImageComponent
+    ImagesComponent,
+    ImagesListComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,27 @@
+<!-- Image -->
+<div *ngIf="card?.picture" class="card-image-section">
+  <img [src]="card?.picture?.value" [alt]="card?.title" class="card-image" />
+</div>
+
+<!-- Details -->
+<div class="card-details-section">
+  <!-- Description -->
+  <div class="detail-block" *ngIf="card?.description">
+    <h2 class="detail-title">Description</h2>
+    <p class="detail-text">{{ card?.description }}</p>
+  </div>
+
+  <!-- Tags -->
+  <div class="detail-block" *ngIf="card?.tags?.length">
+    <h2 class="detail-title">Tags</h2>
+    <div class="tags-container">
+      <span *ngFor="let tag of card?.tags" class="tag-badge">{{ tag?.name }}</span>
+    </div>
+  </div>
+
+  <!-- Picture type info -->
+  <div class="detail-block" *ngIf="card?.picture">
+    <h2 class="detail-title">Type d'image</h2>
+    <p class="detail-text">{{ card?.picture?.type }}</p>
+  </div>
+</div>
