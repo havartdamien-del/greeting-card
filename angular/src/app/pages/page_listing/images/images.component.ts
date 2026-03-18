@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ImageDataService } from '../../services/image-data.service';
-import { Image } from '../../models/card.model';
+import { ImageDataService } from '../../../services/data_class/image-data.service';
+import { Image } from '../../../models/card.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ImageDataService } from '../../services/image-data.service';
+import { ImageDataService } from '../../../services/data_class/image-data.service';
 
 @Component({
   selector: 'app-upload-image',

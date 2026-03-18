@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Tag } from '../models/card.model';
+import { Tag } from '../../models/card.model';
 import { ApiConnectionService } from './api-connection.service';
 
 @Injectable({

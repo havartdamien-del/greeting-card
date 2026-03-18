@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CardDataService } from '../../services/card-data.service';
-import { TagDataService } from '../../services/tag-data.service';
-import { Card, Tag } from '../../models/card.model';
+import { CardDataService } from '../../../services/data_class/card-data.service';
+import { TagDataService } from '../../../services/data_class/tag-data.service';
+import { Card, Tag } from '../../../models/card.model';
 
 @Component({
   selector: 'app-create-card',
