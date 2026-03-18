@@ -9,10 +9,14 @@ import { AppComponent } from './app.component';
 import { MenuModule } from './modules/menu/menu.module';
 import { HomeComponent } from './pages/home/home.component';
 import { CardsComponent } from './pages/page_listing/cards/cards.component';
+import { CardsListComponent } from './pages/page_listing/cards/cards-list.component';
+import { PageContainerListingComponent } from './pages/page_listing/page-container-listing/page-container-listing.component';
 import { CardDetailComponent } from './pages/page_detail/card-detail/card-detail.component';
 import { TagsComponent } from './pages/page_listing/tags/tags.component';
+import { TagsListComponent } from './pages/page_listing/tags/tags-list.component';
 import { CreateCardComponent } from './pages/page_edit/create-card/create-card.component';
 import { ImagesComponent } from './pages/page_listing/images/images.component';
+import { ImagesListComponent } from './pages/page_listing/images/images-list.component';
 import { UploadImageComponent } from './pages/page_edit/upload-image/upload-image.component';
 import { CorsInterceptor } from './interceptors/cors.interceptor';
 
@@ -21,11 +25,13 @@ import { CorsInterceptor } from './interceptors/cors.interceptor';
     AppComponent,
     HomeComponent,
     CardsComponent,
+    CardsListComponent,
+    PageContainerListingComponent,
     CardDetailComponent,
     TagsComponent,
+    TagsListComponent,
     CreateCardComponent,
-    ImagesComponent,
-    UploadImageComponent
+    ImagesComponent,    ImagesListComponent,    UploadImageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,26 @@
+<div class="listing-container">
+  <div class="listing-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>{{ title }}</h1>
+        <p class="subtitle">{{ subtitle }}</p>
+      </div>
+      <ng-content select=".header-action"></ng-content>
+    </div>
+  </div>
+
+  <div class="listing-content">
+    <div *ngIf="(loading$ | async)" class="loading">
+      Chargement...
+    </div>
+    
+    <div *ngIf="(error$ | async) as error" class="error-message">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!(loading$ | async) && (error$ | async) === null">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
