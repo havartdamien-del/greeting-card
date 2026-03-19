@@ -13,6 +13,7 @@ import { CardsListComponent } from './pages/page_listing/cards/cards-list.compon
 import { PageContainerListingComponent } from './pages/page_listing/page-container-listing/page-container-listing.component';
 import { CardDetailComponent } from './pages/page_detail/card-detail/card-detail.component';
 import { CardDetailContentComponent } from './pages/page_detail/card-detail/card-detail-content.component';
+import { DataApiDetailComponent } from './pages/page_detail/data-api-detail/data-api-detail.component';
 import { TagsComponent } from './pages/page_listing/tags/tags.component';
 import { TagsListComponent } from './pages/page_listing/tags/tags-list.component';
 import { CreateCardComponent } from './pages/page_edit/create-card/create-card.component';
@@ -30,6 +31,7 @@ import { CorsInterceptor } from './interceptors/cors.interceptor';
     PageContainerListingComponent,
     CardDetailComponent,
     CardDetailContentComponent,
+    DataApiDetailComponent,
     TagsComponent,
     TagsListComponent,
     CreateCardComponent,

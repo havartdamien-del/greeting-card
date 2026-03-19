@@ -1,7 +1,6 @@
-
-<div class="card-detail-container">
+<div class="data-api-detail-container">
   <div *ngIf="loading" class="loading">
-    <p>Chargement de la card...</p>
+    <p>Chargement des données...</p>
   </div>
 
   <div *ngIf="error" class="error-message">
@@ -9,26 +8,34 @@
     <p>{{ error }}</p>
   </div>
 
-  <div *ngIf="!loading && card && !error" class="card-detail-wrapper">
+  <div *ngIf="!loading && data && !error" class="data-api-detail-wrapper">
     <!-- Header -->
-    <div class="card-detail-header">
+    <div class="data-api-detail-header">
       <button class="btn-back" (click)="goBack()">
         <span class="back-icon">← Retour</span>
       </button>
-      <h1 class="card-title">{{ card?.title }}</h1>
+      <h1 class="data-title">{{ data?.title || data?.name || 'Détail' }}</h1>
     </div>
 
     <!-- Content -->
-    <div class="card-detail-content">
-      <app-data-api-detail [dataType]="'card'"></app-data-api-detail>
+    <div class="data-api-detail-content">
+      <!-- Afficher le composant card-detail-content si dataType est 'card' -->
+      <div *ngIf="dataType === 'card' && card">
+        <app-card-detail-content [card]="card"></app-card-detail-content>
+      </div>
+
+      <!-- Afficher les données JSON pour les autres types -->
+      <div *ngIf="dataType !== 'card'" class="data-info">
+        <pre>{{ data | json }}</pre>
+      </div>
     </div>
 
     <!-- Actions -->
-    <div class="card-detail-actions">
+    <div class="data-api-detail-actions">
       <button class="btn-back-primary" (click)="goBack()">
         Retour à la liste
       </button>
-      <button class="btn-edit" (click)="editCard()">
+      <button class="btn-edit" (click)="editData()">
         <span class="btn-icon">✏️</span>
         <span class="btn-text">Éditer</span>
       </button>
@@ -45,28 +52,17 @@
           <h2>Confirmer la suppression</h2>
         </div>
         <div class="modal-body">
-          <p>Êtes-vous sûr de vouloir supprimer cette card ?</p>
-          <p class="card-title-confirm">{{ card?.title }}</p>
+          <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+          <p class="data-title-confirm">{{ data?.title || data?.name || 'Élément' }}</p>
           <p class="warning-text">Cette action ne peut pas être annulée.</p>
         </div>
         <div class="modal-footer">
-          <button class="btn-cancel" (click)="cancelDelete()" [disabled]="deleting">
-            Annuler
-          </button>
-          <button class="btn-delete-confirm" (click)="deleteCard()" [disabled]="deleting">
+          <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
+          <button class="btn-confirm-delete" (click)="deleteData()" [disabled]="deleting">
             {{ deleting ? 'Suppression en cours...' : 'Supprimer' }}
           </button>
         </div>
       </div>
     </div>
   </div>
-
-  <div *ngIf="!loading && !card && !error" class="empty-state">
-    <p>Aucune card trouvée</p>
-    <button class="btn-back-primary" (click)="goBack()">
-      Retour à la liste
-    </button>
-  </div>
-
-
 </div>
