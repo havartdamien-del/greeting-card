@@ -24,8 +24,13 @@
         <app-card-detail-content [card]="card"></app-card-detail-content>
       </div>
 
+      <!-- Afficher le composant tag-detail-content si dataType est 'tag' -->
+      <div *ngIf="dataType === 'tag' && tag">
+        <app-tag-detail-content [tag]="tag"></app-tag-detail-content>
+      </div>
+
       <!-- Afficher les données JSON pour les autres types -->
-      <div *ngIf="dataType !== 'card'" class="data-info">
+      <div *ngIf="dataType === 'images'" class="data-info">
         <pre>{{ data | json }}</pre>
       </div>
     </div>

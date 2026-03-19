@@ -1,0 +1,21 @@
+<div class="tag-content">
+  <!-- Tag name display -->
+  <div class="tag-info-section">
+    <div class="tag-badge-large">{{ tag?.name }}</div>
+  </div>
+
+  <!-- Tag details -->
+  <div class="tag-details-section">
+    <!-- Name -->
+    <div class="detail-block">
+      <h2 class="detail-title">Nom du tag</h2>
+      <p class="detail-text">{{ tag?.name }}</p>
+    </div>
+
+    <!-- ID -->
+    <div class="detail-block" *ngIf="tag?.id">
+      <h2 class="detail-title">Identifiant</h2>
+      <p class="detail-text">#{{ tag?.id }}</p>
+    </div>
+  </div>
+</div>

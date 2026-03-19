@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tags',
@@ -6,8 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent {
+  constructor(private router: Router) {}
+
   onTagClick(id: number): void {
-    // À implémenter selon les besoins
-    console.log('Tag cliqué:', id);
+    this.router.navigate(['/tag', id]);
   }
 }
