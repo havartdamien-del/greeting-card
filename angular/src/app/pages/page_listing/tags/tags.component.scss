@@ -2,3 +2,42 @@
 // Les styles principaux sont délégués aux composants enfants:
 // - page-container-listing : gère le header et les états
 // - tags-list : gère l'affichage de la grille
+
+.btn-add-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  white-space: nowrap;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .btn-icon {
+    font-size: 1.2rem;
+  }
+
+  .btn-text {
+    display: inline-block;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+}
+

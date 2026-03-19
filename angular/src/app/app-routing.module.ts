@@ -6,6 +6,7 @@ import { CardDetailComponent } from './pages/page_detail/card-detail/card-detail
 import { TagsComponent } from './pages/page_listing/tags/tags.component';
 import { TagDetailComponent } from './pages/page_detail/tag-detail/tag-detail.component';
 import { CreateCardComponent } from './pages/page_edit/create-card/create-card.component';
+import { CreateTagComponent } from './pages/page_edit/create-tag/create-tag.component';
 import { ImagesComponent } from './pages/page_listing/images/images.component';
 import { UploadImageComponent } from './pages/page_edit/upload-image/upload-image.component';
 
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'create-card/:id', component: CreateCardComponent },
   { path: 'tags', component: TagsComponent },
   { path: 'tag/:id', component: TagDetailComponent },
+  { path: 'create-tag', component: CreateTagComponent },
+  { path: 'create-tag/:id', component: CreateTagComponent },
   { path: 'images', component: ImagesComponent },
   { path: 'upload-image', component: UploadImageComponent },
   { path: '**', redirectTo: '' }

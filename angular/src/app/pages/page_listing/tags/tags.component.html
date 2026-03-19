@@ -2,5 +2,9 @@
   title="🏷️ Tous les Tags"
   subtitle="Explorez tous les tags disponibles"
   dataType="tag">
+  <button class="btn-add-tag header-action" (click)="onAddTag()">
+    <span class="btn-icon">➕</span>
+    <span class="btn-text">Ajouter un Tag</span>
+  </button>
   <app-tags-list (tagClick)="onTagClick($event)"></app-tags-list>
 </app-page-container-listing>

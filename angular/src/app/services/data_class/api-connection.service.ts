@@ -70,8 +70,8 @@ export class ApiConnectionService {
    * @param data - Données à mettre à jour
    */
   updateData<T>(tableName: string, id: number, data: T): Observable<T> {
-    const headersWithContent = this.headers.set('Content-Type', 'application/ld+json');
-    return this.http.put<T>(`${this.apiUrl}/${tableName}/${id}`, data, { 
+    const headersWithContent = this.headers.set('Content-Type', 'application/merge-patch+json');
+    return this.http.patch<T>(`${this.apiUrl}/${tableName}/${id}`, data, { 
       headers: headersWithContent 
     });
   }

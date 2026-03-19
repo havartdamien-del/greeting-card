@@ -19,9 +19,15 @@ export class CorsInterceptor implements HttpInterceptor {
       // Cloner la requête et ajouter les headers si nécessaire
       // ✅ Ne pas toucher au Content-Type si c'est un FormData (upload de fichier)
       const isFormData = req.body instanceof FormData;
+      
+      // Déterminer le bon Content-Type selon la méthode HTTP
+      let contentType = 'application/ld+json'; // Par défaut pour POST, PUT
+      if (req.method === 'PATCH') {
+        contentType = 'application/merge-patch+json'; // Pour PATCH
+      }
 
       req = req.clone({
-        setHeaders: isFormData ? {} : { 'Content-Type': 'application/ld+json' },
+        setHeaders: isFormData ? {} : { 'Content-Type': contentType },
         withCredentials: false
       });
     }
