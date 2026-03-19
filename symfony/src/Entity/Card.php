@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
@@ -37,6 +38,10 @@ use Symfony\Component\Serializer\Attribute\Groups;
             normalizationContext: ['groups' => ['card:read']],
         ),
         new Put(
+            denormalizationContext: ['groups' => ['card:write']],
+            normalizationContext: ['groups' => ['card:read']],
+        ),
+        new Patch(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
         ),
