@@ -3,6 +3,7 @@ import { ListingContextService } from '../page-container-listing/listing-context
 import { map } from 'rxjs/operators';
 import { Image } from '../../../models/card.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ImageDataService } from '../../../services/data_class/image-data.service';
 
 @Component({
   selector: 'app-images-list',
@@ -17,9 +18,16 @@ export class ImagesListComponent {
     map(images => images.length === 0)
   );
 
-  constructor(private context: ListingContextService) {}
+  constructor(
+    private context: ListingContextService,
+    private imageDataService: ImageDataService
+  ) {}
 
   onImageClick(id: number): void {
     this.imageClick.emit(id);
+  }
+
+  getSrcImage(image: Image): string {
+    return this.imageDataService.getSrcImage(image);
   }
 }

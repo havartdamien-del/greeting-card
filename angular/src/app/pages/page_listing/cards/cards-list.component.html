@@ -5,7 +5,7 @@
 <div *ngIf="!(isEmpty$ | async)" class="cards-grid">
   <div *ngFor="let card of (cards$ | async)" class="card-item" (click)="viewCardDetail(card.id!)" (keyup.enter)="viewCardDetail(card.id!)" tabindex="0">
     <div class="card-image">
-      <img *ngIf="card.picture" [src]="card.picture.value" [alt]="card.title" />
+      <img *ngIf="card.picture" [src]="getSrcImage(card.picture)" [alt]="card.title" />
     </div>
     <div class="card-body">
       <h3>{{ card.title }}</h3>

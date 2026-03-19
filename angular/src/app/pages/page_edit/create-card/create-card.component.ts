@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CardDataService } from '../../../services/data_class/card-data.service';
 import { TagDataService } from '../../../services/data_class/tag-data.service';
-import { Card, Tag } from '../../../models/card.model';
+import { ImageDataService } from '../../../services/data_class/image-data.service';
+import { Card, Tag, Image } from '../../../models/card.model';
 
 @Component({
   selector: 'app-create-card',
@@ -17,6 +18,7 @@ export class CreateCardComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
   availableTags: Tag[] = [];
+  availableImages: Image[] = [];
   isEditMode = false;
   editingCardId: number | null = null;
   pageTitle = 'Ajouter une nouvelle Card';
@@ -25,6 +27,7 @@ export class CreateCardComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cardDataService: CardDataService,
     private tagDataService: TagDataService,
+    private imageDataService: ImageDataService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -32,6 +35,7 @@ export class CreateCardComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.loadTags();
+    this.loadImages();
     
     // Vérifier si on est en mode édition
     this.route.params.subscribe(params => {
@@ -62,6 +66,18 @@ export class CreateCardComponent implements OnInit {
       },
       error: (error) => {
         console.error('Erreur lors du chargement des tags:', error);
+      }
+    });
+  }
+
+  loadImages(): void {
+    // Charger toutes les images disponibles
+    this.imageDataService.loadImages().subscribe({
+      next: (images) => {
+        this.availableImages = images;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des images:', error);
       }
     });
   }

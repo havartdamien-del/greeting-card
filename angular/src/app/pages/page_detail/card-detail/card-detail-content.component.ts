@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Card } from '../../../models/card.model';
+import { Card, Image } from '../../../models/card.model';
+import { ImageDataService } from '../../../services/data_class/image-data.service';
 
 /**
  * CardDetailContentComponent - Affiche le contenu spécifique d'une card
@@ -11,4 +12,10 @@ import { Card } from '../../../models/card.model';
 })
 export class CardDetailContentComponent {
   @Input() card: Card | null = null;
+
+  constructor(private imageDataService: ImageDataService) {}
+
+  getSrcImage(image?: Image): string {
+    return this.imageDataService.getSrcImage(image);
+  }
 }

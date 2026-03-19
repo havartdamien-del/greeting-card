@@ -19,7 +19,8 @@ export interface Card {
   id?: number;
   title: string;
   description?: string;
-  picture: Picture;
+  //picture: Picture;
+  picture: Image;
   tags: Tag[];
 }
 

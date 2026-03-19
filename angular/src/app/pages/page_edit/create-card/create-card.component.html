@@ -67,7 +67,10 @@
 
         <div class="form-group">
           <label for="pictureValue" class="form-label">Valeur de l'image</label>
+          
+          <!-- Textarea pour URL et Base64 -->
           <textarea 
+            *ngIf="cardForm.get('pictureType')?.value !== 'file'"
             id="pictureValue" 
             formControlName="pictureValue"
             class="form-textarea"
@@ -75,6 +78,21 @@
             rows="4"
             [class.is-invalid]="submitted && cardForm.get('pictureValue')?.invalid"
           ></textarea>
+
+          <!-- Select pour les fichiers -->
+          <select 
+            *ngIf="cardForm.get('pictureType')?.value === 'file'"
+            id="pictureValue" 
+            formControlName="pictureValue"
+            class="form-select"
+            [class.is-invalid]="submitted && cardForm.get('pictureValue')?.invalid"
+          >
+            <option value="">-- Sélectionnez une image --</option>
+            <option *ngFor="let image of availableImages" [value]="image.id">
+              {{ image.type }} - {{ image.value?.substring(0, 50) }}...
+            </option>
+          </select>
+
           <div *ngIf="submitted && cardForm.get('pictureValue')?.invalid" class="form-error">
             <span *ngIf="cardForm.get('pictureValue')?.errors?.['required']">La valeur de l'image est requise</span>
           </div>

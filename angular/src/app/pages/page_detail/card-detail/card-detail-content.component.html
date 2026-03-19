@@ -1,6 +1,6 @@
 <!-- Image -->
 <div *ngIf="card?.picture" class="card-image-section">
-  <img [src]="card?.picture?.value" [alt]="card?.title" class="card-image" />
+  <img [src]="getSrcImage(card?.picture)" [alt]="card?.title" class="card-image" />
 </div>
 
 <!-- Details -->

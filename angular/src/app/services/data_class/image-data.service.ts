@@ -71,4 +71,16 @@ export class ImageDataService {
       })
     );*/
   }
+
+  /**
+   * Retourne l'URL affichable d'une image
+   * Si le type est 'url', retourne la valeur directement
+   * Sinon, ajoute le prefix du serveur
+   */
+  getSrcImage(image?: Image): string {
+    if (!image) {
+      return '';
+    }
+    return image.type === 'url' ? image.value : 'http://localhost:8080' + image.value;
+  }
 }
