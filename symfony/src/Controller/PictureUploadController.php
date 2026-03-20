@@ -31,6 +31,9 @@ class PictureUploadController extends AbstractController
         try {
             $this->logger->info('=== DEBUT UPLOAD IMAGE ===');
             
+            $uploadedFile = $request->files->get('file');
+
+            /*
             // Log les informations de la requête
             $this->logger->info('Requête reçue', [
                 'method' => $request->getMethod(),
@@ -135,7 +138,8 @@ class PictureUploadController extends AbstractController
             $picture = new Picture();
             $picture->setType('fichier');
             // Stocker le chemin relatif pour y accéder via HTTP
-            $picture->setValue('/uploads/' . $newFilename);
+            // $picture->setValue('/uploads/' . $newFilename);
+            $picture->setValue($newFilename);
 
             $entityManager->persist($picture);
             $entityManager->flush();
@@ -174,6 +178,7 @@ class PictureUploadController extends AbstractController
         // }
 //     }
 // }
+*/
 
             // Valider le type MIME
             $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
@@ -220,7 +225,8 @@ class PictureUploadController extends AbstractController
             $picture = new Picture();
             $picture->setType('fichier');
             // Stocker le chemin relatif pour y accéder via HTTP
-            $picture->setValue('/uploads/' . $newFilename);
+            // $picture->setValue('/uploads/' . $newFilename);
+            $picture->setValue($newFilename);
 
             $entityManager->persist($picture);
             $entityManager->flush();

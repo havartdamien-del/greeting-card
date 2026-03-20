@@ -81,6 +81,6 @@ export class ImageDataService {
     if (!image) {
       return '';
     }
-    return image.type === 'url' ? image.value : 'http://localhost:8080' + image.value;
+    return image.type === 'url' ? image.value : 'http://localhost:8080/uploads/' + image.value;
   }
 }
