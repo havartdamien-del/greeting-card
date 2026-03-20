@@ -12,6 +12,9 @@ services:
   php:
     build:
       target: builder
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
     container_name: greeting-card-php
     image: greeting-card-php-v1.0.0
     environment:

@@ -16,6 +16,9 @@ services:
     build:
       context: ..
       dockerfile: docker/php/Dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
     container_name: greeting-card-php-dev
     image: greeting-card-php-dev-v1.0.0
     environment:

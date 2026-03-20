@@ -29,6 +29,9 @@ services:
     build:
       context: ..
       dockerfile: docker/php/Dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
     image: greeting-card-php-v1.0.0
     depends_on:
       mysql:

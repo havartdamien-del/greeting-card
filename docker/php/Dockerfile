@@ -81,6 +81,10 @@ FROM php:8.2-fpm-alpine
 LABEL version="1.0.0" \
       description="PHP 8.2 FPM for Greeting Card API with Symfony"
 
+# Arguments pour l'utilisateur (mêmes droits que l'utilisateur hôte)
+ARG UID=1000
+ARG GID=1000
+
 # Installation des dépendances système
 RUN apk add --no-cache \
     mysql-client \
@@ -105,8 +109,9 @@ RUN apk add --no-cache \
     mbstring \
     bcmath \
     intl && \
+    apk add --no-cache \
     libzip \
-    icu-libs \
+    icu-libs && \
     apk del postgresql-dev mysql-dev libxml2-dev oniguruma-dev libzip-dev
 
 # Configuration PHP
@@ -129,13 +134,15 @@ RUN apk add --no-cache \
     libzip \
     icu-libs
 
-# Création des répertoires nécessaires
+# Création des répertoires nécessaires avec les bonnes permissions pour www-data
 RUN mkdir -p \
     var/cache \
     var/log \
     var/uploads \
     public/uploads && \
-    chmod -R 775 var public
+    chown -R www-data:www-data var public && \
+    chmod -R 775 var public && \
+    chmod -R 755 .
 
 # Exposition du port
 EXPOSE 9000

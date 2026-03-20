@@ -10,3 +10,7 @@
 /vendor/
 ###< symfony/framework-bundle ###
 /docker/mysql_data
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
