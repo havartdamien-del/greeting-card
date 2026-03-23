@@ -32,6 +32,7 @@ services:
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
+      target: ${APP_ENV:-dev}
     image: greeting-card-php-v1.0.0
     depends_on:
       mysql:

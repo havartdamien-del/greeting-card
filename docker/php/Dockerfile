@@ -1,151 +1,78 @@
-# Stage 1: Builder PHP avec Composer
-FROM php:8.2-fpm-alpine AS builder
+# =========================
+# Base image
+# =========================
+FROM php:8.3-fpm-alpine AS base
 
-# Installation des dépendances système pour le build
-RUN apk add --no-cache \
-    bash \
-    # ss \
-    # netstat \
-    curl \
-    git \
-    zip \
-    unzip \
-    postgresql-dev \
-    mysql-dev \
-    libxml2-dev \
-    oniguruma-dev \
-    libzip-dev
-
-# Installation des extensions PHP
-RUN docker-php-ext-install \
-    pdo \
-    pdo_mysql \
-    pdo_pgsql \
-    zip \
-    xml \
-    mbstring \
-    bcmath \
-    intl
-
-# Installation de Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Création du répertoire de travail
 WORKDIR /app
 
-# Copie des fichiers composer
-COPY symfony/composer.json symfony/composer.lock* ./
-
-# Installation des dépendances PHP
-RUN composer install --no-dev --no-scripts --prefer-dist
-
-
-
-# Stage 2: Runtime PHP-FPM
-# FROM php:8.2-fpm-alpine
-
-# LABEL version="1.0.0" \
-#       description="PHP 8.2 FPM for Greeting Card API with Symfony"
-
-
-# # Libs de BUILD (headers) séparées des libs RUNTIME
-# RUN apk add --no-cache \
-#     postgresql-dev \
-#     mysql-dev \
-#     libxml2-dev \
-#     oniguruma-dev \
-#     # libzip-dev \
-#     icu-dev && \
-#     docker-php-ext-install \
-#         pdo \
-#         pdo_mysql \
-#         pdo_pgsql \
-#         zip \
-#         xml \
-#         mbstring \
-#         bcmath \
-#         intl && \
-#     # Supprimer UNIQUEMENT les headers (-dev), pas les libs runtime
-#     # apk del postgresql-dev mysql-dev libxml2-dev oniguruma-dev libzip-dev icu-dev && \
-#     # Réinstaller uniquement les libs runtime nécessaires
-#     apk add --no-cache \
-#         libpq \
-#         libzip \
-#         icu-libs \
-#         libxml2 \
-#         oniguruma
-
-# Stage 2: Runtime PHP-FPM
-FROM php:8.2-fpm-alpine
-
-LABEL version="1.0.0" \
-      description="PHP 8.2 FPM for Greeting Card API with Symfony"
-
-# Arguments pour l'utilisateur (mêmes droits que l'utilisateur hôte)
-ARG UID=1000
-ARG GID=1000
-
-# Installation des dépendances système
 RUN apk add --no-cache \
-    mysql-client \
-    postgresql-client \
-    supervisor \
-    bash \
-    curl
-
-# Installation des extensions PHP
-RUN apk add --no-cache \
-    postgresql-dev \
-    mysql-dev \
-    libxml2-dev \
+    git \
+    unzip \
+    icu-dev \
+    libzip-dev \
     oniguruma-dev \
-    libzip-dev && \
-    docker-php-ext-install \
+    curl \
+    bash \
+    $PHPIZE_DEPS
+
+RUN docker-php-ext-install \
+    intl \
     pdo \
     pdo_mysql \
-    pdo_pgsql \
     zip \
-    xml \
-    mbstring \
-    bcmath \
-    intl && \
-    apk add --no-cache \
-    libzip \
-    icu-libs && \
-    apk del postgresql-dev mysql-dev libxml2-dev oniguruma-dev libzip-dev
+    opcache
+
+# Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Configuration PHP
 COPY docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY docker/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 
-# Installation de Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Création du répertoire de travail
+# =========================
+# DEV image
+# =========================
+FROM base AS dev
+
+ARG UID=1000
+ARG GID=1000
+
+RUN addgroup -g ${GID} symfony \
+ && adduser -D -u ${UID} -G symfony symfony
+
+# Symfony CLI
+RUN curl -fsSL https://get.symfony.com/cli/installer | bash \
+    && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+
 WORKDIR /app
 
-# Copie des dépendances depuis le builder
-COPY --from=builder /app/vendor ./vendor
+# Droits sur le dossier projet
+RUN mkdir -p /var/run/php /var/log/php /var/run/php-fpm \
+    && chown -R symfony:symfony /var/run/php /var/log/php /usr/local/var/log/ /var/run/php-fpm \
+    && chown -R symfony:symfony /app
 
-# Copie du code source Symfony
-COPY symfony/ ./
+# Entrypoint
+COPY docker/php/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-RUN apk add --no-cache \
-    libzip \
-    icu-libs
+USER symfony
 
-# Création des répertoires nécessaires avec les bonnes permissions pour www-data
-RUN mkdir -p \
-    var/cache \
-    var/log \
-    var/uploads \
-    public/uploads && \
-    chown -R www-data:www-data var public && \
-    chmod -R 775 var public && \
-    chmod -R 755 .
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["php-fpm", "-F"]
 
-# Exposition du port
-EXPOSE 9000
 
-# Commande de démarrage
-CMD ["php-fpm"]
+# =========================
+# PROD image
+# =========================
+FROM base AS prod
+
+COPY symfony/ .
+
+RUN composer install \
+    --no-dev \
+    --prefer-dist \
+    --no-interaction \
+    --optimize-autoloader
+
+CMD ["php-fpm", "-F"]

@@ -29,9 +29,9 @@ services:
       - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
     ports:
       - "${PHP_PORT:-9000}:9000"
-    volumes:
-      - ./php/php.ini:/usr/local/etc/php/conf.d/app.ini:ro
-      - ./php/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
+    # volumes:
+    #   - ./php/php.ini:/usr/local/etc/php/conf.d/app.ini:ro
+    #   - ./php/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
     networks:
       - greeting-card-network-dev
 
