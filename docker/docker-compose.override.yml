@@ -25,7 +25,7 @@ services:
       - APP_ENV=${APP_ENV:-dev}
       - APP_DEBUG=${APP_DEBUG:-1}
       - APP_SECRET=${APP_SECRET:-dev-secret-key}
-      - DATABASE_URL=mysql://${DB_USER:-user}:${DB_PASSWORD:-password}@mysql:3306/${DB_DATABASE:-greeting_card}?serverVersion=8.0
+      # - DATABASE_URL=mysql://${DB_USER:-user}:${DB_PASSWORD:-password}@mysql:3306/${DB_DATABASE:-greeting_card}?serverVersion=8.0
       - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
     ports:
       - "${PHP_PORT:-9000}:9000"
