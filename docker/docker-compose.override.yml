@@ -71,8 +71,8 @@ services:
     container_name: greeting-card-phpmyadmin-dev
     environment:
       PMA_HOST: mysql
-      PMA_USER: ${DB_USER:-user}
-      PMA_PASSWORD: ${DB_PASSWORD:-password}
+      PMA_USER: ${DB_USER:-greeting_card_user}
+      PMA_PASSWORD: ${DB_PASSWORD:-greeting_card_password}
       PMA_DB: ${DB_DATABASE:-greeting_card}
       PMA_PORT: 3306
     ports:

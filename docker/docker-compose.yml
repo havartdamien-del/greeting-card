@@ -8,8 +8,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
       MYSQL_DATABASE: ${DB_DATABASE:-greeting_card}
-      MYSQL_USER: ${DB_USER:-user}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_USER: ${DB_USER:-greeting_card_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-greeting_card_password}
       MYSQL_ALLOW_EMPTY_PASSWORD: "no"
     volumes:
       - ./mysql_data:/var/lib/mysql
@@ -39,10 +39,10 @@ services:
         condition: service_healthy
     environment:
       # - DATABASE_URL=mysql://${DB_USER:-user}:${DB_PASSWORD:-password}@mysql:3306/${DB_DATABASE:-greeting_card}?serverVersion=8.0
-      - DB_USER=${DB_USER:-user}
-      - DB_PASSWORD=${DB_UDB_PASSWORDSER:-password}
+      - DB_USER=${DB_USER:-greeting_card_user}
+      - DB_PASSWORD=${DB_PASSWORD:-greeting_card_password}
       - DB_DATABASE=${DB_DATABASE:-greeting_card}
-      - DB_DATABASE_TEST=${DB_DATABASE:-greeting_card_test}
+      - DB_DATABASE_TEST=${DB_DATABASE_TEST:-greeting_card_test}
       - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
     volumes:
       - ../symfony:/app
