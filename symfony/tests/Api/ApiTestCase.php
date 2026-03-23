@@ -107,10 +107,10 @@ class ApiTestCase extends WebTestCase
         
         $this->assertArrayHasKey('@context', $response);
         $this->assertArrayHasKey('@type', $response);
-        $this->assertArrayHasKey('hydra:member', $response);
-        $this->assertArrayHasKey('hydra:totalItems', $response);
-        $this->assertIsArray($response['hydra:member']);
-        $this->assertIsInt($response['hydra:totalItems']);
+        $this->assertArrayHasKey('member', $response);
+        $this->assertArrayHasKey('totalItems', $response);
+        $this->assertIsArray($response['member']);
+        $this->assertIsInt($response['totalItems']);
     }
 
     protected function assertHasCardProperties(array $card): void

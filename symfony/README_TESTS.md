@@ -115,7 +115,7 @@ Chaque test vérifie :
 - ✅ **Statut HTTP 200** (succès)
 - ✅ **Content-Type correct** : `application/ld+json; charset=utf-8`
 - ✅ **Structure JSON valide** (format API Platform avec hydra)
-- ✅ **Présence des métadonnées** : `@context`, `@type`, `hydra:member`, `hydra:totalItems`
+- ✅ **Présence des métadonnées** : `@context`, `@type`, `member`, `totalItems`
 - ✅ **Propriétés des cards** : `id`, `title`, `description`, `isActif`, `tags`
 - ✅ **Types de données corrects** : int, string, bool, array
 - ✅ **Filtrage fonctionne** (cards actives seulement)
@@ -152,7 +152,7 @@ symfony/
 {
   "@context": "/api/contexts/Card",
   "@type": "hydra:Collection",
-  "hydra:member": [
+  "member": [
     {
       "@id": "/api/cards/1",
       "@type": "Card",
@@ -165,7 +165,7 @@ symfony/
       ]
     }
   ],
-  "hydra:totalItems": 12,
+  "totalItems": 12,
   "hydra:view": { ... }
 }
 ```

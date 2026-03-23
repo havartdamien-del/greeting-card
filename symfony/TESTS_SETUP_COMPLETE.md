@@ -88,8 +88,8 @@ Pour chaque appel à l'API, les tests vérifient :
 - ✅ Content-Type : `application/ld+json; charset=utf-8`
 - ✅ Structure JSON valide (format API Platform)
 - ✅ Présence des métadonnées `@context`, `@type`
-- ✅ Présence du tableau `hydra:member`
-- ✅ Total items `hydra:totalItems`
+- ✅ Présence du tableau `member`
+- ✅ Total items `totalItems`
 - ✅ Propriétés des cards : `id`, `title`, `description`, `isActif`, `tags`
 - ✅ Types de données corrects (int, string, bool, array)
 
@@ -129,7 +129,7 @@ Structure JSON retournée par l'API :
 {
   "@context": "/api/contexts/Card",
   "@type": "hydra:Collection",
-  "hydra:member": [
+  "member": [
     {
       "@id": "/api/cards/1",
       "@type": "Card",
@@ -140,7 +140,7 @@ Structure JSON retournée par l'API :
       "tags": [{"id": 1, "name": "plage"}]
     }
   ],
-  "hydra:totalItems": 12
+  "totalItems": 12
 }
 ```
 

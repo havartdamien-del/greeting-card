@@ -11,7 +11,7 @@ Test principal pour l'API des cards. Contient les tests suivants :
   - Test de l'endpoint GET `/api/cards`
   - Vérifie le statut HTTP 200
   - Valide la structure JSON (format API Platform avec hydra)
-  - Vérifie la présence des clés `@context`, `@type`, `hydra:member`, `hydra:totalItems`
+  - Vérifie la présence des clés `@context`, `@type`, `member`, `totalItems`
 
 - ✅ **testCardsHaveCorrectStructure()**
   - Valide la structure d'une card dans la collection
@@ -112,7 +112,7 @@ Les tests vérifient le format JSON-LD standard d'API Platform :
 {
   "@context": "/api/contexts/Card",
   "@type": "hydra:Collection",
-  "hydra:member": [
+  "member": [
     {
       "@id": "/api/cards/1",
       "@type": "Card",
@@ -123,7 +123,7 @@ Les tests vérifient le format JSON-LD standard d'API Platform :
       "tags": []
     }
   ],
-  "hydra:totalItems": 10,
+  "totalItems": 10,
   "hydra:view": { ... }
 }
 ```

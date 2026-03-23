@@ -167,7 +167,7 @@ deleteTag(id: number): Observable<void>
                             ↓
 4. L'API retourne une réponse JSON-LD
                             ↓
-5. ApiConnectionService extrait les données de 'hydra:member'
+5. ApiConnectionService extrait les données de 'member'
                             ↓
 6. CardDataService met à jour le BehaviorSubject
                             ↓
@@ -282,11 +282,11 @@ ApiConnectionService traite automatiquement le format JSON-LD :
   "@context": "/api/contexts/Card",
   "@id": "/api/cards_active",
   "@type": "hydra:Collection",
-  "hydra:member": [
+  "member": [
     { "id": 1, "title": "Card 1" },
     { "id": 2, "title": "Card 2" }
   ],
-  "hydra:totalItems": 2
+  "totalItems": 2
 }
 ```
 

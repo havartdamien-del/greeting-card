@@ -63,7 +63,7 @@ cd symfony/
 ✅ Teste l'endpoint `GET /api/cards`
 - Vérifie le statut HTTP 200
 - Valide le format JSON API Platform
-- Confirme la présence des metadonnées (hydra:member, hydra:totalItems)
+- Confirme la présence des metadonnées (member, totalItems)
 
 ### 2. **testCardsHaveCorrectStructure()**
 ✅ Valide la structure des données des cards
@@ -126,7 +126,7 @@ Les tests utilisent les fixtures existantes dans `src/DataFixtures/AppFixtures.p
 {
   "@context": "/api/contexts/Card",
   "@type": "hydra:Collection",
-  "hydra:member": [
+  "member": [
     {
       "@id": "/api/cards/1",
       "@type": "Card",
@@ -144,7 +144,7 @@ Les tests utilisent les fixtures existantes dans `src/DataFixtures/AppFixtures.p
       ]
     }
   ],
-  "hydra:totalItems": 12,
+  "totalItems": 12,
   "hydra:view": {
     "@id": "/api/cards?page=1",
     "@type": "hydra:PartialCollectionView",

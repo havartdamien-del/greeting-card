@@ -128,8 +128,8 @@ const formData = new FormData();
   private extractData<T>(response: any): T[] {
     if (Array.isArray(response['member'])) {
       return response['member'];
-    } else if (Array.isArray(response['hydra:member'])) {
-      return response['hydra:member'];
+    } else if (Array.isArray(response['member'])) {
+      return response['member'];
     } else if (Array.isArray(response)) {
       return response;
     }

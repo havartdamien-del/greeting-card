@@ -28,5 +28,5 @@ export interface ApiResponse {
   '@context'?: string;
   '@id'?: string;
   '@type'?: string;
-  'hydra:member'?: Card[];
+  'member'?: Card[];
 }
