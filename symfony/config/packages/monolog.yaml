@@ -1,15 +1,23 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+        - api-log # API logs for manual logging of API requests and responses
 
 when@dev:
     monolog:
         handlers:
             main:
-                type: stream
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                type: rotating_file
+                path: "%kernel.logs_dir%/dev.log"
                 level: debug
                 channels: ["!event"]
+                max_files: 5
+            api_log:
+                type: rotating_file
+                path: "%kernel.logs_dir%/api.log"
+                level: debug
+                channels: ["api-log"]
+                max_files: 5
             console:
                 type: console
                 process_psr_3_messages: false

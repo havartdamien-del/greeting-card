@@ -28,3 +28,9 @@ services:
             - '%env(CORS_ALLOW_ORIGIN)%'
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.response', priority: 9999 }
+
+    App\State\CardProcessor:
+        arguments:
+            $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
+        tags:
+            - { name: 'api_platform.state_processor', priority: 100 }

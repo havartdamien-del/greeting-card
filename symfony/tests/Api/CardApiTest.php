@@ -127,4 +127,49 @@ class CardApiTest extends ApiTestCase
             $this->assertTrue($card['isActif']);
         }
     }
+
+    /**
+     * Test POST /api/cards - Crée une nouvelle card
+     */
+    public function testCreateCard(): void
+    {
+        $payload = [
+            'title' => 'Test Card',
+            'isActif' => true,
+            'tags' => ['tag1', 'tag2'],
+        ];
+        
+        $data = $this->postJson('/api/cards', $payload);
+        
+        // Vérifier que la réponse a un statut 201 (Created)
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(201);
+        
+        // Vérifier que les données retournées contiennent les propriétés envoyées
+        $this->assertArrayHasKey('id', $data);
+        $this->assertArrayHasKey('title', $data);
+        $this->assertArrayHasKey('isActif', $data);
+        $this->assertArrayHasKey('tags', $data);
+        
+        // Vérifier que les valeurs correspondent aux données envoyées
+        $this->assertEquals('Test Card', $data['title']);
+        $this->assertTrue($data['isActif']);
+        $this->assertIsArray($data['tags']);
+        $this->assertCount(2, $data['tags']);
+    }
+
+    /**
+     * Test POST /api/cards - Vérifier la validation des données requises
+     */
+    public function testCreateCardWithMissingTitle(): void
+    {
+        $payload = [
+            'isActif' => true,
+        ];
+        
+        $this->postJson('/api/cards', $payload);
+        
+        // Vérifier que la réponse retourne une erreur de validation
+        $this->assertResponseStatusCodeSame(400);
+    }
 }

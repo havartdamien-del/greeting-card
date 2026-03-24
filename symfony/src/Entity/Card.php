@@ -36,16 +36,21 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Post(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
+            processor: 'App\State\CardProcessor',
         ),
         new Put(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
+            processor: 'App\State\CardProcessor',
         ),
         new Patch(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
+            processor: 'App\State\CardProcessor',
         ),
-        new Delete(),
+        new Delete(
+            processor: 'App\State\CardProcessor',
+        ),
     ]
 )]
 #[ApiFilter(BooleanFilter::class, properties: ['isActif'])]
