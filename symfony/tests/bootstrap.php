@@ -11,3 +11,8 @@ if (method_exists(Dotenv::class, 'bootEnv')) {
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);
 }
+
+if (($_ENV['APP_ENV'] ?? null) !== 'test') {
+    fwrite(STDERR, "❌ APP_ENV doit être 'test' pour exécuter PHPUnit.\n");
+    exit(1);
+}
