@@ -4,6 +4,11 @@ namespace App\Tests\Api;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Doctrine\ORM\EntityManagerInterface;
+use App\DataFixtures\AppFixtures;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
 
 /**
  * Classe de base pour tous les tests API
@@ -12,10 +17,77 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 class ApiTestCase extends WebTestCase
 {
     protected KernelBrowser $client;
+    protected EntityManagerInterface $em;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
+        $this->em = self::getContainer()->get('doctrine')->getManager();
+        $this->loadFixtures();
+    }
+
+    /**
+     * Vide la base de données et charge les fixtures
+     */
+    protected function loadFixtures(): void
+    {
+        $connection = $this->em->getConnection();
+        $schemaManager = $connection->createSchemaManager();
+        $tables = $schemaManager->listTableNames();
+
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0');
+
+        foreach ($tables as $table) {
+            $connection->executeStatement("TRUNCATE TABLE `$table`");
+        }
+
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1');
+
+        /*$kernel = static::bootKernel();
+        $container = $kernel->getContainer();
+        
+        $entityManager = $container->get(EntityManagerInterface::class);
+        $connection = $entityManager->getConnection();
+        
+        // Désactiver les contraintes de clé étrangère
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0');
+        
+        // Récupérer et vider toutes les tables
+        $tables = $connection->createSchemaManager()->listTableNames();
+        foreach ($tables as $table) {
+            if ($table !== 'doctrine_migration_versions') { // Ignorer les migrations
+                $connection->executeStatement("TRUNCATE TABLE `$table`");
+            }
+        }
+        
+        // Réactiver les contraintes de clé étrangère
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1');*/
+        
+        // $kernel = static::bootKernel();
+        // $container = $kernel->getContainer();
+        // $entityManager = $container->get(EntityManagerInterface::class);
+        // Charger les fixtures
+        // $fixtures = new AppFixtures();
+        // $fixtures->load($entityManager);
+
+        $loader = new Loader();
+        $loader->addFixture(new AppFixtures());
+
+        $purger = new ORMPurger($this->em);
+        $executor = new ORMExecutor($this->em, $purger);
+
+        $executor->execute($loader->getFixtures());
+
+
+        /*$this->em->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS=0');
+
+        $purger = new ORMPurger($this->em);
+        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        $executor = new ORMExecutor($this->em, $purger);
+
+        $this->em->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS=1');
+
+        $executor->execute($loader->getFixtures());*/
     }
 
     /**
