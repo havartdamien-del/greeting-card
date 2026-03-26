@@ -18,6 +18,7 @@ class ApiTestCase extends WebTestCase
 {
     protected KernelBrowser $client;
     protected EntityManagerInterface $entityManager;
+    protected $baseDirProject = __DIR__ . '/../../';
     // protected $classTestThatChangeDB = false;
 
     protected function setUp(): void
