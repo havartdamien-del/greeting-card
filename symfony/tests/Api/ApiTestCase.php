@@ -17,21 +17,38 @@ use Doctrine\Common\DataFixtures\Loader;
 class ApiTestCase extends WebTestCase
 {
     protected KernelBrowser $client;
-    protected EntityManagerInterface $em;
+    protected EntityManagerInterface $entityManager;
+    // protected $classTestThatChangeDB = false;
 
     protected function setUp(): void
     {
+echo "***** exec parent setUp() \n";
+// echo "***** exec setUp() ".$this->classTestThatChangeDB." \n";
+
+
         $this->client = static::createClient();
-        $this->em = self::getContainer()->get('doctrine')->getManager();
-        $this->loadFixtures();
+        // if($this->classTestThatChangeDB === true) {
+        //     ApiTestCase::loadFixtures();
+        // }
     }
+
+//     public static function setUpBeforeClass(): void
+//     {
+// echo "***** exec setUpBeforeClass()";
+//         //ApiTestCase::loadFixtures();
+// //echo "***** exec setUpBeforeClass() ".$this->testThatChangeDBStat." \n";
+//     }
 
     /**
      * Vide la base de données et charge les fixtures
      */
-    protected function loadFixtures(): void
+    protected static function loadFixtures(): void
     {
-        $connection = $this->em->getConnection();
+
+echo "***** exec loadFixtures() \n";
+
+        $entityManager = self::getContainer()->get('doctrine')->getManager();
+        $connection = $entityManager->getConnection();
         $schemaManager = $connection->createSchemaManager();
         $tables = $schemaManager->listTableNames();
 
@@ -73,8 +90,8 @@ class ApiTestCase extends WebTestCase
         $loader = new Loader();
         $loader->addFixture(new AppFixtures());
 
-        $purger = new ORMPurger($this->em);
-        $executor = new ORMExecutor($this->em, $purger);
+        $purger = new ORMPurger($entityManager);
+        $executor = new ORMExecutor($entityManager, $purger);
 
         $executor->execute($loader->getFixtures());
 
