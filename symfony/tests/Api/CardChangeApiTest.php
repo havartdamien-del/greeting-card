@@ -4,9 +4,6 @@ namespace App\Tests\Api;
 
 class CardChangeApiTest extends ResetDatabaseApiTestCase
 {
-    protected $testThatChangeDBStat = "CardChangeApiTest";
-
-
     /**
      * Test POST /api/cards - Crée une nouvelle card
      */

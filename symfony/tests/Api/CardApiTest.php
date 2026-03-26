@@ -13,9 +13,6 @@ class CardApiTest extends ReadOnlyApiTestCase
     {
         $data = $this->getJson('/api/cards');
         
-echo "APP_ENV => " . ($_SERVER['APP_ENV'] ?? getenv('APP_ENV')) . "\n";
-echo "count => ".json_encode($data);
-
         // Vérifier que la réponse a un statut 200
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(200);
