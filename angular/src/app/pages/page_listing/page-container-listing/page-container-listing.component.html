@@ -10,17 +10,21 @@
   </div>
 
   <div class="listing-content">
-    <div *ngIf="(loading$ | async)" class="loading">
-      Chargement...
-    </div>
-    
-    <div *ngIf="(error$ | async) as error" class="error-message">
-      <span class="error-icon">⚠️</span>
-      <p>{{ error }}</p>
-    </div>
+    @if (loading$ | async) {
+      <div class="loading">Chargement...</div>
+    }
 
-    <div *ngIf="!(loading$ | async) && (error$ | async) === null">
-      <ng-content></ng-content>
-    </div>
+    @if (error$ | async; as error) {
+      <div class="error-message">
+        <span class="error-icon">⚠️</span>
+        <p>{{ error }}</p>
+      </div>
+    }
+
+    @if (!(loading$ | async) && (error$ | async) === null) {
+      <div>
+        <ng-content></ng-content>
+      </div>
+    }
   </div>
 </div>

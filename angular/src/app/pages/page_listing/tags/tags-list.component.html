@@ -1,11 +1,22 @@
-<div *ngIf="(isEmpty$ | async)" class="empty-state">
-  <p>Aucun tag trouvé</p>
-</div>
-
-<div *ngIf="!(isEmpty$ | async)" class="tags-grid">
-  <div *ngFor="let tag of (tags$ | async)" class="tag-item" (click)="onTagClick(tag.id!)" (keyup.enter)="onTagClick(tag.id!)" tabindex="0">
-    <div class="tag-content">
-      <h3>{{ tag.name }}</h3>
-    </div>
+@if (isEmpty$ | async) {
+  <div class="empty-state">
+    <p>Aucun tag trouvé</p>
   </div>
-</div>
+}
+
+@if (!(isEmpty$ | async)) {
+  <div class="tags-grid">
+    @for (tag of tags$ | async; track tag) {
+      <div
+        class="tag-item"
+        (click)="onTagClick(tag.id!)"
+        (keyup.enter)="onTagClick(tag.id!)"
+        tabindex="0"
+      >
+        <div class="tag-content">
+          <h3>{{ tag.name }}</h3>
+        </div>
+      </div>
+    }
+  </div>
+}

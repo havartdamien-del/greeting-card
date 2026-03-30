@@ -27,9 +27,28 @@ services:
   # Service Nginx + Frontend Angular (Development)
   angular:
     build:
-      target: development
+      target: dev
     container_name: greeting-card-angular-dev
     image: greeting-card-angular-dev-v1.0.0
+
+  # Service Jest Tests for Angular (Development)
+  # jest:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/jest/Dockerfile
+  #   container_name: greeting-card-jest-dev
+  #   image: greeting-card-jest-dev-v1.0.0
+  #   volumes:
+  #     - ../angular:/app
+  #     - /app/node_modules
+  #   ports:
+  #     - "${JEST_PORT:-9876}:9876"
+  #   command: npm run test
+  #   stdin_open: true
+  #   tty: true
+  #   networks:
+  #     - greeting-card-network
+  #   restart: unless-stopped
 
   # Service phpMyAdmin (Development only)
   phpmyadmin:

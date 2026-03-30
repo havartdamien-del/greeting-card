@@ -4,9 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImageDataService } from '../../../services/data_class/image-data.service';
 
 @Component({
-  selector: 'app-upload-image',
-  templateUrl: './upload-image.component.html',
-  styleUrls: ['./upload-image.component.scss']
+    selector: 'app-upload-image',
+    templateUrl: './upload-image.component.html',
+    styleUrls: ['./upload-image.component.scss'],
+    standalone: false
 })
 export class UploadImageComponent implements OnInit {
   form!: FormGroup;

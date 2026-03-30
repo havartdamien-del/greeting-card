@@ -1,42 +1,54 @@
 <div class="create-card-container">
   <div class="create-card-wrapper">
     <h1 class="create-card-title">{{ pageTitle }}</h1>
-    
+
     <div class="alerts">
-      <div *ngIf="errorMessage" class="alert alert-error">
-        <span class="alert-icon">❌</span>
-        <span class="alert-message">{{ errorMessage }}</span>
-      </div>
-      <div *ngIf="successMessage" class="alert alert-success">
-        <span class="alert-icon">✅</span>
-        <span class="alert-message">{{ successMessage }}</span>
-      </div>
+      @if (errorMessage) {
+        <div class="alert alert-error">
+          <span class="alert-icon">❌</span>
+          <span class="alert-message">{{ errorMessage }}</span>
+        </div>
+      }
+      @if (successMessage) {
+        <div class="alert alert-success">
+          <span class="alert-icon">✅</span>
+          <span class="alert-message">{{ successMessage }}</span>
+        </div>
+      }
     </div>
 
     <form [formGroup]="cardForm" (ngSubmit)="onSubmit()" class="card-form">
       <!-- Titre -->
       <div class="form-group">
         <label for="title" class="form-label">Titre de la Card *</label>
-        <input 
-          type="text" 
-          id="title" 
-          formControlName="title" 
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
           class="form-input"
           placeholder="Entrez le titre de la card"
           [class.is-invalid]="submitted && cardForm.get('title')?.invalid"
         />
-        <div *ngIf="submitted && cardForm.get('title')?.invalid" class="form-error">
-          <span *ngIf="cardForm.get('title')?.errors?.['required']">Le titre est requis</span>
-          <span *ngIf="cardForm.get('title')?.errors?.['minlength']">Le titre doit avoir au moins 3 caractères</span>
-        </div>
+        @if (submitted && cardForm.get('title')?.invalid) {
+          <div class="form-error">
+            @if (cardForm.get('title')?.errors?.['required']) {
+              <span>Le titre est requis</span>
+            }
+            @if (cardForm.get('title')?.errors?.['minlength']) {
+              <span>Le titre doit avoir au moins 3 caractères</span>
+            }
+          </div>
+        }
       </div>
 
       <!-- Description -->
       <div class="form-group">
-        <label for="description" class="form-label">Description <span class="optional">(optionnelle)</span></label>
-        <textarea 
-          id="description" 
-          formControlName="description" 
+        <label for="description" class="form-label"
+          >Description <span class="optional">(optionnelle)</span></label
+        >
+        <textarea
+          id="description"
+          formControlName="description"
           class="form-textarea"
           placeholder="Entrez la description de la card (optionnelle)"
           rows="5"
@@ -46,11 +58,11 @@
       <!-- Image -->
       <fieldset class="form-fieldset">
         <legend class="form-legend">Image de la Card *</legend>
-        
+
         <div class="form-group">
           <label for="pictureType" class="form-label">Type d'image</label>
-          <select 
-            id="pictureType" 
+          <select
+            id="pictureType"
             formControlName="pictureType"
             class="form-select"
             [class.is-invalid]="submitted && cardForm.get('pictureType')?.invalid"
@@ -60,96 +72,99 @@
             <option value="base64">Base64</option>
             <option value="file">Fichier</option>
           </select>
-          <div *ngIf="submitted && cardForm.get('pictureType')?.invalid" class="form-error">
-            <span *ngIf="cardForm.get('pictureType')?.errors?.['required']">Le type d'image est requis</span>
-          </div>
+          @if (submitted && cardForm.get('pictureType')?.invalid) {
+            <div class="form-error">
+              @if (cardForm.get('pictureType')?.errors?.['required']) {
+                <span>Le type d'image est requis</span>
+              }
+            </div>
+          }
         </div>
 
         <div class="form-group">
           <label for="pictureValue" class="form-label">Valeur de l'image</label>
-          
+
           <!-- Textarea pour URL et Base64 -->
-          <textarea 
-            *ngIf="cardForm.get('pictureType')?.value !== 'file'"
-            id="pictureValue" 
-            formControlName="pictureValue"
-            class="form-textarea"
-            placeholder="Entrez l'URL ou la valeur base64 de l'image"
-            rows="4"
-            [class.is-invalid]="submitted && cardForm.get('pictureValue')?.invalid"
-          ></textarea>
+          @if (cardForm.get('pictureType')?.value !== 'file') {
+            <textarea
+              id="pictureValue"
+              formControlName="pictureValue"
+              class="form-textarea"
+              placeholder="Entrez l'URL ou la valeur base64 de l'image"
+              rows="4"
+              [class.is-invalid]="submitted && cardForm.get('pictureValue')?.invalid"
+            ></textarea>
+          }
 
           <!-- Select pour les fichiers -->
-          <select 
-            *ngIf="cardForm.get('pictureType')?.value === 'file'"
-            id="pictureValue" 
-            formControlName="pictureValue"
-            class="form-select"
-            [class.is-invalid]="submitted && cardForm.get('pictureValue')?.invalid"
-          >
-            <option value="">-- Sélectionnez une image --</option>
-            <option *ngFor="let image of availableImages" [value]="image.id">
-              {{ image.type }} - {{ image.value?.substring(0, 50) }}...
-            </option>
-          </select>
+          @if (cardForm.get('pictureType')?.value === 'file') {
+            <select
+              id="pictureValue"
+              formControlName="pictureValue"
+              class="form-select"
+              [class.is-invalid]="submitted && cardForm.get('pictureValue')?.invalid"
+            >
+              <option value="">-- Sélectionnez une image --</option>
+              @for (image of availableImages; track image) {
+                <option [value]="image.id">
+                  {{ image.type }} - {{ image?.value?.substring(0, 50) }}...
+                </option>
+              }
+            </select>
+          }
 
-          <div *ngIf="submitted && cardForm.get('pictureValue')?.invalid" class="form-error">
-            <span *ngIf="cardForm.get('pictureValue')?.errors?.['required']">La valeur de l'image est requise</span>
-          </div>
+          @if (submitted && cardForm.get('pictureValue')?.invalid) {
+            <div class="form-error">
+              @if (cardForm.get('pictureValue')?.errors?.['required']) {
+                <span>La valeur de l'image est requise</span>
+              }
+            </div>
+          }
         </div>
       </fieldset>
 
       <!-- Tags -->
       <fieldset class="form-fieldset">
         <legend class="form-legend">Tags (optionnel)</legend>
-        
-        <div *ngIf="availableTags.length > 0" class="tags-list">
-          <div 
-            *ngFor="let tag of availableTags" 
-            class="tag-checkbox"
-          >
-            <input 
-              type="checkbox" 
-              [id]="'tag-' + tag.id"
-              (change)="toggleTag(tag)"
-              [checked]="isTagSelected(tag)"
-              class="tag-input"
-            />
-            <label [for]="'tag-' + tag.id" class="tag-label">
-              {{ tag.name }}
-            </label>
+
+        @if (availableTags.length > 0) {
+          <div class="tags-list">
+            @for (tag of availableTags; track tag) {
+              <div class="tag-checkbox">
+                <input
+                  type="checkbox"
+                  [id]="'tag-' + tag.id"
+                  (change)="toggleTag(tag)"
+                  [checked]="isTagSelected(tag)"
+                  class="tag-input"
+                />
+                <label [for]="'tag-' + tag.id" class="tag-label">
+                  {{ tag.name }}
+                </label>
+              </div>
+            }
           </div>
-        </div>
-        
-        <div *ngIf="availableTags.length === 0" class="no-tags-message">
-          Aucun tag disponible
-        </div>
+        }
+
+        @if (availableTags.length === 0) {
+          <div class="no-tags-message">Aucun tag disponible</div>
+        }
       </fieldset>
 
       <!-- Boutons -->
       <div class="form-actions">
-        <button 
-          type="submit" 
-          class="btn btn-primary"
-          [disabled]="loading"
-        >
-          <span *ngIf="!loading">{{ isEditMode ? 'Mettre à jour' : 'Créer la Card' }}</span>
-          <span *ngIf="loading">{{ isEditMode ? 'Mise à jour en cours...' : 'Création en cours...' }}</span>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          @if (!loading) {
+            <span>{{ isEditMode ? 'Mettre à jour' : 'Créer la Card' }}</span>
+          }
+          @if (loading) {
+            <span>{{ isEditMode ? 'Mise à jour en cours...' : 'Création en cours...' }}</span>
+          }
         </button>
-        <button 
-          type="button" 
-          class="btn btn-secondary"
-          (click)="resetForm()"
-          [disabled]="loading"
-        >
+        <button type="button" class="btn btn-secondary" (click)="resetForm()" [disabled]="loading">
           Réinitialiser
         </button>
-        <button 
-          type="button" 
-          class="btn btn-tertiary"
-          (click)="onCancel()"
-          [disabled]="loading"
-        >
+        <button type="button" class="btn btn-tertiary" (click)="onCancel()" [disabled]="loading">
           Annuler
         </button>
       </div>

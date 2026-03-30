@@ -13,9 +13,11 @@
     </div>
 
     <!-- ID -->
-    <div class="detail-block" *ngIf="tag?.id">
-      <h2 class="detail-title">Identifiant</h2>
-      <p class="detail-text">#{{ tag?.id }}</p>
-    </div>
+    @if (tag?.id) {
+      <div class="detail-block">
+        <h2 class="detail-title">Identifiant</h2>
+        <p class="detail-text">#{{ tag?.id }}</p>
+      </div>
+    }
   </div>
 </div>

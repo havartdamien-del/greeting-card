@@ -1,57 +1,64 @@
-
 <div class="card-detail-container">
-  <div *ngIf="loading" class="loading">
-    <p>Chargement de la card...</p>
-  </div>
-
-  <div *ngIf="error" class="error-message">
-    <span class="error-icon">⚠️</span>
-    <p>{{ error }}</p>
-  </div>
-
-  <div *ngIf="!loading && card && !error" class="card-detail-wrapper">
-    <!-- Header -->
-    <div class="card-detail-header">
-      <button class="btn-back" (click)="goBack()">
-        <span class="back-icon">← Retour</span>
-      </button>
-      <h1 class="card-title">{{ card?.title }}</h1>
+  @if (loading) {
+    <div class="loading">
+      <p>Chargement de la card...</p>
     </div>
+  }
 
-    <!-- Content -->
-    <div class="card-detail-content">
-      <app-data-api-detail [dataType]="'card'"></app-data-api-detail>
+  @if (error) {
+    <div class="error-message">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
     </div>
+  }
 
-    <!-- Delete confirmation modal -->
-    <div *ngIf="showDeleteConfirm" class="modal-overlay" (click)="cancelDelete()">
-      <div class="modal-content" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-          <h2>Confirmer la suppression</h2>
-        </div>
-        <div class="modal-body">
-          <p>Êtes-vous sûr de vouloir supprimer cette card ?</p>
-          <p class="card-title-confirm">{{ card?.title }}</p>
-          <p class="warning-text">Cette action ne peut pas être annulée.</p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn-cancel" (click)="cancelDelete()" [disabled]="deleting">
-            Annuler
-          </button>
-          <button class="btn-delete-confirm" (click)="deleteCard()" [disabled]="deleting">
-            {{ deleting ? 'Suppression en cours...' : 'Supprimer' }}
-          </button>
-        </div>
+  @if (!loading && card && !error) {
+    <div class="card-detail-wrapper">
+      <!-- Header -->
+      <div class="card-detail-header">
+        <button class="btn-back" (click)="goBack()">
+          <span class="back-icon">← Retour</span>
+        </button>
+        @if (card) {
+          <h1 class="card-title">{{ card.title }}</h1>
+        }
       </div>
+      <!-- Content -->
+      <div class="card-detail-content">
+        <app-data-api-detail [dataType]="'card'"></app-data-api-detail>
+      </div>
+      <!-- Delete confirmation modal -->
+      @if (showDeleteConfirm) {
+        <div class="modal-overlay" (click)="cancelDelete()">
+          <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+              <h2>Confirmer la suppression</h2>
+            </div>
+            <div class="modal-body">
+              <p>Êtes-vous sûr de vouloir supprimer cette card ?</p>
+              @if (card) {
+                <p class="card-title-confirm">{{ card.title }}</p>
+              }
+              <p class="warning-text">Cette action ne peut pas être annulée.</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn-cancel" (click)="cancelDelete()" [disabled]="deleting">
+                Annuler
+              </button>
+              <button class="btn-delete-confirm" (click)="deleteCard()" [disabled]="deleting">
+                {{ deleting ? 'Suppression en cours...' : 'Supprimer' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      }
     </div>
-  </div>
+  }
 
-  <div *ngIf="!loading && !card && !error" class="empty-state">
-    <p>Aucune card trouvée</p>
-    <button class="btn-back-primary" (click)="goBack()">
-      Retour à la liste
-    </button>
-  </div>
-
-
+  @if (!loading && !card && !error) {
+    <div class="empty-state">
+      <p>Aucune card trouvée</p>
+      <button class="btn-back-primary" (click)="goBack()">Retour à la liste</button>
+    </div>
+  }
 </div>

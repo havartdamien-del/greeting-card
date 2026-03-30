@@ -5,9 +5,10 @@ import { Tag } from '../../../models/card.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-tags-list',
-  templateUrl: './tags-list.component.html',
-  styleUrls: ['./tags-list.component.scss']
+    selector: 'app-tags-list',
+    templateUrl: './tags-list.component.html',
+    styleUrls: ['./tags-list.component.scss'],
+    standalone: false
 })
 export class TagsListComponent {
   @Output() tagClick = new EventEmitter<number>();

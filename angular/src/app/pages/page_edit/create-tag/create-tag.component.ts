@@ -5,9 +5,10 @@ import { TagDataService } from '../../../services/data_class/tag-data.service';
 import { Tag } from '../../../models/card.model';
 
 @Component({
-  selector: 'app-create-tag',
-  templateUrl: './create-tag.component.html',
-  styleUrls: ['./create-tag.component.scss']
+    selector: 'app-create-tag',
+    templateUrl: './create-tag.component.html',
+    styleUrls: ['./create-tag.component.scss'],
+    standalone: false
 })
 export class CreateTagComponent implements OnInit {
   tagForm!: FormGroup;

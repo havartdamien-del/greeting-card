@@ -1,60 +1,60 @@
 <div class="create-tag-container">
   <div class="create-tag-wrapper">
     <h1 class="create-tag-title">{{ pageTitle }}</h1>
-    
+
     <div class="alerts">
-      <div *ngIf="errorMessage" class="alert alert-error">
-        <span class="alert-icon">❌</span>
-        <span class="alert-message">{{ errorMessage }}</span>
-      </div>
-      <div *ngIf="successMessage" class="alert alert-success">
-        <span class="alert-icon">✅</span>
-        <span class="alert-message">{{ successMessage }}</span>
-      </div>
+      @if (errorMessage) {
+        <div class="alert alert-error">
+          <span class="alert-icon">❌</span>
+          <span class="alert-message">{{ errorMessage }}</span>
+        </div>
+      }
+      @if (successMessage) {
+        <div class="alert alert-success">
+          <span class="alert-icon">✅</span>
+          <span class="alert-message">{{ successMessage }}</span>
+        </div>
+      }
     </div>
 
     <form [formGroup]="tagForm" (ngSubmit)="onSubmit()" class="tag-form">
       <!-- Nom du Tag -->
       <div class="form-group">
         <label for="name" class="form-label">Nom du Tag *</label>
-        <input 
-          type="text" 
-          id="name" 
-          formControlName="name" 
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
           class="form-input"
           placeholder="Entrez le nom du tag"
           [class.is-invalid]="submitted && tagForm.get('name')?.invalid"
         />
-        <div *ngIf="submitted && tagForm.get('name')?.invalid" class="form-error">
-          <span *ngIf="tagForm.get('name')?.errors?.['required']">Le nom du tag est requis</span>
-          <span *ngIf="tagForm.get('name')?.errors?.['minlength']">Le nom doit avoir au moins 2 caractères</span>
-        </div>
+        @if (submitted && tagForm.get('name')?.invalid) {
+          <div class="form-error">
+            @if (tagForm.get('name')?.errors?.['required']) {
+              <span>Le nom du tag est requis</span>
+            }
+            @if (tagForm.get('name')?.errors?.['minlength']) {
+              <span>Le nom doit avoir au moins 2 caractères</span>
+            }
+          </div>
+        }
       </div>
 
       <!-- Boutons -->
       <div class="form-actions">
-        <button 
-          type="submit" 
-          class="btn btn-primary"
-          [disabled]="loading"
-        >
-          <span *ngIf="!loading">{{ isEditMode ? 'Mettre à jour' : 'Créer le Tag' }}</span>
-          <span *ngIf="loading">{{ isEditMode ? 'Mise à jour en cours...' : 'Création en cours...' }}</span>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          @if (!loading) {
+            <span>{{ isEditMode ? 'Mettre à jour' : 'Créer le Tag' }}</span>
+          }
+          @if (loading) {
+            <span>{{ isEditMode ? 'Mise à jour en cours...' : 'Création en cours...' }}</span>
+          }
         </button>
-        <button 
-          type="button" 
-          class="btn btn-secondary"
-          (click)="resetForm()"
-          [disabled]="loading"
-        >
+        <button type="button" class="btn btn-secondary" (click)="resetForm()" [disabled]="loading">
           Réinitialiser
         </button>
-        <button 
-          type="button" 
-          class="btn btn-tertiary"
-          (click)="onCancel()"
-          [disabled]="loading"
-        >
+        <button type="button" class="btn btn-tertiary" (click)="onCancel()" [disabled]="loading">
           Annuler
         </button>
       </div>

@@ -1,73 +1,69 @@
-# Stage 1: Builder Node avec les dépendances npm
-FROM node:20-alpine AS builder
 
+# =========================
+# Base image
+# =========================
+FROM node:22-alpine AS base
+ 
+# Variables d'environnement communes
+ENV NODE_ENV=development \
+    NPM_CONFIG_LOGLEVEL=warn
+ 
+# Dépendances système utiles (ex: pour node-gyp si besoin)
+RUN apk add --no-cache libc6-compat
+ 
 WORKDIR /app
+ 
+# Copie des fichiers de dépendances uniquement (optimise le cache Docker)
+COPY angular/package*.json ./
+ 
+# =========================
+# DEV image
+# =========================
+FROM base AS dev
+ 
+ENV NODE_ENV=development
 
-# Copie des fichiers package
-# COPY angular/package.json angular/package-lock.json* ./
+# tool for dev
+RUN apk add --no-cache \
+    bash 
 
-# Installation des dépendances
-# RUN npm ci
-
+# Installation de toutes les dépendances (dev incluses)
+RUN npm ci
+ 
 # Copie du code source
 COPY angular/ ./
-
-RUN if [ -f package-lock.json ]; then npm ci; \
-    elif [ -f package.json ]; then npm install; \
-    fi
-
-# Stage 2: Runtime pour développement
-FROM node:20-alpine AS development
-
-LABEL version="1.0.0" \
-      description="Angular Development Server for Greeting Card"
-
-WORKDIR /app
-
-# Copie des dépendances depuis le builder
-COPY --from=builder /app/node_modules ./node_modules
-
-# Copie du code source
-COPY angular/ ./
-
+ 
 # Exposition du port Angular
 EXPOSE 4200
-
+ 
 # Commande de démarrage pour le développement
-CMD ["npm", "start"]
-
-# Stage 3: Production build
-FROM node:20-alpine AS production-builder
-
-WORKDIR /app
-
-# Copie des fichiers package
-COPY angular/package.json angular/package-lock.json* ./
-
-# Installation des dépendances
+# --host 0.0.0.0 requis pour être accessible depuis Docker
+CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]
+ 
+# =========================
+# BUILD image (intermédiaire)
+# =========================
+FROM base AS build
+ 
+ENV NODE_ENV=production
+ 
+# Installation des dépendances de production + devDependencies nécessaires au build
 RUN npm ci
-
+ 
 # Copie du code source
 COPY angular/ ./
-
+ 
 # Build de l'application Angular
 RUN npm run build -- --configuration production
+ 
+# =========================
+# PROD image
+# =========================
+FROM nginx:alpine AS prod
+ 
+# Copie de la config nginx personnalisée
+COPY --from=build /app/dist/*/browser /usr/share/nginx/html
+ 
+COPY docker/angular/nginx-angular-default.conf /etc/nginx/conf.d/default.conf
 
-# Stage 4: Nginx pour la production
-FROM nginx:alpine AS production
-
-LABEL version="1.0.0" \
-      description="Angular Production Server for Greeting Card"
-
-# Copie de la configuration Nginx
-COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY docker/nginx/php-proxy.conf /etc/nginx/conf.d/default.conf
-
-# Copie des fichiers buildés depuis le stage précédent
-COPY --from=production-builder /app/dist /usr/share/nginx/html
-
-# Exposition du port
 EXPOSE 80
-
-# Commande de démarrage
-CMD ["nginx", "-g", "daemon off;"]

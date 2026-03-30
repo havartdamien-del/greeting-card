@@ -5,9 +5,10 @@ import { Component } from '@angular/core';
  * Utilise le composant générique data-api-detail pour afficher les détails
  */
 @Component({
-  selector: 'app-tag-detail',
-  templateUrl: './tag-detail.component.html',
-  styleUrls: ['./tag-detail.component.scss']
+    selector: 'app-tag-detail',
+    templateUrl: './tag-detail.component.html',
+    styleUrls: ['./tag-detail.component.scss'],
+    standalone: false
 })
 export class TagDetailComponent {
 }

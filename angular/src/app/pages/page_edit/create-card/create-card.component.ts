@@ -7,9 +7,10 @@ import { ImageDataService } from '../../../services/data_class/image-data.servic
 import { Card, Tag, Image } from '../../../models/card.model';
 
 @Component({
-  selector: 'app-create-card',
-  templateUrl: './create-card.component.html',
-  styleUrls: ['./create-card.component.scss']
+    selector: 'app-create-card',
+    templateUrl: './create-card.component.html',
+    styleUrls: ['./create-card.component.scss'],
+    standalone: false
 })
 export class CreateCardComponent implements OnInit {
   cardForm!: FormGroup;

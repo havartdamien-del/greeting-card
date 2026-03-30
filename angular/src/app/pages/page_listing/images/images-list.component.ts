@@ -6,9 +6,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ImageDataService } from '../../../services/data_class/image-data.service';
 
 @Component({
-  selector: 'app-images-list',
-  templateUrl: './images-list.component.html',
-  styleUrls: ['./images-list.component.scss']
+    selector: 'app-images-list',
+    templateUrl: './images-list.component.html',
+    styleUrls: ['./images-list.component.scss'],
+    standalone: false
 })
 export class ImagesListComponent {
   @Output() imageClick = new EventEmitter<number>();

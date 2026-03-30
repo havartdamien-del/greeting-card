@@ -1,11 +1,22 @@
-<div *ngIf="(isEmpty$ | async)" class="empty-state">
-  <p>Aucune image trouvée</p>
-</div>
-
-<div *ngIf="!(isEmpty$ | async)" class="images-grid">
-  <div *ngFor="let image of (images$ | async)" class="image-item" (click)="onImageClick(image.id!)" (keyup.enter)="onImageClick(image.id!)" tabindex="0">
-    <div class="image-wrapper">
-      <img [src]="getSrcImage(image)" [alt]="image.type" />
-    </div>
+@if (isEmpty$ | async) {
+  <div class="empty-state">
+    <p>Aucune image trouvée</p>
   </div>
-</div>
+}
+
+@if (!(isEmpty$ | async)) {
+  <div class="images-grid">
+    @for (image of images$ | async; track image) {
+      <div
+        class="image-item"
+        (click)="onImageClick(image.id!)"
+        (keyup.enter)="onImageClick(image.id!)"
+        tabindex="0"
+      >
+        <div class="image-wrapper">
+          <img [src]="getSrcImage(image)" [alt]="image.type" />
+        </div>
+      </div>
+    }
+  </div>
+}

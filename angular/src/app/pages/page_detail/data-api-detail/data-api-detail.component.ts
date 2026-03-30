@@ -7,9 +7,10 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-data-api-detail',
-  templateUrl: './data-api-detail.component.html',
-  styleUrls: ['./data-api-detail.component.scss']
+    selector: 'app-data-api-detail',
+    templateUrl: './data-api-detail.component.html',
+    styleUrls: ['./data-api-detail.component.scss'],
+    standalone: false
 })
 export class DataApiDetailComponent implements OnInit, OnDestroy {
   @Input() dataType: DataType = 'card';

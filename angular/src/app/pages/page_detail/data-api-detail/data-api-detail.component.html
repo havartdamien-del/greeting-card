@@ -1,73 +1,80 @@
 <div class="data-api-detail-container">
-  <div *ngIf="loading" class="loading">
-    <p>Chargement des données...</p>
-  </div>
-
-  <div *ngIf="error" class="error-message">
-    <span class="error-icon">⚠️</span>
-    <p>{{ error }}</p>
-  </div>
-
-  <div *ngIf="!loading && data && !error" class="data-api-detail-wrapper">
-    <!-- Header -->
-    <div class="data-api-detail-header">
-      <button class="btn-back" (click)="goBack()">
-        <span class="back-icon">← Retour</span>
-      </button>
-      <h1 class="data-title">{{ data?.title || data?.name || 'Détail' }}</h1>
+  @if (loading) {
+    <div class="loading">
+      <p>Chargement des données...</p>
     </div>
+  }
 
-    <!-- Content -->
-    <div class="data-api-detail-content">
-      <!-- Afficher le composant card-detail-content si dataType est 'card' -->
-      <div *ngIf="dataType === 'card' && card">
-        <app-card-detail-content [card]="card"></app-card-detail-content>
-      </div>
-
-      <!-- Afficher le composant tag-detail-content si dataType est 'tag' -->
-      <div *ngIf="dataType === 'tag' && tag">
-        <app-tag-detail-content [tag]="tag"></app-tag-detail-content>
-      </div>
-
-      <!-- Afficher les données JSON pour les autres types -->
-      <div *ngIf="dataType === 'images'" class="data-info">
-        <pre>{{ data | json }}</pre>
-      </div>
+  @if (error) {
+    <div class="error-message">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
     </div>
+  }
 
-    <!-- Actions -->
-    <div class="data-api-detail-actions">
-      <button class="btn-back-primary" (click)="goBack()">
-        Retour à la liste
-      </button>
-      <button class="btn-edit" (click)="editData()">
-        <span class="btn-icon">✏️</span>
-        <span class="btn-text">Éditer</span>
-      </button>
-      <button class="btn-delete" (click)="confirmDelete()" [disabled]="deleting">
-        <span class="btn-icon">🗑️</span>
-        <span class="btn-text">{{ deleting ? 'Suppression...' : 'Supprimer' }}</span>
-      </button>
-    </div>
-
-    <!-- Delete confirmation modal -->
-    <div *ngIf="showDeleteConfirm" class="modal-overlay" (click)="cancelDelete()">
-      <div class="modal-content" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-          <h2>Confirmer la suppression</h2>
+  @if (!loading && data && !error) {
+    <div class="data-api-detail-wrapper">
+      <!-- Header -->
+      <div class="data-api-detail-header">
+        <button class="btn-back" (click)="goBack()">
+          <span class="back-icon">← Retour</span>
+        </button>
+        <h1 class="data-title">{{ data?.title || data?.name || 'Détail' }}</h1>
+      </div>
+      <!-- Content -->
+      <div class="data-api-detail-content">
+        <!-- Afficher le composant card-detail-content si dataType est 'card' -->
+        @if (dataType === 'card' && card) {
+          <div>
+            <app-card-detail-content [card]="card"></app-card-detail-content>
+          </div>
+        }
+        <!-- Afficher le composant tag-detail-content si dataType est 'tag' -->
+        @if (dataType === 'tag' && tag) {
+          <div>
+            <app-tag-detail-content [tag]="tag"></app-tag-detail-content>
+          </div>
+        }
+        <!-- Afficher les données JSON pour les autres types -->
+        @if (dataType === 'images') {
+          <div class="data-info">
+            <pre>{{ data | json }}</pre>
+          </div>
+        }
+      </div>
+      <!-- Actions -->
+      <div class="data-api-detail-actions">
+        <button class="btn-back-primary" (click)="goBack()">Retour à la liste</button>
+        <button class="btn-edit" (click)="editData()">
+          <span class="btn-icon">✏️</span>
+          <span class="btn-text">Éditer</span>
+        </button>
+        <button class="btn-delete" (click)="confirmDelete()" [disabled]="deleting">
+          <span class="btn-icon">🗑️</span>
+          <span class="btn-text">{{ deleting ? 'Suppression...' : 'Supprimer' }}</span>
+        </button>
+      </div>
+      <!-- Delete confirmation modal -->
+      @if (showDeleteConfirm) {
+        <div class="modal-overlay" (click)="cancelDelete()">
+          <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+              <h2>Confirmer la suppression</h2>
+            </div>
+            <div class="modal-body">
+              <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+              <p class="data-title-confirm">{{ data?.title || data?.name || 'Élément' }}</p>
+              <p class="warning-text">Cette action ne peut pas être annulée.</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
+              <button class="btn-confirm-delete" (click)="deleteData()" [disabled]="deleting">
+                {{ deleting ? 'Suppression en cours...' : 'Supprimer' }}
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
-          <p class="data-title-confirm">{{ data?.title || data?.name || 'Élément' }}</p>
-          <p class="warning-text">Cette action ne peut pas être annulée.</p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
-          <button class="btn-confirm-delete" (click)="deleteData()" [disabled]="deleting">
-            {{ deleting ? 'Suppression en cours...' : 'Supprimer' }}
-          </button>
-        </div>
-      </div>
+      }
     </div>
-  </div>
+  }
 </div>

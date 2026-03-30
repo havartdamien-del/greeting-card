@@ -6,9 +6,10 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-card-detail',
-  templateUrl: './card-detail.component.html',
-  styleUrls: ['./card-detail.component.scss']
+    selector: 'app-card-detail',
+    templateUrl: './card-detail.component.html',
+    styleUrls: ['./card-detail.component.scss'],
+    standalone: false
 })
 export class CardDetailComponent implements OnInit, OnDestroy {
   card: Card | null = null;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,41 +25,35 @@ import { ImagesListComponent } from './pages/page_listing/images/images-list.com
 import { UploadImageComponent } from './pages/page_edit/upload-image/upload-image.component';
 import { CorsInterceptor } from './interceptors/cors.interceptor';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    CardsComponent,
-    CardsListComponent,
-    PageContainerListingComponent,
-    CardDetailComponent,
-    CardDetailContentComponent,
-    TagDetailContentComponent,
-    DataApiDetailComponent,
-    TagDetailComponent,
-    TagsComponent,
-    TagsListComponent,
-    CreateCardComponent,
-    CreateTagComponent,
-    ImagesComponent,
-    ImagesListComponent,
-    UploadImageComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MenuModule,
-    AppRoutingModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: CorsInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        CardsComponent,
+        CardsListComponent,
+        PageContainerListingComponent,
+        CardDetailComponent,
+        CardDetailContentComponent,
+        TagDetailContentComponent,
+        DataApiDetailComponent,
+        TagDetailComponent,
+        TagsComponent,
+        TagsListComponent,
+        CreateCardComponent,
+        CreateTagComponent,
+        ImagesComponent,
+        ImagesListComponent,
+        UploadImageComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MenuModule,
+        AppRoutingModule], providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: CorsInterceptor,
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }

@@ -5,62 +5,73 @@
   </div>
 
   <div class="upload-content">
-    <div *ngIf="!uploadSuccess" class="upload-form">
-      <div class="upload-area">
-        <div class="upload-box" (click)="onFileInputClick()">
-          <div *ngIf="!previewUrl" class="upload-placeholder">
-            <span class="upload-icon">📸</span>
-            <p>Cliquez pour sélectionner une image</p>
-            <p class="upload-hint">ou glissez-déposez une image</p>
+    @if (!uploadSuccess) {
+      <div class="upload-form">
+        <div class="upload-area">
+          <div class="upload-box" (click)="onFileInputClick()">
+            @if (!previewUrl) {
+              <div class="upload-placeholder">
+                <span class="upload-icon">📸</span>
+                <p>Cliquez pour sélectionner une image</p>
+                <p class="upload-hint">ou glissez-déposez une image</p>
+              </div>
+            }
+            @if (previewUrl) {
+              <div class="preview">
+                <img [src]="previewUrl" alt="Aperçu de l'image" />
+              </div>
+            }
           </div>
-          <div *ngIf="previewUrl" class="preview">
-            <img [src]="previewUrl" alt="Aperçu de l'image" />
-          </div>
+          <input
+            #fileInput
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            hidden
+          />
         </div>
-        <input 
-          #fileInput
-          id="fileInput"
-          type="file" 
-          accept="image/*" 
-          (change)="onFileSelected($event)"
-          hidden
-        />
+        @if (selectedFile) {
+          <div class="file-info">
+            <p><strong>Fichier sélectionné:</strong> {{ selectedFile.name }}</p>
+            <p><strong>Taille:</strong> {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
+          </div>
+        }
+        @if (uploadError) {
+          <div class="error-message">
+            <span class="error-icon">⚠️</span>
+            <p>{{ uploadError }}</p>
+          </div>
+        }
+        <div class="form-actions">
+          <button
+            class="btn btn-submit"
+            (click)="onUpload()"
+            [disabled]="uploading || !selectedFile"
+          >
+            @if (!uploading) {
+              <span class="btn-icon">✓</span>
+            }
+            @if (uploading) {
+              <span class="btn-icon spinner"></span>
+            }
+            <span class="btn-text">{{
+              uploading ? 'Upload en cours...' : "Uploader l'image"
+            }}</span>
+          </button>
+          <button class="btn btn-cancel" (click)="cancel()" [disabled]="uploading">
+            <span class="btn-text">Annuler</span>
+          </button>
+        </div>
       </div>
+    }
 
-      <div class="file-info" *ngIf="selectedFile">
-        <p><strong>Fichier sélectionné:</strong> {{ selectedFile.name }}</p>
-        <p><strong>Taille:</strong> {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
+    @if (uploadSuccess) {
+      <div class="success-message">
+        <span class="success-icon">✅</span>
+        <h2>Image uploadée avec succès!</h2>
+        <p>Redirection vers la galerie...</p>
       </div>
-
-      <div *ngIf="uploadError" class="error-message">
-        <span class="error-icon">⚠️</span>
-        <p>{{ uploadError }}</p>
-      </div>
-
-      <div class="form-actions">
-        <button 
-          class="btn btn-submit" 
-          (click)="onUpload()"
-          [disabled]="uploading || !selectedFile"
-        >
-          <span *ngIf="!uploading" class="btn-icon">✓</span>
-          <span *ngIf="uploading" class="btn-icon spinner"></span>
-          <span class="btn-text">{{ uploading ? 'Upload en cours...' : 'Uploader l\'image' }}</span>
-        </button>
-        <button 
-          class="btn btn-cancel" 
-          (click)="cancel()"
-          [disabled]="uploading"
-        >
-          <span class="btn-text">Annuler</span>
-        </button>
-      </div>
-    </div>
-
-    <div *ngIf="uploadSuccess" class="success-message">
-      <span class="success-icon">✅</span>
-      <h2>Image uploadée avec succès!</h2>
-      <p>Redirection vers la galerie...</p>
-    </div>
+    }
   </div>
 </div>

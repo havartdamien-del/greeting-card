@@ -1,10 +1,13 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./out-tsc/spec",
-    "types": [
-      "jasmine"
-    ]
+  // "compilerOptions": {
+  //   "outDir": "./out-tsc/spec",
+  //   "types": [
+  //     "jasmine"
+  //   ]
+  // },
+   "compilerOptions": {
+    "types": ["jest"]
   },
   "files": [
     "src/test.ts"

@@ -1,18 +1,35 @@
-<div *ngIf="(isEmpty$ | async)" class="empty-state">
-  <p>Aucune card trouvée</p>
-</div>
-
-<div *ngIf="!(isEmpty$ | async)" class="cards-grid">
-  <div *ngFor="let card of (cards$ | async)" class="card-item" (click)="viewCardDetail(card.id!)" (keyup.enter)="viewCardDetail(card.id!)" tabindex="0">
-    <div class="card-image">
-      <img *ngIf="card.picture" [src]="getSrcImage(card.picture)" [alt]="card.title" />
-    </div>
-    <div class="card-body">
-      <h3>{{ card.title }}</h3>
-      <p>{{ card.description }}</p>
-      <div class="card-tags" *ngIf="card.tags && card.tags.length > 0">
-        <span *ngFor="let tag of card.tags" class="tag">{{ tag.name }}</span>
-      </div>
-    </div>
+@if (isEmpty$ | async) {
+  <div class="empty-state">
+    <p>Aucune card trouvée</p>
   </div>
-</div>
+}
+
+@if (!(isEmpty$ | async)) {
+  <div class="cards-grid">
+    @for (card of cards$ | async; track card) {
+      <div
+        class="card-item"
+        (click)="viewCardDetail(card.id!)"
+        (keyup.enter)="viewCardDetail(card.id!)"
+        tabindex="0"
+      >
+        <div class="card-image">
+          @if (card.picture) {
+            <img [src]="getSrcImage(card.picture)" [alt]="card.title" />
+          }
+        </div>
+        <div class="card-body">
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.description }}</p>
+          @if (card.tags && card.tags.length > 0) {
+            <div class="card-tags">
+              @for (tag of card.tags; track tag) {
+                <span class="tag">{{ tag.name }}</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

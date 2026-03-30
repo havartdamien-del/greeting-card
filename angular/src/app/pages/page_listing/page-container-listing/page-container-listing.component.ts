@@ -8,10 +8,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-page-container-listing',
-  templateUrl: './page-container-listing.component.html',
-  styleUrls: ['./page-container-listing.component.scss'],
-  providers: [ListingContextService]
+    selector: 'app-page-container-listing',
+    templateUrl: './page-container-listing.component.html',
+    styleUrls: ['./page-container-listing.component.scss'],
+    providers: [ListingContextService],
+    standalone: false
 })
 export class PageContainerListingComponent implements OnInit, OnDestroy {
   @Input() title: string = '';
