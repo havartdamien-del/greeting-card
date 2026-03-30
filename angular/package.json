@@ -6,7 +6,9 @@
     "start": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "ng lint",
     "format": "prettier --write \"src/**/*.{ts,html,scss,json}\""
   },
@@ -28,15 +30,14 @@
     "@angular/build": "^21.2.5",
     "@angular/cli": "^21.2.5",
     "@angular/compiler-cli": "^21.2.6",
-    "@types/jasmine": "~5.1.0",
-    "jasmine-core": "~5.0.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "jest-preset-angular": "^16.1.1",
+    "jsdom": "^29.0.1",
     "less": "^4.2.0",
     "prettier": "^3.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.9.3"
   }
 }
