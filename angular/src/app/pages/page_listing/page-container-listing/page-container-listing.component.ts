@@ -69,7 +69,7 @@ export class PageContainerListingComponent implements OnInit, OnDestroy {
         next: (data: any[]) => {
           this.context.setData(data);
           this.context.setLoading(false);
-          console.log(`✅ ${this.dataType}s chargé(e)s: data.length=`, data.length);
+          //console.log(`✅ ${this.dataType}s chargé(e)s: data.length=`, data.length);
         },
         error: (err) => {
           console.error(`❌ Erreur lors du chargement des ${this.dataType}s:`, err);
