@@ -33,6 +33,13 @@
           <span class="menu-label">Toutes les images</span>
         </a>
       </li>
+
+      <li class="menu-item" [class.active]="isActive('/settings')">
+        <a (click)="navigateTo('/settings')" class="menu-link">
+          <span class="menu-icon">⚙️</span>
+          <span class="menu-label">Paramètres</span>
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

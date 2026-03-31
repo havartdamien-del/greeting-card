@@ -1,0 +1,38 @@
+/* Default Theme - Purple Gradient */
+:root.theme-default {
+  /* Primary Colors */
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #667eea;
+  
+  /* Background Colors */
+  --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-bg-active: rgba(102, 126, 234, 0.05);
+  
+  /* Text Colors */
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-light: #999999;
+  
+  /* Border Colors */
+  --border-color: #dddddd;
+  --border-dark: #cccccc;
+  
+  /* UI Elements */
+  --input-bg: #ffffff;
+  --input-border: #dddddd;
+  --button-hover: rgba(102, 126, 234, 0.1);
+  --info-bg: rgba(102, 126, 234, 0.05);
+  
+  /* Shadow */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Apply smooth transitions when switching themes */
+:root.theme-default * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

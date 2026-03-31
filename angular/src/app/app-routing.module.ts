@@ -9,6 +9,7 @@ import { CreateCardComponent } from './pages/page_edit/create-card/create-card.c
 import { CreateTagComponent } from './pages/page_edit/create-tag/create-tag.component';
 import { ImagesComponent } from './pages/page_listing/images/images.component';
 import { UploadImageComponent } from './pages/page_edit/upload-image/upload-image.component';
+import { PageSettingsComponent } from './pages/page_settings/page-settings.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'create-tag/:id', component: CreateTagComponent },
   { path: 'images', component: ImagesComponent },
   { path: 'upload-image', component: UploadImageComponent },
+  { path: 'settings', component: PageSettingsComponent },
   { path: '**', redirectTo: '' }
 ];
 

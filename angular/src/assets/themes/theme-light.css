@@ -1,0 +1,38 @@
+/* Light Theme */
+:root.theme-light {
+  /* Primary Colors */
+  --primary-color: #6b9bd1;
+  --secondary-color: #74a8d6;
+  --accent-color: #5da3d5;
+  
+  /* Background Colors */
+  --bg-primary: linear-gradient(135deg, #fef9f3 0%, #f0e8d8 100%);
+  --bg-secondary: rgba(255, 255, 255, 0.98);
+  --card-bg: rgba(255, 255, 255, 0.98);
+  --card-bg-active: rgba(93, 163, 213, 0.08);
+  
+  /* Text Colors */
+  --text-primary: #2c3e50;
+  --text-secondary: #555555;
+  --text-light: #888888;
+  
+  /* Border Colors */
+  --border-color: #e8e8e8;
+  --border-dark: #d0d0d0;
+  
+  /* UI Elements */
+  --input-bg: #ffffff;
+  --input-border: #e8e8e8;
+  --button-hover: rgba(93, 163, 213, 0.08);
+  --info-bg: rgba(93, 163, 213, 0.05);
+  
+  /* Shadow */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Apply smooth transitions when switching themes */
+:root.theme-light * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

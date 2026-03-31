@@ -1,0 +1,38 @@
+/* Dark Theme */
+:root.theme-dark {
+  /* Primary Colors */
+  --primary-color: #4dd0e1;
+  --secondary-color: #26c6da;
+  --accent-color: #4dd0e1;
+  
+  /* Background Colors */
+  --bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  --bg-secondary: rgba(30, 30, 45, 0.95);
+  --card-bg: rgba(45, 45, 70, 0.9);
+  --card-bg-active: rgba(77, 208, 225, 0.1);
+  
+  /* Text Colors */
+  --text-primary: #e8e8e8;
+  --text-secondary: #b0b0b0;
+  --text-light: #808080;
+  
+  /* Border Colors */
+  --border-color: #404060;
+  --border-dark: #303050;
+  
+  /* UI Elements */
+  --input-bg: rgba(60, 60, 90, 0.8);
+  --input-border: #404060;
+  --button-hover: rgba(77, 208, 225, 0.1);
+  --info-bg: rgba(77, 208, 225, 0.08);
+  
+  /* Shadow */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Apply smooth transitions when switching themes */
+:root.theme-dark * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

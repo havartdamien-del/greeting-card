@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ThemeService } from './services/theme.service';
 
 @Component({
     selector: 'app-root',
@@ -6,6 +7,13 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.scss'],
     standalone: false
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Greeting Card AI';
+
+  constructor(private themeService: ThemeService) {}
+
+  ngOnInit(): void {
+    // Initialize theme from sessionStorage
+    this.themeService.loadTheme();
+  }
 }

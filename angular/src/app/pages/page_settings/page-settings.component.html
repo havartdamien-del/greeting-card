@@ -1,0 +1,40 @@
+<div class="settings-container">
+  <div class="settings-header">
+    <h1>⚙️ Paramètres</h1>
+    <p class="settings-subtitle">Personnalisez votre expérience</p>
+  </div>
+
+  <div class="settings-content">
+    <!-- Theme Selection Section -->
+    <div class="settings-section">
+      <h2 class="section-title">🎨 Thème Visual</h2>
+      <p class="section-description">Choisissez le thème qui vous convient le mieux</p>
+
+      <div class="theme-grid">
+        <div *ngFor="let theme of availableThemes" 
+             class="theme-card" 
+             [class.active]="currentTheme === theme"
+             (click)="changeTheme(theme)">
+          <div class="theme-preview" [ngClass]="'preview-' + theme"></div>
+          <div class="theme-info">
+            <h3 class="theme-name">{{ getThemeName(theme) }}</h3>
+            <p class="theme-desc">{{ getThemeDescription(theme) }}</p>
+          </div>
+          <div *ngIf="currentTheme === theme" class="theme-selected">
+            <span class="checkmark">✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Information Section -->
+    <div class="settings-section info-section">
+      <h2 class="section-title">ℹ️ Information</h2>
+      <div class="info-content">
+        <p><strong>Stockage:</strong> Les préférences de thème sont sauvegardées dans sessionStorage</p>
+        <p><strong>Persistance:</strong> Votre thème sera conservé pendant la durée de votre session</p>
+        <p><strong>Restauration:</strong> Rechargez la page pour appliquer les modifications</p>
+      </div>
+    </div>
+  </div>
+</div>
