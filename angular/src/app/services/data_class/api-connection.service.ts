@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiConnectionService {
-  private apiUrl = 'http://localhost:8080/api';
+  // private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = environment.apiUrl;
 
   // Headers pour accepter le format JSON-LD d'API Platform
   private headers = new HttpHeaders({
