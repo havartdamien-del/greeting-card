@@ -15,7 +15,6 @@ export class ImagesComponent {
   }
 
   onImageClick(id: number): void {
-    // À implémenter selon les besoins
-    console.log('Image cliquée:', id);
+    this.router.navigate(['/image', id]);
   }
 }

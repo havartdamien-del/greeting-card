@@ -23,6 +23,7 @@ import { CreateTagComponent } from './pages/page_edit/create-tag/create-tag.comp
 import { ImagesComponent } from './pages/page_listing/images/images.component';
 import { ImagesListComponent } from './pages/page_listing/images/images-list.component';
 import { UploadImageComponent } from './pages/page_edit/upload-image/upload-image.component';
+import { ImageDetailComponent } from './pages/page_detail/image-detail/image-detail.component';
 import { PageSettingsComponent } from './pages/page_settings/page-settings.component';
 import { CorsInterceptor } from './interceptors/cors.interceptor';
 
@@ -44,6 +45,7 @@ import { CorsInterceptor } from './interceptors/cors.interceptor';
         ImagesComponent,
         ImagesListComponent,
         UploadImageComponent,
+        ImageDetailComponent,
         PageSettingsComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,

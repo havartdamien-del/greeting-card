@@ -26,7 +26,7 @@ export class ApiDataService {
     const mapping: Record<DataType, string> = {
       'card': 'cards',
       'tag': 'tags',
-      'images': 'images'
+      'images': 'pictures'
     };
     return mapping[dataType];
   }
