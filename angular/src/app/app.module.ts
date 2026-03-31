@@ -14,6 +14,7 @@ import { PageContainerListingComponent } from './pages/page_listing/page-contain
 import { CardDetailComponent } from './pages/page_detail/card-detail/card-detail.component';
 import { CardDetailContentComponent } from './pages/page_detail/card-detail/card-detail-content.component';
 import { TagDetailContentComponent } from './pages/page_detail/card-detail/tag-detail-content.component';
+import { ImageDetailContentComponent } from './pages/page_detail/card-detail/image-detail-content.component';
 import { DataApiDetailComponent } from './pages/page_detail/data-api-detail/data-api-detail.component';
 import { TagDetailComponent } from './pages/page_detail/tag-detail/tag-detail.component';
 import { TagsComponent } from './pages/page_listing/tags/tags.component';
@@ -36,6 +37,7 @@ import { CorsInterceptor } from './interceptors/cors.interceptor';
         CardDetailComponent,
         CardDetailContentComponent,
         TagDetailContentComponent,
+        ImageDetailContentComponent,
         DataApiDetailComponent,
         TagDetailComponent,
         TagsComponent,

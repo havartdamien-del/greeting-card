@@ -35,20 +35,22 @@
             <app-tag-detail-content [tag]="tag"></app-tag-detail-content>
           </div>
         }
-        <!-- Afficher les données JSON pour les autres types -->
-        @if (dataType === 'images') {
-          <div class="data-info">
-            <pre>{{ data | json }}</pre>
+        <!-- Afficher le composant image-detail-content si dataType est 'images' -->
+        @if (dataType === 'images' && image) {
+          <div>
+            <app-image-detail-content [image]="image"></app-image-detail-content>
           </div>
         }
       </div>
       <!-- Actions -->
       <div class="data-api-detail-actions">
         <button class="btn-back-primary" (click)="goBack()">Retour à la liste</button>
-        <button class="btn-edit" (click)="editData()">
-          <span class="btn-icon">✏️</span>
-          <span class="btn-text">Éditer</span>
-        </button>
+        @if (dataType !== 'images') {
+          <button class="btn-edit" (click)="editData()">
+            <span class="btn-icon">✏️</span>
+            <span class="btn-text">Éditer</span>
+          </button>
+        }
         <button class="btn-delete" (click)="confirmDelete()" [disabled]="deleting">
           <span class="btn-icon">🗑️</span>
           <span class="btn-text">{{ deleting ? 'Suppression...' : 'Supprimer' }}</span>

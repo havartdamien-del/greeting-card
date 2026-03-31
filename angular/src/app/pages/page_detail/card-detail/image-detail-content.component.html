@@ -1,0 +1,40 @@
+<div class="image-content">
+  <!-- Image display -->
+
+  <div class="image-display-section">
+    @if (image) {
+      <div class="image-wrapper">
+        <img [src]="getSrcImage()" [alt]="image.type" class="detail-image" />
+      </div>
+    }
+  </div>
+
+  @if (image) {
+  <!-- Image details -->
+  <div class="image-details-section">
+    <!-- Type -->
+    @if (image?.type) {
+      <div class="detail-block">
+        <h2 class="detail-title">Type</h2>
+        <p class="detail-text">{{ image.type }}</p>
+      </div>
+    }
+
+    <!-- Filename/Value -->
+    @if (image?.value) {
+      <div class="detail-block">
+        <h2 class="detail-title">Fichier</h2>
+        <p class="detail-text">{{ image.value }}</p>
+      </div>
+    }
+
+    <!-- ID -->
+    @if (image?.id) {
+      <div class="detail-block">
+        <h2 class="detail-title">Identifiant</h2>
+        <p class="detail-text">#{{ image.id }}</p>
+      </div>
+    }
+  </div>
+  }
+</div>
