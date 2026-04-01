@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--bg-primary);
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
@@ -18,7 +18,7 @@
 // Header
 .welcome-header {
   margin-bottom: 40px;
-  color: white;
+  color: var(--primary-color);
 
   .welcome-title {
     font-size: 3.5rem;
@@ -45,10 +45,10 @@
   margin-bottom: 40px;
 
   .message-card {
-    background: white;
+    background: var(--card-bg);
     border-radius: 20px;
     padding: 40px 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
     transform: translateY(0);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -66,20 +66,20 @@
 
     h2 {
       font-size: 2rem;
-      color: #667eea;
+      color: var(--primary-color);
       margin-bottom: 15px;
       font-weight: 700;
     }
 
     p {
       font-size: 1.1rem;
-      color: #666;
+      color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 15px;
 
       &.status-text {
         font-size: 0.95rem;
-        color: #764ba2;
+        color: var(--secondary-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -92,7 +92,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #764ba2;
+      background: var(--secondary-color);
       animation: pulse 1.5s ease-in-out infinite;
     }
   }
@@ -111,11 +111,11 @@
   }
 
   .feature {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background:  var(--bg-secondary);
+    border: 1px solid var(--border-color);
     border-radius: 15px;
     padding: 25px 20px;
-    color: white;
+    color: var(--primary-color);
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
 
@@ -147,7 +147,7 @@
 
 // Footer
 .welcome-footer {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--primary-color);
   font-size: 0.9rem;
 
   p {
