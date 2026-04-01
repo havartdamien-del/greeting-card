@@ -54,7 +54,8 @@ export class CardDataService {
    * Crée une nouvelle carte
    */
   createCard(card: Card): Observable<Card> {
-    return this.apiConnection.createData<Card>(this.TABLE_NAME, card).pipe(
+    const transformedCard = this.transformTagsToIris(card);
+    return this.apiConnection.createData<Card>(this.TABLE_NAME, transformedCard).pipe(
       tap(newCard => {
         const currentCards = this.cardsSubject.value;
         this.cardsSubject.next([...currentCards, newCard]);
@@ -66,7 +67,8 @@ export class CardDataService {
    * Met à jour une carte existante
    */
   updateCard(id: number, card: Card): Observable<Card> {
-    return this.apiConnection.updateData<Card>(this.TABLE_NAME, id, card).pipe(
+    const transformedCard = this.transformTagsToIris(card);
+    return this.apiConnection.updateData<Card>(this.TABLE_NAME, id, transformedCard).pipe(
       tap(updatedCard => {
         const currentCards = this.cardsSubject.value;
         const index = currentCards.findIndex(c => c.id === id);
@@ -88,5 +90,17 @@ export class CardDataService {
         this.cardsSubject.next(currentCards.filter(c => c.id !== id));
       })
     );
+  }
+
+  /**
+   * Transforme les objets Tag en chaînes IRI pour l'API
+   * @param card La carte avec les objets Tag
+   * @returns Une copie de la carte avec les tags convertis en IRI
+   */
+  private transformTagsToIris(card: Card): any {
+    return {
+      ...card,
+      tags: card.tags.map(tag => `/api/tags/${tag.id}`)
+    };
   }
 }
