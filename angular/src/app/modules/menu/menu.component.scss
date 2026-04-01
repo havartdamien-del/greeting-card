@@ -1,7 +1,7 @@
 .menu-container {
   width: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: white;
+  color: var(--text-on-primary-bg);
   font-weight: bold;
   font-size: 1.2rem;
   flex-shrink: 0;
@@ -51,7 +51,7 @@
   &.active {
     .menu-link {
       background-color: rgba(255, 255, 255, 0.2);
-      border-bottom: 3px solid white;
+      border-bottom: 3px solid var(--text-on-primary-bg);
     }
   }
 }
@@ -61,7 +61,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
-  color: white;
+  color: var(--text-on-primary-bg);
   text-decoration: none;
   border-radius: 4px;
   transition: all 0.3s ease;

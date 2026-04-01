@@ -10,7 +10,7 @@
   text-align: center;
   padding: 3rem 1rem;
   font-size: 1.1rem;
-  color: #999;
+  color: var(--text-light);
 }
 
 .error-message {
@@ -36,9 +36,9 @@
 }
 
 .data-api-detail-wrapper {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
   animation: slideIn 0.4s ease-out;
 }
@@ -56,7 +56,7 @@
 
 .data-api-detail-header {
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--bg-primary);
   position: relative;
 
   .btn-back {
@@ -65,7 +65,7 @@
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     background: rgba(255, 255, 255, 0.2);
-    color: white;
+    color: var(--text-on-primary-bg);
     border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 6px;
     cursor: pointer;
@@ -89,7 +89,7 @@
 
   .data-title {
     font-size: 2.5rem;
-    color: white;
+    color: var(--text-on-primary-bg);
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
@@ -103,7 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f5f5;
+  background: var(--info-bg);
   border-radius: 8px;
   overflow: hidden;
   min-height: 300px;
@@ -123,7 +123,7 @@
 }
 
 .detail-block {
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 1.5rem;
 
   &:last-child {
@@ -132,14 +132,14 @@
 
   .detail-title {
     font-size: 1.3rem;
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 0.75rem;
     font-weight: 600;
   }
 
   .detail-text {
     font-size: 1rem;
-    color: #666;
+    color: var(--text-secondary);
     line-height: 1.6;
     margin: 0;
     white-space: pre-wrap;
@@ -155,8 +155,8 @@
 
 .tag-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--bg-primary);
+  color: var(--text-on-primary-bg);
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -165,8 +165,8 @@
 
 .data-api-detail-actions {
   padding: 1.5rem 2rem;
-  background: #f9f9f9;
-  border-top: 1px solid #e0e0e0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -177,8 +177,8 @@
   padding: 0.85rem 2rem;
   font-size: 1rem;
   font-weight: 600;
-  color: white;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: var(--text-on-primary-bg);
+  background: var(--bg-primary);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -304,7 +304,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   max-width: 500px;
@@ -340,14 +340,14 @@
 
   p {
     margin: 0 0 1rem 0;
-    color: #333;
+    color: var(--text-primary);
     line-height: 1.6;
   }
 
   .data-title-confirm {
     font-weight: 600;
     font-size: 1.1rem;
-    color: #667eea;
+    color: var(--primary-color);
     background: #f5f5f5;
     padding: 1rem;
     border-radius: 8px;
@@ -362,8 +362,8 @@
 
 .modal-footer {
   padding: 1.5rem 2rem;
-  background: #f9f9f9;
-  border-top: 1px solid #e0e0e0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
   border-radius: 0 0 12px 12px;
   display: flex;
   gap: 1rem;
@@ -374,15 +374,15 @@
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #333;
-  background: white;
-  border: 2px solid #ccc;
+  color: var(--text-primary);
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover:not(:disabled) {
-    border-color: #999;
+    border-color: var(--text-secondary);
     background: #f5f5f5;
   }
 
@@ -450,14 +450,14 @@
   margin-top: 3rem;
   padding: 1rem;
   background-color: #f9f9f9;
-  border: 2px dashed #999;
+  border: 2px dashed var(--border-color);
   border-radius: 8px;
   font-family: monospace;
 
   .debug-summary {
     cursor: pointer;
     font-weight: 600;
-    color: #333;
+    color: var(--text-primary);
     padding: 0.5rem;
     display: flex;
     align-items: center;
@@ -465,14 +465,14 @@
     user-select: none;
 
     &:hover {
-      color: #667eea;
+      color: var(--primary-color);
     }
   }
 
   .debug-content {
     padding: 1rem 0 0 1rem;
     margin-top: 1rem;
-    border-left: 2px solid #ddd;
+    border-left: 2px solid var(--border-color);
   }
 
   .debug-item {
@@ -483,22 +483,22 @@
 
     .debug-label {
       font-weight: 600;
-      color: #667eea;
+      color: var(--primary-color);
       min-width: 100px;
     }
 
     .debug-value {
-      color: #333;
-      background: white;
+      color: var(--text-primary);
+      background: var(--card-bg);
       padding: 0.25rem 0.5rem;
       border-radius: 4px;
-      border: 1px solid #ddd;
+      border: 1px solid var(--border-color);
     }
   }
 
   .debug-json {
-    background: white;
-    border: 1px solid #ddd;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 1rem;
     overflow-x: auto;
@@ -506,6 +506,6 @@
     font-size: 0.9rem;
     max-height: 300px;
     overflow-y: auto;
-    color: #333;
+    color: var(--text-primary);
   }
 }
