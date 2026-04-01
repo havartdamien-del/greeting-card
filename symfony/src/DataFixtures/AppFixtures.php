@@ -5,11 +5,18 @@ namespace App\DataFixtures;
 use App\Entity\Card;
 use App\Entity\Tag;
 use App\Entity\Picture;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    public function __construct(
+        private UserPasswordHasherInterface $passwordHasher,
+    ) {
+    }
+
     public function load(ObjectManager $manager): void
     {
         // Create tags
@@ -134,6 +141,16 @@ class AppFixtures extends Fixture
 
             $manager->persist($card);
         }
+
+        // Create default admin user
+        $user = new User();
+        $user->setEmail('admin@test.com');
+        $user->setRoles(['ROLE_ADMIN']);
+        
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'password');
+        $user->setPassword($hashedPassword);
+        
+        $manager->persist($user);
 
         $manager->flush();
     }
