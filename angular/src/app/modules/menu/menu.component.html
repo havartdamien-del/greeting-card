@@ -40,6 +40,23 @@
           <span class="menu-label">Paramètres</span>
         </a>
       </li>
+
+      <li class="menu-divider"></li>
+
+      <!-- Login/Logout -->
+      <li class="menu-item" *ngIf="!(isLoggedIn$ | async)">
+        <a (click)="navigateTo('/login')" class="menu-link">
+          <span class="menu-icon">🔓</span>
+          <span class="menu-label">Connexion</span>
+        </a>
+      </li>
+
+      <li class="menu-item" *ngIf="isLoggedIn$ | async">
+        <a (click)="logout()" class="menu-link logout">
+          <span class="menu-icon">🔒</span>
+          <span class="menu-label">Déconnexion</span>
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

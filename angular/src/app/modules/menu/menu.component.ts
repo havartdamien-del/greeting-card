@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-menu',
@@ -7,8 +9,17 @@ import { Router } from '@angular/router';
     styleUrls: ['./menu.component.scss'],
     standalone: false
 })
-export class MenuComponent {
-  constructor(private router: Router) {}
+export class MenuComponent implements OnInit {
+  isLoggedIn$!: Observable<boolean>;
+
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.isLoggedIn$ = this.authService.isLoggedIn$;
+  }
 
   navigateTo(route: string): void {
     this.router.navigate([route]);
@@ -16,5 +27,10 @@ export class MenuComponent {
 
   isActive(route: string): boolean {
     return this.router.url === route || this.router.url.startsWith(route);
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

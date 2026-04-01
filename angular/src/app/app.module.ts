@@ -2,11 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AsyncPipe, CommonModule, NgClass } from '@angular/common';
+
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuModule } from './modules/menu/menu.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { HomeComponent } from './pages/home/home.component';
 import { CardsComponent } from './pages/page_listing/cards/cards.component';
 import { CardsListComponent } from './pages/page_listing/cards/cards-list.component';
@@ -27,6 +30,7 @@ import { UploadImageComponent } from './pages/page_edit/upload-image/upload-imag
 import { ImageDetailComponent } from './pages/page_detail/image-detail/image-detail.component';
 import { PageSettingsComponent } from './pages/page_settings/page-settings.component';
 import { CorsInterceptor } from './interceptors/cors.interceptor';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -54,10 +58,18 @@ import { CorsInterceptor } from './interceptors/cors.interceptor';
         BrowserAnimationsModule,
         ReactiveFormsModule,
         MenuModule,
+        AsyncPipe,
+        NgClass,
+        AuthModule,
         AppRoutingModule], providers: [
         {
             provide: HTTP_INTERCEPTORS,
             useClass: CorsInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
             multi: true
         },
         provideHttpClient(withInterceptorsFromDi())

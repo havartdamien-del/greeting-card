@@ -11,14 +11,17 @@ import { ImagesComponent } from './pages/page_listing/images/images.component';
 import { ImageDetailComponent } from './pages/page_detail/image-detail/image-detail.component';
 import { UploadImageComponent } from './pages/page_edit/upload-image/upload-image.component';
 import { PageSettingsComponent } from './pages/page_settings/page-settings.component';
+import { LoginComponent } from './modules/auth/login/login.component';
+import { AuthGuard } from './services/auth/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'cards', component: CardsComponent },
   { path: 'card/:id', component: CardDetailComponent },
   { path: 'create-card', component: CreateCardComponent },
   { path: 'create-card/:id', component: CreateCardComponent },
-  { path: 'tags', component: TagsComponent },
+  { path: 'tags', component: TagsComponent, canActivate: [AuthGuard] },
   { path: 'tag/:id', component: TagDetailComponent },
   { path: 'create-tag', component: CreateTagComponent },
   { path: 'create-tag/:id', component: CreateTagComponent },
