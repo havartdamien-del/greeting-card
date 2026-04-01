@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ApiResource(
+    security: "is_authenticated()",
     operations: [
         new GetCollection(),
         new Post(),
