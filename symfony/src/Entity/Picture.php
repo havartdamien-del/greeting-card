@@ -6,10 +6,37 @@ use App\Repository\PictureRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour créer une image',
+        ),
+        new Put(
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour modifier une image',
+        ),
+        new Patch(
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour modifier une image',
+        ),
+        new Delete(
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour supprimer une image',
+        ),
+    ]
+)]
 class Picture
 {
     #[ORM\Id]

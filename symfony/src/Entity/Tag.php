@@ -15,14 +15,25 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ApiResource(
-    security: "is_authenticated()",
     operations: [
         new GetCollection(),
-        new Post(),
         new Get(),
-        new Put(),
-        new Patch(),
-        new Delete(),
+        new Post(
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour créer un tag',
+        ),
+        new Put(
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour modifier un tag',
+        ),
+        new Patch(
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour modifier un tag',
+        ),
+        new Delete(
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour supprimer un tag',
+        ),
     ]
 )]
 class Tag

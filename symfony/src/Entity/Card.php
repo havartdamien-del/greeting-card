@@ -37,19 +37,27 @@ use Symfony\Component\Serializer\Attribute\Groups;
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
             processor: 'App\State\CardProcessor',
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour créer une carte',
         ),
         new Put(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
             processor: 'App\State\CardProcessor',
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour modifier une carte',
         ),
         new Patch(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
             processor: 'App\State\CardProcessor',
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour modifier une carte',
         ),
         new Delete(
             processor: 'App\State\CardProcessor',
+            security: 'is_authenticated()',
+            securityMessage: 'Vous devez être authentifié pour supprimer une carte',
         ),
     ]
 )]

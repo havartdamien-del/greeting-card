@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Picture;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +27,7 @@ class PictureUploadController extends AbstractController
     }
 
     #[Route('/pictures/upload', name: 'picture_upload', methods: ['POST'])]
+    #[IsGranted('IS_AUTHENTICATED')]
     public function upload(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         try {
