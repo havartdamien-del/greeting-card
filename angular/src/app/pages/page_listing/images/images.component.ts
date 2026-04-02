@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
     selector: 'app-images',
@@ -8,7 +9,9 @@ import { Router } from '@angular/router';
     standalone: false
 })
 export class ImagesComponent {
-  constructor(private router: Router) {}
+  isLoggedIn$ = this.authService.isLoggedIn$;
+
+  constructor(private router: Router, private authService: AuthService) {}
 
   onAddImage(): void {
     this.router.navigate(['/upload-image']);

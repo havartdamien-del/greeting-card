@@ -171,6 +171,24 @@
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.auth-required-message {
+  width: 100%;
+  padding: 1rem;
+  // background-color: #fff5f5;
+  // border: 2px solid #ff6b6b;
+  border-radius: 8px;
+  color: #c92a2a;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
 }
 
 .btn-back-primary {

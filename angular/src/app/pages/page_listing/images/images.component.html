@@ -2,10 +2,12 @@
   title="🖼️ Toutes les images"
   subtitle="Explorez toutes les images du site"
   dataType="image">
-  <button class="btn-add-image header-action" (click)="onAddImage()">
-    <span class="btn-icon">➕</span>
-    <span class="btn-text">Ajouter une Image</span>
-  </button>
+  @if (isLoggedIn$ | async) {
+    <button class="btn-add-image header-action" (click)="onAddImage()">
+      <span class="btn-icon">➕</span>
+      <span class="btn-text">Ajouter une Image</span>
+    </button>
+  }
   <app-images-list (imageClick)="onImageClick($event)"></app-images-list>
 </app-page-container-listing>
 

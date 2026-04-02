@@ -44,14 +44,19 @@
       </div>
       <!-- Actions -->
       <div class="data-api-detail-actions">
+        @if (!(isLoggedIn$ | async)) {
+          <div class="auth-required-message">
+            <p>🔒 Vous devez être connecté pour modifier cet élément</p>
+          </div>
+        }
         <button class="btn-back-primary" (click)="goBack()">Retour à la liste</button>
         @if (dataType !== 'images') {
-          <button class="btn-edit" (click)="editData()">
+          <button class="btn-edit" (click)="editData()" [disabled]="!(isLoggedIn$ | async)">
             <span class="btn-icon">✏️</span>
             <span class="btn-text">Éditer</span>
           </button>
         }
-        <button class="btn-delete" (click)="confirmDelete()" [disabled]="deleting">
+        <button class="btn-delete" (click)="confirmDelete()" [disabled]="deleting || !(isLoggedIn$ | async)">
           <span class="btn-icon">🗑️</span>
           <span class="btn-text">{{ deleting ? 'Suppression...' : 'Supprimer' }}</span>
         </button>

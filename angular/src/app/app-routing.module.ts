@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'create-tag/:id', component: CreateTagComponent },
   { path: 'images', component: ImagesComponent },
   { path: 'image/:id', component: ImageDetailComponent },
-  { path: 'upload-image', component: UploadImageComponent },
+  { path: 'upload-image', component: UploadImageComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: PageSettingsComponent },
   { path: '**', redirectTo: '' }
 ];

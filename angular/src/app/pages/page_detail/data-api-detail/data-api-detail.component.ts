@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDataService, DataType } from '../../../services/data_class/api-data.service';
 import { ApiConnectionService } from '../../../services/data_class/api-connection.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { Card, Tag, Image } from '../../../models/card.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,13 +24,15 @@ export class DataApiDetailComponent implements OnInit, OnDestroy {
   error: string | null = null;
   deleting = false;
   showDeleteConfirm = false;
+  isLoggedIn$ = this.authService.isLoggedIn$;
   private destroy$ = new Subject<void>();
   private apiDataService: ApiDataService;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiConnectionService: ApiConnectionService
+    private apiConnectionService: ApiConnectionService,
+    private authService: AuthService
   ) {
     // Initialiser avec un dataType par défaut
     this.apiDataService = new ApiDataService(this.apiConnectionService, this.dataType);

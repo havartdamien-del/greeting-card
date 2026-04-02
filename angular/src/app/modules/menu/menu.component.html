@@ -20,7 +20,7 @@
         </a>
       </li>
       
-      <li class="menu-item" [class.active]="isActive('/tags')">
+      <li class="menu-item" [class.active]="isActive('/tags')" *ngIf="isLoggedIn$ | async">
         <a (click)="navigateTo('/tags')" class="menu-link">
           <span class="menu-icon">🏷️</span>
           <span class="menu-label">Tous les Tags</span>
