@@ -2,7 +2,7 @@
   title="🎴 Toutes les Cards"
   subtitle="Découvrez toutes les cartes disponibles"
   dataType="card">
-  <button class="btn-add-card header-action" (click)="onAddCard()">
+  <button class="btn-add-card header-action" (click)="onAddCard()" [disabled]="!(isLoggedIn$ | async)" [title]="(isLoggedIn$ | async) ? 'Ajouter une nouvelle Card' : 'Vous devez être logué pour cette action'">
     <span class="btn-icon">➕</span>
     <span class="btn-text">Ajouter une Card</span>
   </button>
