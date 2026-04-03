@@ -13,6 +13,8 @@ class PictureChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testPatchUpdatePicture(): void
     {
+        $this->seLogger();
+        
         // Vérifier que la picture id=2 existe
         $pictureData = $this->getJson('/api/pictures/2');
         $this->assertArrayHasKey('value', $pictureData);
@@ -51,6 +53,8 @@ class PictureChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testUploadPicture(): void
     {
+        $this->seLogger();
+        
         // Récupérer le nombre de pictures avant l'upload
         $beforeUpload = $this->getJson('/api/pictures');
         $countBefore = count($beforeUpload['member']);
@@ -77,6 +81,11 @@ class PictureChangeApiTest extends ResetDatabaseApiTestCase
             true
         );
 
+        // Préparer les headers avec le bearer token
+        $headers = ['CONTENT_TYPE' => 'multipart/form-data'];
+        if ($this->token !== null) {
+            $headers['HTTP_AUTHORIZATION'] = 'Bearer ' . $this->token;
+        }
         
         // Faire la requête POST avec le fichier
         $this->client->request(
@@ -84,7 +93,7 @@ class PictureChangeApiTest extends ResetDatabaseApiTestCase
             '/api/pictures/upload',
             [],
             ['file' => $uploadedFile],
-            ['CONTENT_TYPE' => 'multipart/form-data']
+            $headers
         );
 
         // Vérifier que la réponse est successful

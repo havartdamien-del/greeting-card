@@ -11,6 +11,8 @@ class TagChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testCreateTag(): void
     {
+        $this->seLogger();
+        
         $payload = [
             'name' => 'forêt',
         ];
@@ -34,6 +36,8 @@ class TagChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testDeleteTag(): void
     {
+        $this->seLogger();
+        
         // Récupérer les tags existants
         $tagsData = $this->getJson('/api/tags');
         $this->assertArrayHasKey('member', $tagsData);
@@ -67,6 +71,8 @@ class TagChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testUpdateTag(): void
     {
+        $this->seLogger();
+        
         // Récupérer les tags existants
         $tagsData = $this->getJson('/api/tags');
         $this->assertArrayHasKey('member', $tagsData);
