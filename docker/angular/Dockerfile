@@ -27,6 +27,8 @@ ENV NODE_ENV=development
 RUN apk add --no-cache \
     bash 
 
+COPY angular/package*.json ./
+
 # Installation de toutes les dépendances (dev incluses)
 RUN npm ci
  

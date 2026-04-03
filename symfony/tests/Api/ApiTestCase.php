@@ -88,8 +88,11 @@ echo "***** exec loadFixtures() \n";
         // $fixtures = new AppFixtures();
         // $fixtures->load($entityManager);
 
+        $fixture = static::getContainer()->get(AppFixtures::class);
+
         $loader = new Loader();
-        $loader->addFixture(new AppFixtures());
+        //$loader->addFixture(new AppFixtures());
+        $loader->addFixture($fixture);
 
         $purger = new ORMPurger($entityManager);
         $executor = new ORMExecutor($entityManager, $purger);

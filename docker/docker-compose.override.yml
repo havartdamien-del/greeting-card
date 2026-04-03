@@ -19,10 +19,28 @@ services:
     ports:
       - "${PHP_PORT:-9000}:9000"
 
+  # php-test: 
+  #   <<: *php-base
+  #   container_name: greeting-card-php-test
+  #   image: greeting-card-php-test-v1.0.0
+  #   environment:
+  #     DB_USER: ${DB_USER:-greeting_card_user}
+  #     DB_PASSWORD: ${DB_PASSWORD:-greeting_card_password}
+  #     DB_DATABASE: ${DB_DATABASE:-greeting_card}
+  #     DB_DATABASE_TEST: ${DB_DATABASE_TEST:-greeting_card_test}
+  #     CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
+  #     APP_SECRET: ${APP_SECRET:-dev-secret-key}
+  #     APP_ENV: test
+  #   ports:
+  #     - "9001:9000"
+
   # Service Nginx Reverse Proxy for API (Development)
   nginx-api:
     container_name: greeting-card-nginx-api-dev
     image: greeting-card-dev-nginx-api-v1.0.0
+    # depends_on:
+    #   - php
+    #   - php-test
 
   # Service Nginx + Frontend Angular (Development)
   angular:

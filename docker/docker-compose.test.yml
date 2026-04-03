@@ -1,0 +1,33 @@
+# Docker Compose Override for Development
+# This file is automatically loaded by docker-compose
+# Provides development-specific configuration
+
+services:
+  # Service MySQL Database (Development)
+  mysql:
+    container_name: greeting-card-mysql-test
+
+  # Service Backend Symfony + API Platform (Development)
+  php:
+    build:
+      target: dev
+    container_name: greeting-card-php-test
+    image: greeting-card-php-test-v1.0.0
+    environment:
+      APP_ENV: test
+      APP_DEBUG: 1
+    ports:
+      - "${PHP_PORT:-9000}:9000"
+
+  # Service Nginx Reverse Proxy for API (Development)
+  nginx-api:
+    container_name: greeting-card-nginx-api-test
+    image: greeting-card-test-nginx-api-v1.0.0
+
+  # Service Nginx + Frontend Angular (Development)
+  angular:
+    build:
+      target: dev
+    container_name: greeting-card-angular-test
+    image: greeting-card-angular-test-v1.0.0
+
