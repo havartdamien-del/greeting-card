@@ -9,6 +9,8 @@ class CardChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testCreateCard(): void
     {
+        $this->seLogger();
+        
         // Récupérer les tags existants pour créer une référence
         $tagsData = $this->getJson('/api/tags');
         $tagIds = [];
@@ -48,6 +50,8 @@ class CardChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testDeleteCard(): void
     {
+        $this->seLogger();
+        
         // Vérifier que la card id=3 existe et a le titre "Sable blanc et palmiers"
         $cardData = $this->getJson('/api/cards/3');
         $this->assertArrayHasKey('title', $cardData);
@@ -71,6 +75,8 @@ class CardChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testUpdateCard(): void
     {
+        $this->seLogger();
+        
         // Vérifier que la card id=4 existe et a le titre "Lac calme et serein"
         $cardData = $this->getJson('/api/cards/4');
         $this->assertArrayHasKey('title', $cardData);
@@ -103,6 +109,8 @@ class CardChangeApiTest extends ResetDatabaseApiTestCase
      */
     public function testPatchUpdateCard(): void
     {
+        $this->seLogger();
+        
         // Vérifier que la card id=4 existe et a le titre "Lac calme et serein"
         $cardData = $this->getJson('/api/cards/4');
         $this->assertArrayHasKey('title', $cardData);

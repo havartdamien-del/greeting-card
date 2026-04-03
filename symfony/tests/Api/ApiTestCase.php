@@ -18,6 +18,7 @@ class ApiTestCase extends WebTestCase
 {
     protected KernelBrowser $client;
     protected EntityManagerInterface $entityManager;
+    protected ?string $token = null;
     protected $baseDirProject = __DIR__ . '/../../';
     // protected $classTestThatChangeDB = false;
 
@@ -31,6 +32,27 @@ echo "***** exec parent setUp() \n";
         // if($this->classTestThatChangeDB === true) {
         //     ApiTestCase::loadFixtures();
         // }
+    }
+
+    /**
+     * Se connecter avec les identifiants admin et stocker le bearer token
+     */
+    protected function seLogger(): void
+    {
+        $payload = [
+            'email' => 'admin@test.com',
+            'password' => 'password'
+        ];
+        
+        $this->client->request('POST', '/auth', [], [], [
+            'CONTENT_TYPE' => 'application/json'
+        ], json_encode($payload));
+        
+        $response = json_decode($this->client->getResponse()->getContent(), true);
+        
+        if (isset($response['token'])) {
+            $this->token = $response['token'];
+        }
     }
 
 //     public static function setUpBeforeClass(): void
@@ -124,6 +146,31 @@ echo "***** exec loadFixtures() \n";
     }
 
     /**
+     * Envoie des données JSON avec la méthode HTTP spécifiée
+     *
+     * @param string $method La méthode HTTP (POST, PUT, PATCH)
+     * @param string $url L'URL de la requête
+     * @param array $data Les données à envoyer
+     * @param string $contentType Le type de contenu
+     * @param array $headers Les headers additionnels
+     * @return array Les données JSON de réponse
+     */
+    protected function sendDataJson(string $method, string $url, array $data, string $contentType = 'application/ld+json', array $headers = []): array
+    {
+        $mergedHeaders = array_merge([
+            'CONTENT_TYPE' => $contentType,
+        ], $headers);
+        
+        if ($this->token !== null) {
+            $mergedHeaders['HTTP_AUTHORIZATION'] = 'Bearer ' . $this->token;
+        }
+        
+        $this->client->request($method, $url, [], [], $mergedHeaders, json_encode($data));
+        
+        return json_decode($this->client->getResponse()->getContent(), true);
+    }
+
+    /**
      * Effectue une requête POST avec les données JSON
      *
      * @param string $url L'URL de la requête
@@ -133,11 +180,7 @@ echo "***** exec loadFixtures() \n";
      */
     protected function postJson(string $url, array $data, array $headers = []): array
     {
-        $this->client->request('POST', $url, [], [], array_merge([
-            'CONTENT_TYPE' => 'application/ld+json',
-        ], $headers), json_encode($data));
-        
-        return json_decode($this->client->getResponse()->getContent(), true);
+        return $this->sendDataJson('POST', $url, $data, 'application/ld+json', $headers);
     }
 
     /**
@@ -150,11 +193,7 @@ echo "***** exec loadFixtures() \n";
      */
     protected function putJson(string $url, array $data, array $headers = []): array
     {
-        $this->client->request('PUT', $url, [], [], array_merge([
-            'CONTENT_TYPE' => 'application/ld+json',
-        ], $headers), json_encode($data));
-        
-        return json_decode($this->client->getResponse()->getContent(), true);
+        return $this->sendDataJson('PUT', $url, $data, 'application/ld+json', $headers);
     }
 
     /**
@@ -167,11 +206,7 @@ echo "***** exec loadFixtures() \n";
      */
     protected function patchJson(string $url, array $data, array $headers = []): array
     {
-        $this->client->request('PATCH', $url, [], [], array_merge([
-            'CONTENT_TYPE' => 'application/merge-patch+json',
-        ], $headers), json_encode($data));
-        
-        return json_decode($this->client->getResponse()->getContent(), true);
+        return $this->sendDataJson('PATCH', $url, $data, 'application/merge-patch+json', $headers);
     }
 
     /**
@@ -182,6 +217,10 @@ echo "***** exec loadFixtures() \n";
      */
     protected function deleteJson(string $url, array $headers = []): void
     {
+        if ($this->token !== null) {
+            $headers['HTTP_AUTHORIZATION'] = 'Bearer ' . $this->token;
+        }
+        
         $this->client->request('DELETE', $url, [], [], $headers);
     }
 
