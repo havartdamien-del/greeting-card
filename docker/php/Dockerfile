@@ -30,6 +30,12 @@ COPY docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY docker/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 
 
+# RUN composer install \
+#     --no-dev \
+#     --prefer-dist \
+#     --no-interaction \
+#     --optimize-autoloader
+
 # =========================
 # DEV image
 # =========================
@@ -47,6 +53,10 @@ RUN curl -fsSL https://get.symfony.com/cli/installer | bash \
 
 WORKDIR /app
 
+COPY symfony/ /app/
+
+RUN composer install
+
 # Droits sur le dossier projet
 RUN mkdir -p /var/run/php /var/log/php /var/run/php-fpm \
     && chown -R symfony:symfony /var/run/php /var/log/php /usr/local/var/log/ /var/run/php-fpm \
@@ -58,7 +68,7 @@ RUN chmod +x /entrypoint.sh
 
 USER symfony
 
-ENTRYPOINT ["/entrypoint.sh"]
+# ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm", "-F"]
 
 
@@ -67,12 +77,29 @@ CMD ["php-fpm", "-F"]
 # =========================
 FROM base AS prod
 
-COPY symfony/ .
+ARG UID=1000
+ARG GID=1000
+
+RUN addgroup -g ${GID} symfony \
+ && adduser -D -u ${UID} -G symfony symfony
+
+WORKDIR /app
+
+ENV APP_ENV=prod
+
+COPY symfony/ /app/
 
 RUN composer install \
     --no-dev \
     --prefer-dist \
     --no-interaction \
     --optimize-autoloader
+
+# Droits sur le dossier projet
+RUN mkdir -p /var/run/php /var/log/php /var/run/php-fpm \
+    && chown -R symfony:symfony /var/run/php /var/log/php /usr/local/var/log/ /var/run/php-fpm \
+    && chown -R symfony:symfony /app
+
+USER symfony
 
 CMD ["php-fpm", "-F"]

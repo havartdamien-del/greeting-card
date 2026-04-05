@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { AuthGuard } from '../../../services/auth/auth.guard';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {

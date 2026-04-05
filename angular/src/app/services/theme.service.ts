@@ -37,17 +37,31 @@ export class ThemeService {
   setTheme(theme: Theme): void {
     sessionStorage.setItem(this.THEME_STORAGE_KEY, theme);
     this.currentTheme.next(theme);
-    this.applyTheme(theme);
+    this.loadThemeStylesheet(theme);
+  }
+
+  /**
+   * Load theme stylesheet dynamically
+   */
+  private loadThemeStylesheet(theme: Theme): void {
+    const id = 'app-theme';
+    let link = document.getElementById(id) as HTMLLinkElement;
+
+    if (!link) {
+      link = document.createElement('link');
+      link.id = id;
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+
+    link.href = `assets/themes/theme-${theme}.css`;
   }
 
   /**
    * Apply theme by setting CSS class on html element
    */
   private applyTheme(theme: Theme): void {
-    // Remove all theme classes
-    document.documentElement.classList.remove('theme-default', 'theme-light', 'theme-dark');
-    // Add current theme class
-    document.documentElement.classList.add(`theme-${theme}`);
+    this.loadThemeStylesheet(theme);
   }
 
   /**

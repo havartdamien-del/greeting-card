@@ -1,5 +1,5 @@
 /* Default Theme - Purple Gradient */
-:root.theme-default {
+:root {
   /* Primary Colors */
   --primary-color: #667eea;
   --secondary-color: #764ba2;

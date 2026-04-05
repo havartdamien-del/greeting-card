@@ -60,15 +60,16 @@ services:
       APP_ENV: ${APP_ENV:-dev}
     volumes:
       - ../symfony:/app
+      - vendor:/app/vendor
     # ports:
     #   - "${PHP_PORT:-9000}:9000"
     restart: unless-stopped
     networks:
       - greeting-card-network
-    command: >
-      sh -c "
-        php-fpm
-      "
+    # command: >
+    #   sh -c "
+    #     php-fpm
+    #   "
 
   # php-test: 
   #   <<: *php-base
@@ -92,7 +93,7 @@ services:
     image: greeting-card-nginx-api-v1.0.0
     ports:
       - "${NGINX_API_PORT:-8080}:80"
-      - "8082:8082"
+      # - "8082:8082"
     depends_on:
       - php
     volumes:
@@ -125,6 +126,8 @@ volumes:
   mysql_data:
     driver: local
   node_modules:
+    driver: local
+  vendor:
     driver: local
 
 networks:

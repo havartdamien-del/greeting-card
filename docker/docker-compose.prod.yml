@@ -4,19 +4,19 @@
 services:
   # Service MySQL Database (Production)
   mysql:
-    container_name: greeting-card-mysql
-    networks:
-      - greeting-card-network
+    container_name: greeting-card-mysql-prod
+    # networks:
+    #   - greeting-card-network
 
   # Service Backend Symfony + API Platform (Production)
   php:
     build:
-      target: builder
-      args:
-        - UID=${UID:-1000}
-        - GID=${GID:-1000}
-    container_name: greeting-card-php
-    image: greeting-card-php-v1.0.0
+      target: prod
+      # args:
+      #   - UID=${UID:-1000}
+      #   - GID=${GID:-1000}
+    container_name: greeting-card-php-prod
+    image: greeting-card-php-prod-v1.0.0
     environment:
       - APP_ENV=${APP_ENV:-prod}
       - APP_DEBUG=${APP_DEBUG:-0}
@@ -24,29 +24,31 @@ services:
       - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
     ports:
       - "${PHP_PORT:-9000}:9000"
-    networks:
-      - greeting-card-network
+    # networks:
+    #   - greeting-card-network
 
   # Service Nginx Reverse Proxy for API (Production)
   nginx-api:
-    container_name: greeting-card-nginx-api
-    image: greeting-card-nginx-api-v1.0.0
+    container_name: greeting-card-nginx-api-prod
+    image: greeting-card-nginx-api-prod-v1.0.0
     ports:
       - "${NGINX_API_PORT:-8080}:80"
-    networks:
-      - greeting-card-network
+    # networks:
+    #   - greeting-card-network
 
   # Service Nginx + Frontend Angular (Production)
   angular:
     build:
-      target: production
-    container_name: greeting-card-angular
+      target: prod
+    container_name: greeting-card-angular-prod
     image: greeting-card-angular-prod-v1.0.0
     ports:
-      - "${ANGULAR_PORT:-4200}:80"
-    networks:
-      - greeting-card-network
+      - "4201:80"
+    # ports:
+    #   - "${ANGULAR_PORT:-4200}:80"
+    # networks:
+    #   - greeting-card-network
 
-networks:
-  greeting-card-network:
-    driver: bridge
+# networks:
+#   greeting-card-network:
+#     driver: bridge

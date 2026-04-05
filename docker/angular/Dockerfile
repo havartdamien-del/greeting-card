@@ -50,13 +50,14 @@ FROM base AS build
 ENV NODE_ENV=production
  
 # Installation des dépendances de production + devDependencies nécessaires au build
-RUN npm ci
+# attention ici il faut ajouter "--include=dev" sinon le "npm run build" ne fonctionnera pas
+RUN npm ci --include=dev
  
 # Copie du code source
 COPY angular/ ./
  
 # Build de l'application Angular
-RUN npm run build -- --configuration production
+RUN npm run build
  
 # =========================
 # PROD image
