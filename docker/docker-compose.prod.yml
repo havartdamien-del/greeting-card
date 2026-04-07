@@ -18,12 +18,14 @@ services:
     container_name: greeting-card-php-prod
     image: greeting-card-php-prod-v1.0.0
     environment:
-      - APP_ENV=${APP_ENV:-prod}
-      - APP_DEBUG=${APP_DEBUG:-0}
+      - APP_ENV=prod
+      - APP_DEBUG=0
       - APP_SECRET=${APP_SECRET:-change-me-in-production}
       - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
     ports:
       - "${PHP_PORT:-9000}:9000"
+    volumes:
+      - app_php:/app
     # networks:
     #   - greeting-card-network
 
@@ -33,6 +35,8 @@ services:
     image: greeting-card-nginx-api-prod-v1.0.0
     ports:
       - "${NGINX_API_PORT:-8080}:80"
+    volumes:
+      - app_php:/app
     # networks:
     #   - greeting-card-network
 
@@ -43,7 +47,9 @@ services:
     container_name: greeting-card-angular-prod
     image: greeting-card-angular-prod-v1.0.0
     ports:
-      - "4201:80"
+      - "${ANGULAR_PORT:-4200}:80"
+    # ports:
+    #   - "4201:80"
     # ports:
     #   - "${ANGULAR_PORT:-4200}:80"
     # networks:

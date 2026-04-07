@@ -16,7 +16,8 @@
   --text-secondary: #555555;
   --text-light: #888888;
   --text-on-primary-bg: #2c3e50;
-  
+  --text-on-secondary-bg: #415c77;
+
   /* Border Colors */
   --border-color: #e8e8e8;
   --border-dark: #d0d0d0;

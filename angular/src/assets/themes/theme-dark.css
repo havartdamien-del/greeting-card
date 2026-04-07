@@ -8,7 +8,7 @@
   /* Background Colors */
   --bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   --bg-secondary: rgba(30, 30, 45, 0.95);
-  --card-bg: rgba(45, 45, 70, 0.9);
+  --card-bg: rgba(255, 255, 255, 0.95);
   --card-bg-active: rgba(77, 208, 225, 0.1);
   
   /* Text Colors */
@@ -16,7 +16,8 @@
   --text-secondary: #b0b0b0;
   --text-light: #808080;
   --text-on-primary-bg: #ffffff;
-  
+  --text-on-secondary-bg: #ccc;
+
   /* Border Colors */
   --border-color: #404060;
   --border-dark: #303050;

@@ -11,13 +11,13 @@
 
   h1 {
     font-size: 2.5rem;
-    color: var(--text-primary, #333);
+    color: var(--text-on-primary-bg, #333);
     margin: 0 0 10px 0;
   }
 
   .settings-subtitle {
     font-size: 1.1rem;
-    color: var(--text-secondary, #666);
+    color: var(--text-on-secondary-bg, #666);
     margin: 0;
   }
 }

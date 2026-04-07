@@ -18,11 +18,16 @@ services:
       APP_DEBUG: 1
     ports:
       - "${PHP_PORT:-9000}:9000"
+    volumes:
+      - ../symfony:/app
+      - vendor:/app/vendor
 
   # Service Nginx Reverse Proxy for API (Development)
   nginx-api:
     container_name: greeting-card-nginx-api-test
     image: greeting-card-test-nginx-api-v1.0.0
+    volumes:
+      - ../symfony:/app
 
   # Service Nginx + Frontend Angular (Development)
   angular:
@@ -30,4 +35,8 @@ services:
       target: dev
     container_name: greeting-card-angular-test
     image: greeting-card-angular-test-v1.0.0
-
+    ports:
+      - "${ANGULAR_PORT:-4200}:4200"
+    volumes:
+      - ../angular:/app
+      - node_modules:/app/node_modules
