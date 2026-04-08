@@ -15,8 +15,6 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "no"
     volumes:
       - ./mysql_data:/var/lib/mysql
-      # - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro
-      # - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
@@ -25,8 +23,6 @@ services:
     networks:
       - greeting-card-network
     restart: unless-stopped
-    # sysctls:
-    #   - net.ipv4.ip_local_port_range=1024 65535
 
   # Service Backend Symfony + API Platform
   php:
@@ -36,20 +32,10 @@ services:
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
-      # target: ${APP_TARGET:-dev}
     image: greeting-card-php-v1.0.0
     depends_on:
       mysql:
         condition: service_healthy
-    # environment:
-    #   # - DATABASE_URL=mysql://${DB_USER:-user}:${DB_PASSWORD:-password}@mysql:3306/${DB_DATABASE:-greeting_card}?serverVersion=8.0
-    #   - DB_USER=${DB_USER:-greeting_card_user}
-    #   - DB_PASSWORD=${DB_PASSWORD:-greeting_card_password}
-    #   - DB_DATABASE=${DB_DATABASE:-greeting_card}
-    #   - DB_DATABASE_TEST=${DB_DATABASE_TEST:-greeting_card_test}
-    #   - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
-    #   - APP_SECRET=${APP_SECRET:-dev-secret-key}
-    #   - APP_ENV=${APP_ENV:-dev}
     environment:
       DB_USER: ${DB_USER:-greeting_card_user}
       DB_PASSWORD: ${DB_PASSWORD:-greeting_card_password}
@@ -58,32 +44,9 @@ services:
       CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
       APP_SECRET: ${APP_SECRET:-dev-secret-key}
       APP_ENV: ${APP_ENV:-dev}
-    # volumes:
-    #   - ../symfony:/app
-    #   - vendor:/app/vendor
-    # ports:
-    #   - "${PHP_PORT:-9000}:9000"
     restart: unless-stopped
     networks:
       - greeting-card-network
-    # command: >
-    #   sh -c "
-    #     php-fpm
-    #   "
-
-  # php-test: 
-  #   <<: *php-base
-  #   image: greeting-card-php-test-v1.0.0
-  #   environment:
-  #     DB_USER: ${DB_USER:-greeting_card_user}
-  #     DB_PASSWORD: ${DB_PASSWORD:-greeting_card_password}
-  #     DB_DATABASE: ${DB_DATABASE:-greeting_card}
-  #     DB_DATABASE_TEST: ${DB_DATABASE_TEST:-greeting_card_test}
-  #     CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$}
-  #     APP_SECRET: ${APP_SECRET:-dev-secret-key}
-  #     APP_ENV: test
-  #   ports:
-  #     - "9001:9000"
 
   # Service Nginx Reverse Proxy for API
   nginx-api:
@@ -93,11 +56,8 @@ services:
     image: greeting-card-nginx-api-v1.0.0
     ports:
       - "${NGINX_API_PORT:-8080}:80"
-      # - "8082:8082"
     depends_on:
       - php
-    # volumes:
-    #   - ../symfony:/app
     networks:
       - greeting-card-network
     restart: unless-stopped
@@ -108,11 +68,6 @@ services:
       context: ..
       dockerfile: docker/angular/Dockerfile
     image: greeting-card-angular-v1.0.0
-    # ports:
-    #   - "${ANGULAR_PORT:-4200}:4200"
-    # volumes:
-    #   - ../angular:/app
-    #   - node_modules:/app/node_modules
     networks:
       - greeting-card-network
     environment:

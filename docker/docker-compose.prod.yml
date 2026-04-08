@@ -5,16 +5,11 @@ services:
   # Service MySQL Database (Production)
   mysql:
     container_name: greeting-card-mysql-prod
-    # networks:
-    #   - greeting-card-network
 
   # Service Backend Symfony + API Platform (Production)
   php:
     build:
       target: prod
-      # args:
-      #   - UID=${UID:-1000}
-      #   - GID=${GID:-1000}
     container_name: greeting-card-php-prod
     image: greeting-card-php-prod-v1.0.0
     environment:
@@ -26,8 +21,6 @@ services:
       - "${PHP_PORT:-9000}:9000"
     volumes:
       - app_php:/app
-    # networks:
-    #   - greeting-card-network
 
   # Service Nginx Reverse Proxy for API (Production)
   nginx-api:
@@ -37,8 +30,6 @@ services:
       - "${NGINX_API_PORT:-8080}:80"
     volumes:
       - app_php:/app
-    # networks:
-    #   - greeting-card-network
 
   # Service Nginx + Frontend Angular (Production)
   angular:
@@ -48,13 +39,3 @@ services:
     image: greeting-card-angular-prod-v1.0.0
     ports:
       - "${ANGULAR_PORT:-4200}:80"
-    # ports:
-    #   - "4201:80"
-    # ports:
-    #   - "${ANGULAR_PORT:-4200}:80"
-    # networks:
-    #   - greeting-card-network
-
-# networks:
-#   greeting-card-network:
-#     driver: bridge

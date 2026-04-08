@@ -30,12 +30,6 @@ COPY docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY docker/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 
 
-# RUN composer install \
-#     --no-dev \
-#     --prefer-dist \
-#     --no-interaction \
-#     --optimize-autoloader
-
 # =========================
 # DEV image
 # =========================
