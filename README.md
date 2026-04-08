@@ -25,12 +25,21 @@ git clone <repository>
 cd greeting-card-AI
 ```
 
-### 2️⃣ Configurer les Variables d'Environnement
+### 2️⃣ Configurer les Variables d'Environnement et Démarrer les Services
+
+```bash
+cd symfony
+cp .env.example .env
+```
 
 ```bash
 cd docker
 cp .env.example .env
-chmod +x manage.sh
+```
+
+```bash
+cd docker
+docker compose up -d
 ```
 
 ### 3️⃣ Configurer le Backend Symfony
@@ -39,7 +48,7 @@ chmod +x manage.sh
 
 ```bash
 cd docker
-./manage.sh shell-php
+docker compose exec php bash
 
 # Générer les clés RSA pour JWT
 php bin/console lexik:jwt:generate-keypair
