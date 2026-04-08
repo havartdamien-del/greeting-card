@@ -33,19 +33,46 @@ cp .env.example .env
 chmod +x manage.sh
 ```
 
-### 3️⃣ Démarrer les Services
+### 3️⃣ Configurer le Backend Symfony
+
+#### Générer les Clés JWT
+
+```bash
+cd docker
+./manage.sh shell-php
+
+# Générer les clés RSA pour JWT
+php bin/console lexik:jwt:generate-keypair
+```
+
+#### Exécuter les Migrations et Charger les Fixtures
+
+```bash
+cd docker
+./manage.sh shell-php
+
+# Exécuter les migrations
+php bin/console doctrine:migrations:migrate
+
+# Charger les fixtures (données d'exemple)
+php bin/console doctrine:fixtures:load
+```
+
+### 4️⃣ Démarrer les Services
 
 #### Mode Développement
 ```bash
+cd docker
 ./manage.sh up-dev
 ```
 
 #### Mode Production
 ```bash
+cd docker
 ./manage.sh up
 ```
 
-### 4️⃣ Accéder à l'Application
+### 5️⃣ Accéder à l'Application
 
 - 🌐 **Frontend** : http://localhost:4200
 - 🔌 **API Backend** : http://localhost:9000
@@ -61,7 +88,7 @@ chmod +x manage.sh
 | **Base de Données** | MySQL 8.0 |
 | **Containerization** | Docker + Docker Compose |
 | **PHP** | 8.2 |
-| **Node** | 20 |
+| **Node** | 22 |
 
 ## 🗂️ Structure du Projet
 
@@ -292,8 +319,6 @@ Pour toute question ou problème :
 
 ## ✨ Roadmap
 
-- [ ] Authentification utilisateur (JWT/OAuth2)
-- [ ] Upload d'images
 - [ ] Intégration IA pour la génération de contenu
 - [ ] Système de templates de cartes
 - [ ] Export PDF
