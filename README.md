@@ -66,6 +66,8 @@ docker compose up -d
 cd docker
 docker compose exec php bash
 
+sed -i "s|JWT_PASSPHRASE=CHANGE_ME|JWT_PASSPHRASE=$(openssl rand -base64 32)|" .env
+
 # Générer les clés RSA pour JWT
 php bin/console lexik:jwt:generate-keypair
 ```
@@ -81,6 +83,15 @@ php bin/console doctrine:migrations:migrate
 
 # Charger les fixtures (données d'exemple)
 php bin/console doctrine:fixtures:load
+```
+
+#### Mettre les images de test du site en place
+
+```bash
+cd docker
+docker compose exec php bash
+
+cp -R public/image_test/ public/uploads/
 ```
 
 ### 3️⃣ Accéder à l'Application

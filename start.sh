@@ -52,6 +52,10 @@ if [ ! -f "$SYMFONY_DIR/.env" ]; then
     else
         cp "$SYMFONY_DIR/.env.example" "$SYMFONY_DIR/.env"
     fi
+    echo -e "${BLUE}📝 remplacer JWT_PASSPHRASE dans .env Symfony...${NC}"
+    sed -i "s|JWT_PASSPHRASE=CHANGE_ME|JWT_PASSPHRASE=$(openssl rand -base64 32)|" "$SYMFONY_DIR/.env"
+    echo -e "${BLUE}📝 copie des images de testes dans public/uploads Symfony...${NC}"
+    cp -R "$SYMFONY_DIR/public/image_test/" "$SYMFONY_DIR/public/uploads/"
     echo -e "${GREEN}✓ Fichier .env Symfony créé${NC}\n"
 fi
 
@@ -70,7 +74,7 @@ echo -e "${BLUE}🚀 Démarrage des services en mode ${MODE}...${NC}\n"
 
 if [ "$MODE" = "dev" ]; then
     cd "$DOCKER_DIR"
-    ./manage.sh up-dev
+    docker compose up -d
     echo -e "\n${GREEN}✓ Services démarrés en mode DÉVELOPPEMENT${NC}"
 else
     cd "$DOCKER_DIR"
@@ -84,7 +88,7 @@ sleep 30
 
 # Générer les clés JWT
 echo -e "\n${BLUE}🔐 Génération des clés JWT...${NC}"
-if docker compose -f "$DOCKER_DIR/docker-compose.yml" exec -T php bash -c "php bin/console lexik:jwt:generate-keypair --overwrite --no-interaction" 2>/dev/null; then
+if docker compose exec -T php bash -c "php bin/console lexik:jwt:generate-keypair --overwrite --no-interaction" 2>/dev/null; then
     echo -e "${GREEN}✓ Clés JWT générées${NC}\n"
 else
     echo -e "${YELLOW}⚠️  Les clés JWT existent déjà ou JWT n'est pas activé${NC}\n"
@@ -92,7 +96,7 @@ fi
 
 # Exécuter les migrations
 echo -e "${BLUE}📦 Exécution des migrations de base de données...${NC}"
-if docker compose -f "$DOCKER_DIR/docker-compose.yml" exec -T php bash -c "php bin/console doctrine:migrations:migrate --no-interaction" 2>/dev/null; then
+if docker compose exec -T php bash -c "php bin/console doctrine:migrations:migrate --no-interaction" 2>/dev/null; then
     echo -e "${GREEN}✓ Migrations exécutées${NC}\n"
 else
     echo -e "${YELLOW}⚠️  Impossible d'exécuter les migrations${NC}\n"
@@ -100,7 +104,7 @@ fi
 
 # Charger les fixtures
 echo -e "${BLUE}🌱 Chargement des fixtures (données d'exemple)...${NC}"
-if docker compose -f "$DOCKER_DIR/docker-compose.yml" exec -T php bash -c "php bin/console doctrine:fixtures:load --no-interaction" 2>/dev/null; then
+if docker compose exec -T php bash -c "php bin/console doctrine:fixtures:load --no-interaction" 2>/dev/null; then
     echo -e "${GREEN}✓ Fixtures chargées${NC}\n"
 else
     echo -e "${YELLOW}⚠️  Impossible de charger les fixtures${NC}\n"
