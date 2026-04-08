@@ -43,11 +43,23 @@ if ! command -v docker compose &> /dev/null; then
     exit 1
 fi
 
-# Créer le fichier .env s'il n'existe pas
+# Créer le fichier .env pour Symfony s'il n'existe pas
+SYMFONY_DIR="$PROJECT_ROOT/symfony"
+if [ ! -f "$SYMFONY_DIR/.env" ]; then
+    echo -e "${BLUE}📝 Création du fichier .env Symfony...${NC}"
+    if [ -f "$SYMFONY_DIR/.env.local" ]; then
+        cp "$SYMFONY_DIR/.env.local" "$SYMFONY_DIR/.env"
+    else
+        cp "$SYMFONY_DIR/.env.example" "$SYMFONY_DIR/.env"
+    fi
+    echo -e "${GREEN}✓ Fichier .env Symfony créé${NC}\n"
+fi
+
+# Créer le fichier .env pour Docker s'il n'existe pas
 if [ ! -f "$DOCKER_DIR/.env" ]; then
-    echo -e "${BLUE}📝 Création du fichier .env...${NC}"
+    echo -e "${BLUE}📝 Création du fichier .env Docker...${NC}"
     cp "$DOCKER_DIR/.env.example" "$DOCKER_DIR/.env"
-    echo -e "${GREEN}✓ Fichier .env créé${NC}\n"
+    echo -e "${GREEN}✓ Fichier .env Docker créé${NC}\n"
 fi
 
 # Rendre manage.sh exécutable
@@ -60,21 +72,44 @@ if [ "$MODE" = "dev" ]; then
     cd "$DOCKER_DIR"
     ./manage.sh up-dev
     echo -e "\n${GREEN}✓ Services démarrés en mode DÉVELOPPEMENT${NC}"
-    echo -e "\n${YELLOW}URLs d'accès:${NC}"
-    echo "  🌐 Frontend Angular : http://localhost:4200"
-    echo "  🔌 API Backend     : http://localhost:9000"
-    echo "  📊 API Docs        : http://localhost:9000/api/docs"
-    echo "  📦 MySQL           : localhost:3306"
 else
     cd "$DOCKER_DIR"
     ./manage.sh up
     echo -e "\n${GREEN}✓ Services démarrés en mode PRODUCTION${NC}"
-    echo -e "\n${YELLOW}URLs d'accès:${NC}"
-    echo "  🌐 Frontend Angular : http://localhost:4200"
-    echo "  🔌 API Backend     : http://localhost:9000"
-    echo "  📊 API Docs        : http://localhost:9000/api/docs"
-    echo "  📦 MySQL           : localhost:3306"
 fi
+
+# Attendre que les services soient prêts
+echo -e "\n${BLUE}⏳ Attente du démarrage des services (30 secondes)...${NC}"
+sleep 30
+
+# Générer les clés JWT
+echo -e "\n${BLUE}🔐 Génération des clés JWT...${NC}"
+if docker compose -f "$DOCKER_DIR/docker-compose.yml" exec -T php bash -c "php bin/console lexik:jwt:generate-keypair --overwrite --no-interaction" 2>/dev/null; then
+    echo -e "${GREEN}✓ Clés JWT générées${NC}\n"
+else
+    echo -e "${YELLOW}⚠️  Les clés JWT existent déjà ou JWT n'est pas activé${NC}\n"
+fi
+
+# Exécuter les migrations
+echo -e "${BLUE}📦 Exécution des migrations de base de données...${NC}"
+if docker compose -f "$DOCKER_DIR/docker-compose.yml" exec -T php bash -c "php bin/console doctrine:migrations:migrate --no-interaction" 2>/dev/null; then
+    echo -e "${GREEN}✓ Migrations exécutées${NC}\n"
+else
+    echo -e "${YELLOW}⚠️  Impossible d'exécuter les migrations${NC}\n"
+fi
+
+# Charger les fixtures
+echo -e "${BLUE}🌱 Chargement des fixtures (données d'exemple)...${NC}"
+if docker compose -f "$DOCKER_DIR/docker-compose.yml" exec -T php bash -c "php bin/console doctrine:fixtures:load --no-interaction" 2>/dev/null; then
+    echo -e "${GREEN}✓ Fixtures chargées${NC}\n"
+else
+    echo -e "${YELLOW}⚠️  Impossible de charger les fixtures${NC}\n"
+fi
+
+echo -e "\n${YELLOW}URLs d'accès:${NC}"
+echo "  🌐 Frontend Angular : http://localhost:4200"
+echo "  🔌 API Backend     : http://localhost:8080"
+
 
 echo -e "\n${BLUE}💡 Commandes utiles:${NC}"
 echo "  ./docker/manage.sh logs      # Afficher les logs"

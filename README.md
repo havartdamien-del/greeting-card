@@ -25,7 +25,29 @@ git clone <repository>
 cd greeting-card-AI
 ```
 
-### 2️⃣ Configurer les Variables d'Environnement et Démarrer les Services
+### 2️⃣ Démarrage Automatisé (Recommandé)
+
+```bash
+# Rendre le script exécutable
+chmod +x start.sh
+
+# Démarrer en mode développement (recommandé)
+./start.sh dev
+
+# OU démarrer en mode production
+./start.sh prod
+```
+
+Le script `start.sh` automatise automatiquement :
+- ✅ Configuration des fichiers `.env`
+- ✅ Démarrage des services Docker
+- ✅ Génération des clés JWT
+- ✅ Exécution des migrations
+- ✅ Chargement des fixtures (données d'exemple)
+
+### 2️⃣ Alternative : Configuration Manuelle
+
+Si vous préférez configurer manuellement :
 
 ```bash
 cd symfony
@@ -35,22 +57,14 @@ cp .env.example .env
 ```bash
 cd docker
 cp .env.example .env
-```
-
-```bash
-cd docker
 docker compose up -d
 ```
-
-### 3️⃣ Configurer le Backend Symfony
 
 #### Générer les Clés JWT
 
 ```bash
 cd docker
 docker compose exec php bash
-
-sed -i "s|JWT_SECRET_KEY=CHANGE_ME|JWT_SECRET_KEY=$(openssl rand -base64 32)|" .env
 
 # Générer les clés RSA pour JWT
 php bin/console lexik:jwt:generate-keypair
@@ -60,7 +74,7 @@ php bin/console lexik:jwt:generate-keypair
 
 ```bash
 cd docker
-./manage.sh shell-php
+docker compose exec php bash
 
 # Exécuter les migrations
 php bin/console doctrine:migrations:migrate
@@ -69,33 +83,17 @@ php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
 
-### 4️⃣ Démarrer les Services
-
-#### Mode Développement
-```bash
-cd docker
-./manage.sh up-dev
-```
-
-#### Mode Production
-```bash
-cd docker
-./manage.sh up
-```
-
-### 5️⃣ Accéder à l'Application
+### 3️⃣ Accéder à l'Application
 
 - 🌐 **Frontend** : http://localhost:4200
-- 🔌 **API Backend** : http://localhost:9000
-- 📊 **API Docs** : http://localhost:9000/api/docs
-- 📦 **MySQL** : localhost:3306
+- 🔌 **API Backend** : http://localhost:8080
 
 ## 📊 Résumé Technique
 
 | Aspect | Technologie |
 |--------|-------------|
-| **Frontend** | Angular 17+ |
-| **Backend** | Symfony 6.x + API Platform |
+| **Frontend** | Angular 21+ |
+| **Backend** | Symfony 7.x + API Platform |
 | **Base de Données** | MySQL 8.0 |
 | **Containerization** | Docker + Docker Compose |
 | **PHP** | 8.2 |
@@ -134,92 +132,6 @@ Infrastructure Docker :
 
 **Voir** : `docker/README.md` et `docker/manage.sh`
 
-## 🎮 Commandes Principales
-
-```bash
-cd docker
-
-# Démarrage
-./manage.sh up           # Mode production
-./manage.sh up-dev       # Mode développement
-
-# Arrêt
-./manage.sh down
-
-# Logs
-./manage.sh logs         # Tous les services
-./manage.sh logs-php     # PHP uniquement
-./manage.sh logs-ng      # Angular uniquement
-
-# Shell
-./manage.sh shell-php    # Accès au conteneur PHP
-./manage.sh shell-ng     # Accès au conteneur Angular
-
-# Base de données
-./manage.sh db-migrate   # Exécuter les migrations
-./manage.sh db-fixtures  # Charger les fixtures
-
-# Plus de commandes
-./manage.sh help
-```
-
-## 🔄 Mode Développement vs Production
-
-### 🔧 Développement (`docker-compose.dev.yml`)
-
-```
-Angular:
-  └─ Serveur npm start avec hot reload
-PHP:
-  └─ Mode debug activé, sources volumisées
-MySQL:
-  └─ Données persistantes
-```
-
-**Démarrage:**
-```bash
-cd docker
-./manage.sh up-dev
-```
-
-### 📦 Production (`docker-compose.yml`)
-
-```
-Angular:
-  └─ Build optimisé servie par Nginx
-PHP:
-  └─ Mode production, optimisé
-MySQL:
-  └─ Données persistantes
-```
-
-**Démarrage:**
-```bash
-cd docker
-./manage.sh up
-```
-
-## 📝 Configuration
-
-### Variables d'Environnement
-
-Éditer `docker/.env` :
-
-```env
-# Mode
-APP_ENV=dev          # 'dev' ou 'prod'
-APP_DEBUG=1          # 0 ou 1
-
-# Base de données
-DB_DATABASE=greeting_card
-DB_USER=user
-DB_PASSWORD=password
-
-# Ports
-ANGULAR_PORT=4200
-PHP_PORT=9000
-MYSQL_PORT=3306
-```
 
 ## 🔐 Sécurité
 
@@ -238,63 +150,6 @@ MYSQL_PORT=3306
 - 📖 **Symfony** : Voir `symfony/README.md`
 - 📖 **Angular** : Voir `angular/README.md`
 
-## 🐛 Troubleshooting
-
-### Les services ne démarrent pas
-
-```bash
-cd docker
-./manage.sh logs  # Voir tous les logs
-```
-
-### Port déjà utilisé
-
-Éditer `docker/.env` et modifier les ports :
-
-```env
-ANGULAR_PORT=4201
-PHP_PORT=9001
-MYSQL_PORT=3307
-```
-
-### MySQL ne démarre pas
-
-```bash
-cd docker
-./manage.sh logs-mysql
-# Vérifier les variables d'environnement
-```
-
-### Réinitialiser l'environnement
-
-```bash
-cd docker
-./manage.sh clean    # Supprime les volumes
-./manage.sh up-dev   # Redémarre tout
-```
-
-## 📊 Monitoring
-
-### État des services
-
-```bash
-cd docker
-./manage.sh ps
-```
-
-### Ressources utilisées
-
-```bash
-docker stats
-```
-
-### Logs en temps réel
-
-```bash
-cd docker
-./manage.sh logs -f
-```
-
 ## 🔗 Ressources
 
 ### Documentation Officielle
@@ -308,32 +163,6 @@ cd docker
 - [Symfony Docker](https://symfony.com/doc/current/setup/docker.html)
 - [Angular Docker](https://angular.io/guide/docker)
 - [Docker Compose](https://docs.docker.com/compose/)
-
-## 👥 Contribution
-
-1. Créer une branche (`git checkout -b feature/nouvelle-fonctionnalite`)
-2. Committer les changements (`git commit -m 'Ajout de nouvelle fonctionnalité'`)
-3. Pousser la branche (`git push origin feature/nouvelle-fonctionnalite`)
-4. Créer une Pull Request
-
-## 📝 License
-
-À définir selon les besoins du projet.
-
-## 📞 Support
-
-Pour toute question ou problème :
-
-1. Consulter la documentation pertinente dans le répertoire `specifications/`
-2. Vérifier les logs : `./docker/manage.sh logs`
-3. Vérifier les guides : `./docker/README.md`, `./symfony/README.md`, `./angular/README.md`
-
-## ✨ Roadmap
-
-- [ ] Intégration IA pour la génération de contenu
-- [ ] Système de templates de cartes
-- [ ] Export PDF
-- [ ] Partage et collaboration
 
 ## 🎉 Merci !
 
