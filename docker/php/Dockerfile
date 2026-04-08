@@ -71,12 +71,6 @@ CMD ["php-fpm", "-F"]
 # =========================
 FROM base AS prod
 
-# ARG UID=1000
-# ARG GID=1000
-
-# RUN addgroup -g ${GID} symfony \
-#  && adduser -D -u ${UID} -G symfony symfony
-
 RUN addgroup -S symfony \
  && adduser -S -G symfony symfony
 
