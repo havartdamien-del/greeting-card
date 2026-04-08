@@ -50,6 +50,8 @@ docker compose up -d
 cd docker
 docker compose exec php bash
 
+sed -i "s|JWT_SECRET_KEY=CHANGE_ME|JWT_SECRET_KEY=$(openssl rand -base64 32)|" .env
+
 # Générer les clés RSA pour JWT
 php bin/console lexik:jwt:generate-keypair
 ```
