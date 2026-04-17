@@ -11,14 +11,14 @@ export class CardDataService {
   private readonly TABLE_NAME = 'cards';
   private readonly TABLE_NAME_ACTIVE = 'cards_active';
 
-  private cardsSubject = new BehaviorSubject<Card[]>([]);
+  private readonly cardsSubject = new BehaviorSubject<Card[]>([]);
   public cards$ = this.cardsSubject.asObservable();
 
   get cards(): Card[] {
     return this.cardsSubject.value;
   }
 
-  constructor(private apiConnection: ApiConnectionService) {}
+  constructor(private readonly apiConnection: ApiConnectionService) {}
 
   /**
    * Récupère toutes les cartes depuis l'API
@@ -31,7 +31,7 @@ export class CardDataService {
    * Récupère UNIQUEMENT les cartes actives (isActif = true)
    */
   getActiveCards(): Observable<Card[]> {
-    return this.apiConnection.getActiveData<Card>(this.TABLE_NAME_ACTIVE);
+    return this.apiConnection.getData<Card>(this.TABLE_NAME_ACTIVE);
   }
 
   /**

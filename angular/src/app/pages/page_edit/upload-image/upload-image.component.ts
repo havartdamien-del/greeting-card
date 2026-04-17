@@ -19,9 +19,9 @@ export class UploadImageComponent implements OnInit {
   uploadedImageId: number | null = null;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private imageDataService: ImageDataService,
-    private router: Router
+    private readonly formBuilder: FormBuilder,
+    private readonly imageDataService: ImageDataService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {

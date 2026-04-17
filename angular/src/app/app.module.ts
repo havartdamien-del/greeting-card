@@ -8,7 +8,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { MenuModule } from './modules/menu/menu.module';
 import { MenuComponent } from './modules/menu/menu.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { CardsComponent } from './pages/page_listing/cards/cards.component';

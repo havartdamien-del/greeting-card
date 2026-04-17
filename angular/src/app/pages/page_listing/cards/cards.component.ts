@@ -11,7 +11,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 export class CardsComponent {
   isLoggedIn$ = this.authService.isLoggedIn$;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private readonly router: Router, private readonly authService: AuthService) {}
 
   onAddCard(): void {
     this.router.navigate(['/create-card']);

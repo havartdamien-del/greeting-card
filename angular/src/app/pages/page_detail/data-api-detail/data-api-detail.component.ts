@@ -25,14 +25,14 @@ export class DataApiDetailComponent implements OnInit, OnDestroy {
   deleting = false;
   showDeleteConfirm = false;
   isLoggedIn$ = this.authService.isLoggedIn$;
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
   private apiDataService: ApiDataService;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private apiConnectionService: ApiConnectionService,
-    private authService: AuthService
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly apiConnectionService: ApiConnectionService,
+    private readonly authService: AuthService
   ) {
     // Initialiser avec un dataType par défaut
     this.apiDataService = new ApiDataService(this.apiConnectionService, this.dataType);

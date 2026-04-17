@@ -11,7 +11,7 @@
         class="tag-item"
         (click)="onTagClick(tag.id!)"
         (keyup.enter)="onTagClick(tag.id!)"
-        tabindex="0"
+        tabindex="tag.id"
       >
         <div class="tag-content">
           <h3>{{ tag.name }}</h3>

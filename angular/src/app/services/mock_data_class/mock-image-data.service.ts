@@ -53,6 +53,19 @@ export class MockImageDataService {
   }
 
   /**
+   * Get the alt text for an image
+   * If the image has an id: return the id as string
+   * Otherwise: return 'Image'
+   */
+  getAltImage(image?: Image): string {
+    if (!image) {
+      return 'Image';
+    }
+
+    return image.id ? String(image.id) : 'Image';
+  }
+
+  /**
    * Mock upload image - simulates file upload without actual file handling
    */
   uploadImage(file: File): Observable<any> {

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse } from '../../models/auth.model';
 
@@ -10,11 +9,11 @@ import { LoginRequest, LoginResponse } from '../../models/auth.model';
   providedIn: 'root'
 })
 export class AuthService {
-  private authTokenKey = 'authToken';
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  private readonly authTokenKey = 'authToken';
+  private readonly isLoggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   /**
    * Initialise l'état d'authentification en vérifiant si un token existe en sessionStorage

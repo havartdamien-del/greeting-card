@@ -14,7 +14,7 @@ import { ImageDataService } from '../../../services/data_class/image-data.servic
 export class ImageDetailContentComponent {
   @Input() image: Image | null = null;
 
-  constructor(private imageDataService: ImageDataService) {}
+  constructor(private readonly imageDataService: ImageDataService) {}
 
   getSrcImage(): string {
     if (!this.image) return '';

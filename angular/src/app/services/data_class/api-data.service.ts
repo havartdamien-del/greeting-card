@@ -8,10 +8,10 @@ export type DataType = 'card' | 'tag' | 'images';
 
 @Injectable()
 export class ApiDataService {
-  private tableName: string;
+  private readonly tableName: string;
 
   constructor(
-    private apiConnectionService: ApiConnectionService,
+    private readonly apiConnectionService: ApiConnectionService,
     dataType: DataType
   ) {
     this.tableName = this.mapDataTypeToTable(dataType);

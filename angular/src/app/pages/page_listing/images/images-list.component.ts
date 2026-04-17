@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { ListingContextService } from '../page-container-listing/listing-context.service';
 import { map } from 'rxjs/operators';
 import { Image } from '../../../models/card.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ImageDataService } from '../../../services/data_class/image-data.service';
 
 @Component({
@@ -20,8 +20,8 @@ export class ImagesListComponent {
   );
 
   constructor(
-    private context: ListingContextService,
-    private imageDataService: ImageDataService
+    private readonly context: ListingContextService,
+    private readonly imageDataService: ImageDataService
   ) {}
 
   onImageClick(id: number): void {
@@ -30,5 +30,9 @@ export class ImagesListComponent {
 
   getSrcImage(image: Image): string {
     return this.imageDataService.getSrcImage(image);
+  }
+
+  getAltImage(image: Image): string {
+    return this.imageDataService.getAltImage(image);
   }
 }

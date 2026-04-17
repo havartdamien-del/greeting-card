@@ -8,33 +8,20 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ApiConnectionService {
-  // private apiUrl = 'http://localhost:8080/api';
-  private apiUrl = environment.apiUrl;
+  private readonly apiUrl = environment.apiUrl;
 
   // Headers pour accepter le format JSON-LD d'API Platform
-  private headers = new HttpHeaders({
+  private readonly headers = new HttpHeaders({
     'Accept': 'application/ld+json'
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   /**
    * Récupère toutes les données depuis une table de l'API
    * @param tableName - Nom de la table (ex: 'cards', 'tags')
    */
   getData<T>(tableName: string): Observable<T[]> {
-    return this.http.get<any>(`${this.apiUrl}/${tableName}`, { 
-      headers: this.headers 
-    }).pipe(
-      map(response => this.extractData(response))
-    );
-  }
-
-  /**
-   * Récupère les données actives (isActif = true) depuis une table
-   * @param tableName - Nom de la table (ex: 'cards_active')
-   */
-  getActiveData<T>(tableName: string): Observable<T[]> {
     return this.http.get<any>(`${this.apiUrl}/${tableName}`, { 
       headers: this.headers 
     }).pipe(
@@ -129,8 +116,6 @@ const formData = new FormData();
    */
   private extractData<T>(response: any): T[] {
     if (Array.isArray(response['member'])) {
-      return response['member'];
-    } else if (Array.isArray(response['member'])) {
       return response['member'];
     } else if (Array.isArray(response)) {
       return response;

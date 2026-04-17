@@ -11,7 +11,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 export class ImagesComponent {
   isLoggedIn$ = this.authService.isLoggedIn$;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private readonly router: Router, private readonly authService: AuthService) {}
 
   onAddImage(): void {
     this.router.navigate(['/upload-image']);

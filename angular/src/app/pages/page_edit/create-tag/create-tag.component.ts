@@ -21,10 +21,10 @@ export class CreateTagComponent implements OnInit {
   pageTitle = 'Ajouter un nouveau Tag';
 
   constructor(
-    private formBuilder: FormBuilder,
-    private tagDataService: TagDataService,
-    private router: Router,
-    private route: ActivatedRoute
+    private readonly formBuilder: FormBuilder,
+    private readonly tagDataService: TagDataService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {

@@ -3,9 +3,8 @@ import { CardDataService } from '../../../services/data_class/card-data.service'
 import { ImageDataService } from '../../../services/data_class/image-data.service';
 import { TagDataService } from '../../../services/data_class/tag-data.service';
 import { ListingContextService } from './listing-context.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-page-container-listing',
@@ -24,13 +23,13 @@ export class PageContainerListingComponent implements OnInit, OnDestroy {
   loading$ = this.context.loading$;
   error$ = this.context.error$;
 
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
-    private cardService: CardDataService,
-    private imageService: ImageDataService,
-    private tagService: TagDataService,
-    private context: ListingContextService
+    private readonly cardService: CardDataService,
+    private readonly imageService: ImageDataService,
+    private readonly tagService: TagDataService,
+    private readonly context: ListingContextService
   ) {}
 
   ngOnInit(): void {
@@ -69,7 +68,6 @@ export class PageContainerListingComponent implements OnInit, OnDestroy {
         next: (data: any[]) => {
           this.context.setData(data);
           this.context.setLoading(false);
-          //console.log(`✅ ${this.dataType}s chargé(e)s: data.length=`, data.length);
         },
         error: (err) => {
           console.error(`❌ Erreur lors du chargement des ${this.dataType}s:`, err);

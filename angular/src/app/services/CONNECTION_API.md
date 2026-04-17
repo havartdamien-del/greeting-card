@@ -66,7 +66,7 @@ import { takeUntil } from 'rxjs/operators';
 export class CardsComponent implements OnInit, OnDestroy {
   cards: Card[] = [];
   loading = true;
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
   constructor(private connectionApiService: ConnectionApiService) {}
 

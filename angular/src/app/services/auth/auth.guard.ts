@@ -9,8 +9,8 @@ export class AuthGuard implements CanActivate {
   private redirectUrl: string | null = null;
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) {}
 
   canActivate(

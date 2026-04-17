@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
     standalone: false
 })
 export class TagsComponent {
-  constructor(private router: Router) {}
+  constructor(private readonly router: Router) {}
 
   onAddTag(): void {
     this.router.navigate(['/create-tag']);

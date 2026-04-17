@@ -12,9 +12,9 @@ import { takeUntil } from 'rxjs/operators';
 export class PageSettingsComponent implements OnInit, OnDestroy {
   currentTheme: Theme = 'default';
   availableThemes: Theme[] = [];
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private readonly themeService: ThemeService) {}
 
   ngOnInit(): void {
     // Get current theme

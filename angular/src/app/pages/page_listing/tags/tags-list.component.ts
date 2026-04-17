@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { ListingContextService } from '../page-container-listing/listing-context.service';
 import { map } from 'rxjs/operators';
 import { Tag } from '../../../models/card.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'app-tags-list',
@@ -18,7 +18,7 @@ export class TagsListComponent {
     map(tags => tags.length === 0)
   );
 
-  constructor(private context: ListingContextService) {}
+  constructor(private readonly context: ListingContextService) {}
 
   onTagClick(id: number): void {
     this.tagClick.emit(id);

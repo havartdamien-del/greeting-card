@@ -10,14 +10,14 @@ import { ApiConnectionService } from './api-connection.service';
 export class TagDataService {
   private readonly TABLE_NAME = 'tags';
 
-  private tagsSubject = new BehaviorSubject<Tag[]>([]);
+  private readonly tagsSubject = new BehaviorSubject<Tag[]>([]);
   public tags$ = this.tagsSubject.asObservable();
 
   get tags(): Tag[] {
     return this.tagsSubject.value;
   }
 
-  constructor(private apiConnection: ApiConnectionService) {}
+  constructor(private readonly apiConnection: ApiConnectionService) {}
 
   /**
    * Récupère toutes les étiquettes depuis l'API

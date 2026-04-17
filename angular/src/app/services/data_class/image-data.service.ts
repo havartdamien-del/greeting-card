@@ -10,14 +10,14 @@ import { ApiConnectionService } from './api-connection.service';
 export class ImageDataService {
   private readonly TABLE_NAME = 'pictures';
 
-  private imagesSubject = new BehaviorSubject<Image[]>([]);
+  private readonly imagesSubject = new BehaviorSubject<Image[]>([]);
   public images$ = this.imagesSubject.asObservable();
 
   get images(): Image[] {
     return this.imagesSubject.value;
   }
 
-  constructor(private apiConnection: ApiConnectionService) {}
+  constructor(private readonly apiConnection: ApiConnectionService) {}
 
   /**
    * Récupère toutes les images uniques depuis l'API
@@ -62,14 +62,6 @@ export class ImageDataService {
         this.loadImages().subscribe();
       })
     );
-
-    /*return this.apiConnection.uploadFile(formData).pipe(
-      tap((response: any) => {
-        console.log('Upload response received, reloading images...');
-        // Recharger les images après l'upload
-        this.loadImages().subscribe();
-      })
-    );*/
   }
 
   /**
@@ -82,5 +74,13 @@ export class ImageDataService {
       return '';
     }
     return image.type === 'url' ? image.value : 'http://localhost:8080/uploads/' + image.value;
+  }
+
+  getAltImage(image?: Image): string {
+    if (!image) {
+      return 'Image';
+    }
+
+    return image.id ? String(image.id) : 'Image';
   }
 }

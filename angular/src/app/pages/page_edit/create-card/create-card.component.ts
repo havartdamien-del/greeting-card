@@ -25,12 +25,12 @@ export class CreateCardComponent implements OnInit {
   pageTitle = 'Ajouter une nouvelle Card';
 
   constructor(
-    private formBuilder: FormBuilder,
-    private cardDataService: CardDataService,
-    private tagDataService: TagDataService,
-    private imageDataService: ImageDataService,
-    private router: Router,
-    private route: ActivatedRoute
+    private readonly formBuilder: FormBuilder,
+    private readonly cardDataService: CardDataService,
+    private readonly tagDataService: TagDataService,
+    private readonly imageDataService: ImageDataService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
