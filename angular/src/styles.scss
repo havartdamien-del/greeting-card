@@ -23,7 +23,6 @@ html, body {
   height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--bg-primary);
-  //background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   color: var(--text-primary);
 }
 
@@ -98,14 +97,14 @@ app-root {
 
   p {
     margin: 0 0 1rem 0;
-    color: var(--text-primary);
+    color: black;
     line-height: 1.6;
   }
 
   .data-title-confirm {
     font-weight: 600;
     font-size: 1.1rem;
-    color: var(--primary-color);
+    color: black;
     background: #f5f5f5;
     padding: 1rem;
     border-radius: 8px;
@@ -132,8 +131,6 @@ app-root {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-primary);
-  background: var(--card-bg);
   border: 2px solid var(--border-color);
   border-radius: 8px;
   cursor: pointer;
@@ -141,7 +138,7 @@ app-root {
 
   &:hover:not(:disabled) {
     border-color: var(--text-secondary);
-    background: #f5f5f5;
+    background: var(--card-bg);
   }
 
   &:disabled {

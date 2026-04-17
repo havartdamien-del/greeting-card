@@ -135,24 +135,31 @@ export class Fixture {
   }
 
   /**
+   * Create a deep copy of data using JSON serialization
+   */
+  private structuredClone<T>(data: T): T {
+    return JSON.parse(JSON.stringify(data));
+  }
+
+  /**
    * Get all tags (returns a copy)
    */
   getTags(): Tag[] {
-    return JSON.parse(JSON.stringify(this.tags));
+    return this.structuredClone(this.tags);
   }
 
   /**
    * Get all cards (returns a copy)
    */
   getCards(): Card[] {
-    return JSON.parse(JSON.stringify(this.cards));
+    return this.structuredClone(this.cards);
   }
 
   /**
    * Get all images (returns a copy)
    */
   getImages(): Image[] {
-    return JSON.parse(JSON.stringify(this.images));
+    return this.structuredClone(this.images);
   }
 
   /**
@@ -160,7 +167,7 @@ export class Fixture {
    */
   getTagById(id: number): Tag | undefined {
     const tag = this.tags.find(t => t.id === id);
-    return tag ? JSON.parse(JSON.stringify(tag)) : undefined;
+    return tag ? this.structuredClone(tag) : undefined;
   }
 
   /**
@@ -168,7 +175,7 @@ export class Fixture {
    */
   getCardById(id: number): Card | undefined {
     const card = this.cards.find(c => c.id === id);
-    return card ? JSON.parse(JSON.stringify(card)) : undefined;
+    return card ? this.structuredClone(card) : undefined;
   }
 
   /**
@@ -176,7 +183,7 @@ export class Fixture {
    */
   getImageById(id: number): Image | undefined {
     const image = this.images.find(i => i.id === id);
-    return image ? JSON.parse(JSON.stringify(image)) : undefined;
+    return image ? this.structuredClone(image) : undefined;
   }
 
   /**
@@ -185,7 +192,7 @@ export class Fixture {
   addCard(card: Card): Card {
     const newCard = { ...card, id: card.id || this.nextCardId++ };
     this.cards.push(newCard);
-    return JSON.parse(JSON.stringify(newCard));
+    return this.structuredClone(newCard);
   }
 
   /**
@@ -214,7 +221,7 @@ export class Fixture {
   addTag(tag: Tag): Tag {
     const newTag = { ...tag, id: tag.id || Math.max(...this.tags.map(t => t.id || 0)) + 1 };
     this.tags.push(newTag);
-    return JSON.parse(JSON.stringify(newTag));
+    return this.structuredClone(newTag);
   }
 
   /**
@@ -243,7 +250,7 @@ export class Fixture {
   addImage(image: Image): Image {
     const newImage = { ...image, id: image.id || Math.max(...this.images.map(i => i.id || 0)) + 1 };
     this.images.push(newImage);
-    return JSON.parse(JSON.stringify(newImage));
+    return this.structuredClone(newImage);
   }
 
   /**

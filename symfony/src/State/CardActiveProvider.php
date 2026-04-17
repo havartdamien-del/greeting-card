@@ -24,8 +24,6 @@ class CardActiveProvider implements ProviderInterface
         $repository = $this->entityManager->getRepository(Card::class);
 
         // Récupère uniquement les cards actives (isActif = true)
-        $cards = $repository->findBy(['isActif' => true]);
-
-        return $cards;
+        return $repository->findBy(['isActif' => true]);
     }
 }

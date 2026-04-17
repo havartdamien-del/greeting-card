@@ -20,4 +20,9 @@ export class ImageDetailContentComponent {
     if (!this.image) return '';
     return this.imageDataService.getSrcImage(this.image);
   }
+
+  getAltImage(): string {
+    if (!this.image) return '';
+    return this.imageDataService.getAltImage(this.image);
+  }
 }

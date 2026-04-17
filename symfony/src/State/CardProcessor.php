@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  */
 class CardProcessor implements ProcessorInterface
 {
+    private const DATETIME_FORMAT = 'Y-m-d H:i:s';
+
     public function __construct(
         // private ProcessorInterface $persistProcessor,
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
@@ -24,8 +26,7 @@ class CardProcessor implements ProcessorInterface
         private ProcessorInterface $removeProcessor,
 
         #[Autowire(service: 'monolog.logger.api-log')]
-        private LoggerInterface $logger,
-        private EntityManagerInterface $entityManager
+        private LoggerInterface $logger
     ) {
     }
 
@@ -38,7 +39,7 @@ class CardProcessor implements ProcessorInterface
                 'title' => $data->getTitle() ?? 'N/A',
                 'isActif' => $data->isActif() ?? 'N/A',
                 'tags' => count($data->getTags() ?? []) . ' tag(s)',
-                'timestamp' => (new \DateTime())->format('Y-m-d H:i:s'),
+                'timestamp' => (new \DateTime())->format(self::DATETIME_FORMAT),
             ]);
         }
 
@@ -49,7 +50,7 @@ class CardProcessor implements ProcessorInterface
                 'title' => $data->getTitle() ?? 'N/A',
                 'isActif' => $data->isActif() ?? 'N/A',
                 'method' => $operation->getMethod(),
-                'timestamp' => (new \DateTime())->format('Y-m-d H:i:s'),
+                'timestamp' => (new \DateTime())->format(self::DATETIME_FORMAT),
             ]);
         }
 
@@ -61,7 +62,7 @@ class CardProcessor implements ProcessorInterface
             $this->logger->info('Suppression de Card', [
                 'id' => $cardId,
                 'title' => $title,
-                'timestamp' => (new \DateTime())->format('Y-m-d H:i:s'),
+                'timestamp' => (new \DateTime())->format(self::DATETIME_FORMAT),
             ]);
             return $this->removeProcessor->process($data, $operation, $uriVariables, $context);
         }

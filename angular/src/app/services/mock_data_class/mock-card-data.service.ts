@@ -3,14 +3,14 @@ import { Card } from '../../models/card.model';
 import { Fixture } from './fixture';
 
 export class MockCardDataService {
-  private cardsSubject: BehaviorSubject<Card[]>;
+  private readonly cardsSubject: BehaviorSubject<Card[]>;
   public cards$: Observable<Card[]>;
 
   get cards(): Card[] {
     return this.cardsSubject.value;
   }
 
-  constructor(private fixture: Fixture) {
+  constructor(private readonly fixture: Fixture) {
     this.cardsSubject = new BehaviorSubject<Card[]>(this.fixture.getCards());
     this.cards$ = this.cardsSubject.asObservable();
   }

@@ -9,7 +9,7 @@ export type Theme = 'default' | 'light' | 'dark';
 export class ThemeService {
   private readonly THEME_STORAGE_KEY = 'app_theme';
   private readonly DEFAULT_THEME: Theme = 'default';
-  private currentTheme = new BehaviorSubject<Theme>(this.getStoredTheme());
+  private readonly currentTheme = new BehaviorSubject<Theme>(this.getStoredTheme());
   public theme$ = this.currentTheme.asObservable();
 
   get currentThemeValue(): Theme {

@@ -36,27 +36,27 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Post(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
-            processor: 'App\State\CardProcessor',
-            security: 'is_authenticated()',
+            processor: self::PROCESSOR_CLASS,
+            security: self::SECURITY_FONCTION,
             securityMessage: 'Vous devez être authentifié pour créer une carte',
         ),
         new Put(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
-            processor: 'App\State\CardProcessor',
-            security: 'is_authenticated()',
+            processor: self::PROCESSOR_CLASS,
+            security: self::SECURITY_FONCTION,
             securityMessage: 'Vous devez être authentifié pour modifier une carte',
         ),
         new Patch(
             denormalizationContext: ['groups' => ['card:write']],
             normalizationContext: ['groups' => ['card:read']],
-            processor: 'App\State\CardProcessor',
-            security: 'is_authenticated()',
+            processor: self::PROCESSOR_CLASS,
+            security: self::SECURITY_FONCTION,
             securityMessage: 'Vous devez être authentifié pour modifier une carte',
         ),
         new Delete(
-            processor: 'App\State\CardProcessor',
-            security: 'is_authenticated()',
+            processor: self::PROCESSOR_CLASS,
+            security: self::SECURITY_FONCTION,
             securityMessage: 'Vous devez être authentifié pour supprimer une carte',
         ),
     ]
@@ -64,6 +64,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiFilter(BooleanFilter::class, properties: ['isActif'])]
 class Card
 {
+    private const PROCESSOR_CLASS = 'App\State\CardProcessor';
+    private const SECURITY_FONCTION = 'is_authenticated()';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -164,11 +167,6 @@ class Card
     }
 
     public function getIsActif(): bool
-    {
-        return $this->isActif;
-    }
-
-    public function isActif(): bool
     {
         return $this->isActif;
     }

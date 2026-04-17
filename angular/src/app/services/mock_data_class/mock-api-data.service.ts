@@ -5,7 +5,7 @@ import { Fixture } from './fixture';
 type DataType = 'card' | 'tag' | 'images';
 
 export class MockApiDataService {
-  constructor(private fixture: Fixture) {}
+  constructor(private readonly fixture: Fixture) {}
 
   /**
    * Get data by ID and convert to specific type

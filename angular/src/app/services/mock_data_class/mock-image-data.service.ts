@@ -3,14 +3,14 @@ import { Image } from '../../models/card.model';
 import { Fixture } from './fixture';
 
 export class MockImageDataService {
-  private imagesSubject: BehaviorSubject<Image[]>;
+  private readonly imagesSubject: BehaviorSubject<Image[]>;
   public images$: Observable<Image[]>;
 
   get images(): Image[] {
     return this.imagesSubject.value;
   }
 
-  constructor(private fixture: Fixture) {
+  constructor(private readonly fixture: Fixture) {
     this.imagesSubject = new BehaviorSubject<Image[]>(this.fixture.getImages());
     this.images$ = this.imagesSubject.asObservable();
   }

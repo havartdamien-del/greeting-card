@@ -20,25 +20,27 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Get(),
         new GetCollection(),
         new Post(
-            security: 'is_authenticated()',
+            security: self::SECURITY_AUTHENTICATED,
             securityMessage: 'Vous devez être authentifié pour créer une image',
         ),
         new Put(
-            security: 'is_authenticated()',
+            security: self::SECURITY_AUTHENTICATED,
             securityMessage: 'Vous devez être authentifié pour modifier une image',
         ),
         new Patch(
-            security: 'is_authenticated()',
+            security: self::SECURITY_AUTHENTICATED,
             securityMessage: 'Vous devez être authentifié pour modifier une image',
         ),
         new Delete(
-            security: 'is_authenticated()',
+            security: self::SECURITY_AUTHENTICATED,
             securityMessage: 'Vous devez être authentifié pour supprimer une image',
         ),
     ]
 )]
 class Picture
 {
+    private const SECURITY_AUTHENTICATED = 'is_authenticated()';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

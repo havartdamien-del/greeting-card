@@ -63,8 +63,8 @@
       </div>
       <!-- Delete confirmation modal -->
       @if (showDeleteConfirm) {
-        <div class="modal-overlay" (click)="cancelDelete()">
-          <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-overlay" (click)="cancelDelete()" (keydown.escape)="cancelDelete()">
+          <div class="modal-content" (click)="$event.stopPropagation()" (keydown.escape)="$event.stopPropagation()">
             <div class="modal-header">
               <h2>Confirmer la suppression</h2>
             </div>

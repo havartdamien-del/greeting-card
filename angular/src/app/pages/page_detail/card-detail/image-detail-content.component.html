@@ -4,7 +4,7 @@
   <div class="image-display-section">
     @if (image) {
       <div class="image-wrapper">
-        <img [src]="getSrcImage()" [alt]="image.type" class="detail-image" />
+        <img [src]="getSrcImage()" [alt]="getAltImage()" class="detail-image" />
       </div>
     }
   </div>

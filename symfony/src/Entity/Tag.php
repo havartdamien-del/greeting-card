@@ -19,25 +19,27 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new GetCollection(),
         new Get(),
         new Post(
-            security: 'is_authenticated()',
+            security: self::SECURITY_AUTHENTICATED,
             securityMessage: 'Vous devez être authentifié pour créer un tag',
         ),
         new Put(
-            security: 'is_authenticated()',
+            security: self::SECURITY_AUTHENTICATED,
             securityMessage: 'Vous devez être authentifié pour modifier un tag',
         ),
         new Patch(
-            security: 'is_authenticated()',
+            security: self::SECURITY_AUTHENTICATED,
             securityMessage: 'Vous devez être authentifié pour modifier un tag',
         ),
         new Delete(
-            security: 'is_authenticated()',
+            security: self::SECURITY_AUTHENTICATED,
             securityMessage: 'Vous devez être authentifié pour supprimer un tag',
         ),
     ]
 )]
 class Tag
 {
+    private const SECURITY_AUTHENTICATED = 'is_authenticated()';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

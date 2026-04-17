@@ -8,7 +8,7 @@
     @if (!uploadSuccess) {
       <div class="upload-form">
         <div class="upload-area">
-          <div class="upload-box" (click)="onFileInputClick()">
+          <div class="upload-box" (click)="onFileInputClick()" (keydown.enter)="onFileInputClick()">
             @if (!previewUrl) {
               <div class="upload-placeholder">
                 <span class="upload-icon">📸</span>
@@ -18,7 +18,7 @@
             }
             @if (previewUrl) {
               <div class="preview">
-                <img [src]="previewUrl" alt="Aperçu de l'image" />
+                <img [src]="previewUrl" alt="Aperçu" />
               </div>
             }
           </div>
