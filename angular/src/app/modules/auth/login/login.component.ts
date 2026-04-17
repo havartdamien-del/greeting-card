@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { AuthGuard } from '../../../services/auth/auth.guard';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,10 +17,10 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private authGuard: AuthGuard,
-    private router: Router
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly authGuard: AuthGuard,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {

@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
   title = 'Greeting Card AI';
 
   constructor(
-    private themeService: ThemeService,
-    private authService: AuthService
+    private readonly themeService: ThemeService,
+    private readonly authService: AuthService
   ) {}
 
   ngOnInit(): void {

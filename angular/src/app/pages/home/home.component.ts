@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
@@ -13,10 +14,10 @@ import { trigger, transition, style, animate } from '@angular/animations';
             ])
         ])
     ],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   currentYear = new Date().getFullYear();
 
-  ngOnInit(): void {}
 }

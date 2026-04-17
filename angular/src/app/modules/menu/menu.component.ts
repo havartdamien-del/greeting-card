@@ -2,19 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class MenuComponent implements OnInit {
   isLoggedIn$!: Observable<boolean>;
 
   constructor(
-    private router: Router,
-    private authService: AuthService
+    private readonly router: Router,
+    private readonly authService: AuthService
   ) {}
 
   ngOnInit(): void {

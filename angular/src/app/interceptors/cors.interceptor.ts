@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 export class CorsInterceptor implements HttpInterceptor {
   
   // URLs autorisées pour les requêtes CORS
-  private allowedOrigins = [
+  private readonly allowedOrigins = [
     'http://localhost:8080',
     'http://localhost:8081',
     'http://127.0.0.1:8080'

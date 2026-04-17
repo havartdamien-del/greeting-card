@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { AsyncPipe, CommonModule, NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MenuModule } from './modules/menu/menu.module';
+// import { MenuModule } from './modules/menu/menu.module';
+import { MenuComponent } from './modules/menu/menu.component';
 import { AuthModule } from './modules/auth/auth.module';
-import { HomeComponent } from './pages/home/home.component';
 import { CardsComponent } from './pages/page_listing/cards/cards.component';
 import { CardsListComponent } from './pages/page_listing/cards/cards-list.component';
 import { PageContainerListingComponent } from './pages/page_listing/page-container-listing/page-container-listing.component';
@@ -34,7 +34,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({ declarations: [
         AppComponent,
-        HomeComponent,
         CardsComponent,
         CardsListComponent,
         PageContainerListingComponent,
@@ -57,7 +56,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        MenuModule,
+        // MenuModule,
+        MenuComponent,
         AsyncPipe,
         NgClass,
         AuthModule,
