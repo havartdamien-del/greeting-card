@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { AsyncPipe, NgClass } from '@angular/common';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,8 +28,8 @@ import { ImagesListComponent } from './pages/page_listing/images/images-list.com
 import { UploadImageComponent } from './pages/page_edit/upload-image/upload-image.component';
 import { ImageDetailComponent } from './pages/page_detail/image-detail/image-detail.component';
 import { PageSettingsComponent } from './pages/page_settings/page-settings.component';
-import { CorsInterceptor } from './interceptors/cors.interceptor';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { corsInterceptor } from './interceptors/cors.interceptor';
+import { authInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -61,16 +61,20 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
         NgClass,
         AuthModule,
         AppRoutingModule], providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: CorsInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-        },
-        provideHttpClient(withInterceptorsFromDi())
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: CorsInterceptor,
+        //     multi: true
+        // },
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: AuthInterceptor,
+        //     multi: true
+        // },
+        // provideHttpClient(withInterceptorsFromDi())
+        //provideHttpClient(), // <--- C'est ici que la magie opère
+        provideHttpClient(
+            withInterceptors([authInterceptor, corsInterceptor]) // C'est ici qu'on l'ajoute
+        )
     ] })
 export class AppModule { }
