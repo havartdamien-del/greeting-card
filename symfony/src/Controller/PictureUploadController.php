@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Picture;
+use App\Exception\ErrorUploadException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -56,9 +57,9 @@ class PictureUploadController extends AbstractController
                 ]
             ], JsonResponse::HTTP_CREATED);
 
-        } catch (\Exception $e) {
+        } catch (ErrorUploadException $e) {
             return new JsonResponse(
-                ['error' => 'Erreur serveur: ' . $e->getMessage()],
+                ['error' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -109,7 +110,7 @@ class PictureUploadController extends AbstractController
         try {
             $uploadedFile->move($uploadDir, $newFilename);
         } catch (FileException $e) {
-            throw new \Exception('Erreur lors du téléchargement du fichier: ' . $e->getMessage());
+            throw new ErrorUploadException('Erreur lors du téléchargement du fichier: ' . $e->getMessage());
         }
 
         return $newFilename;
