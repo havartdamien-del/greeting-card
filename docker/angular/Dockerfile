@@ -30,7 +30,7 @@ RUN apk add --no-cache \
 COPY angular/package*.json ./
 
 # Installation de toutes les dépendances (dev incluses)
-RUN npm ci
+# RUN npm ci
  
 # Copie du code source
 COPY angular/ ./
@@ -40,7 +40,7 @@ EXPOSE 4200
  
 # Commande de démarrage pour le développement
 # --host 0.0.0.0 requis pour être accessible depuis Docker
-CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]
+# CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]
  
 # =========================
 # BUILD image (intermédiaire)
