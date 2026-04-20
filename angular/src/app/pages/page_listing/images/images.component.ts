@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth.service';
+import { PageContainerListingComponent } from '../page-container-listing/page-container-listing.component';
+import { ImagesListComponent } from './images-list.component';
 
 @Component({
     selector: 'app-images',
     templateUrl: './images.component.html',
     styleUrls: ['./images.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule, ImagesListComponent, PageContainerListingComponent]
 })
 export class ImagesComponent {
   isLoggedIn$ = this.authService.isLoggedIn$;

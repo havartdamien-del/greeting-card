@@ -3,12 +3,14 @@ import { ListingContextService } from '../page-container-listing/listing-context
 import { map } from 'rxjs/operators';
 import { Tag } from '../../../models/card.model';
 import { BehaviorSubject } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-tags-list',
     templateUrl: './tags-list.component.html',
     styleUrls: ['./tags-list.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class TagsListComponent {
   @Output() tagClick = new EventEmitter<number>();

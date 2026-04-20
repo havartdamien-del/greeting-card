@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { CardDataService } from '../../../services/data_class/card-data.service';
 import { TagDataService } from '../../../services/data_class/tag-data.service';
 import { ImageDataService } from '../../../services/data_class/image-data.service';
@@ -10,7 +11,8 @@ import { Card, Tag, Image } from '../../../models/card.model';
     selector: 'app-create-card',
     templateUrl: './create-card.component.html',
     styleUrls: ['./create-card.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, RouterModule]
 })
 export class CreateCardComponent implements OnInit {
   cardForm!: FormGroup;

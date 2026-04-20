@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataApiDetailComponent } from '../data-api-detail/data-api-detail.component';
 
 /**
  * TagDetailComponent - Page de détail d'un tag
@@ -7,7 +8,8 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-tag-detail',
     templateUrl: './tag-detail.component.html',
-    standalone: false
+    standalone: true,
+    imports: [DataApiDetailComponent]
 })
 export class TagDetailComponent {
 }

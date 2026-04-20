@@ -5,13 +5,15 @@ import { TagDataService } from '../../../services/data_class/tag-data.service';
 import { ListingContextService } from './listing-context.service';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-page-container-listing',
     templateUrl: './page-container-listing.component.html',
     styleUrls: ['./page-container-listing.component.scss'],
     providers: [ListingContextService],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class PageContainerListingComponent implements OnInit, OnDestroy {
   @Input() title: string = '';

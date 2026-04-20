@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { ImageDataService } from '../../../services/data_class/image-data.service';
 
 @Component({
     selector: 'app-upload-image',
     templateUrl: './upload-image.component.html',
     styleUrls: ['./upload-image.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, RouterModule]
 })
 export class UploadImageComponent implements OnInit {
   form!: FormGroup;

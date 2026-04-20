@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { TagDataService } from '../../../services/data_class/tag-data.service';
 import { Tag } from '../../../models/card.model';
 
@@ -8,7 +9,8 @@ import { Tag } from '../../../models/card.model';
     selector: 'app-create-tag',
     templateUrl: './create-tag.component.html',
     styleUrls: ['./create-tag.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, RouterModule]
 })
 export class CreateTagComponent implements OnInit {
   tagForm!: FormGroup;

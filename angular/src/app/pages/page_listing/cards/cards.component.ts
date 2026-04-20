@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth.service';
+import { CardsListComponent } from './cards-list.component';
+import { PageContainerListingComponent } from '../page-container-listing/page-container-listing.component';
 
 @Component({
     selector: 'app-cards',
     templateUrl: './cards.component.html',
     styleUrls: ['./cards.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule, CardsListComponent, PageContainerListingComponent]
 })
 export class CardsComponent {
   isLoggedIn$ = this.authService.isLoggedIn$;

@@ -4,12 +4,14 @@ import { map } from 'rxjs/operators';
 import { Image } from '../../../models/card.model';
 import { BehaviorSubject } from 'rxjs';
 import { ImageDataService } from '../../../services/data_class/image-data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-images-list',
     templateUrl: './images-list.component.html',
     styleUrls: ['./images-list.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class ImagesListComponent {
   @Output() imageClick = new EventEmitter<number>();

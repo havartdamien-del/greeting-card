@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataApiDetailComponent } from '../data-api-detail/data-api-detail.component';
 
 /**
  * ImageDetailComponent - Page de détail d'une image
@@ -7,7 +8,8 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-image-detail',
     templateUrl: './image-detail.component.html',
-    standalone: false
+    standalone: true,
+    imports: [DataApiDetailComponent]
 })
 export class ImageDetailComponent {
 }

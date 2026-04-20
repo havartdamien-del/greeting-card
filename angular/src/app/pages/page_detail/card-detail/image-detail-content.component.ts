@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Image } from '../../../models/card.model';
 import { ImageDataService } from '../../../services/data_class/image-data.service';
+import { CommonModule } from '@angular/common';
 
 /**
  * ImageDetailContentComponent - Affiche le contenu spécifique d'une image
@@ -9,7 +10,8 @@ import { ImageDataService } from '../../../services/data_class/image-data.servic
     selector: 'app-image-detail-content',
     templateUrl: './image-detail-content.component.html',
     styleUrls: ['./image-detail-content.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class ImageDetailContentComponent {
   @Input() image: Image | null = null;

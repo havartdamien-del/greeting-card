@@ -1,17 +1,22 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { ApiDataService, DataType } from '../../../services/data_class/api-data.service';
 import { ApiConnectionService } from '../../../services/data_class/api-connection.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Card, Tag, Image } from '../../../models/card.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CardDetailContentComponent } from '../card-detail/card-detail-content.component';
+import { ImageDetailContentComponent } from '../card-detail/image-detail-content.component';
+import { TagDetailContentComponent } from '../card-detail/tag-detail-content.component';
 
 @Component({
     selector: 'app-data-api-detail',
     templateUrl: './data-api-detail.component.html',
     styleUrls: ['./data-api-detail.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, TagDetailContentComponent, ImageDetailContentComponent, CardDetailContentComponent]
 })
 export class DataApiDetailComponent implements OnInit, OnDestroy {
   @Input() dataType: DataType = 'card';
