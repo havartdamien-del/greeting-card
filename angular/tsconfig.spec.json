@@ -1,8 +1,29 @@
+// {
+//   "extends": "./tsconfig.json",
+//   "compilerOptions": {
+//     "module": "CommonJS",
+//     "types": ["jest"]
+//   },
+//   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+// }
+
+// {
+//   "extends": "./tsconfig.json",
+//   "compilerOptions": {
+//     "module": "CommonJS",
+//     "moduleResolution": "node",
+//     "types": ["jest", "node"]
+//   },
+//   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+// }
+
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "CommonJS",
-    "types": ["jest"]
+    "moduleResolution": "node",
+    "types": ["jest", "node"],
+    "isolatedModules": true
   },
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

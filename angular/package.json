@@ -6,6 +6,8 @@
     "start": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "build:test": "tsc -p tsconfig.spec.json",
+    "test:prepare": "jest --listTests",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

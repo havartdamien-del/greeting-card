@@ -30,7 +30,7 @@ RUN apk add --no-cache \
 COPY angular/package*.json ./
 
 # Installation de toutes les dépendances (dev incluses)
-# RUN npm ci
+RUN npm ci
  
 # Copie du code source
 COPY angular/ ./
