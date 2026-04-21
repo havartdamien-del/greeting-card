@@ -168,6 +168,11 @@ class Card
 
     public function getIsActif(): bool
     {
+        return $this->isActif();
+    }
+
+    public function isActif(): bool
+    {
         return $this->isActif;
     }
 

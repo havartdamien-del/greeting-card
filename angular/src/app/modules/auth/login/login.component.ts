@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
 
     const { email, password } = this.loginForm.value;
 
-    this.authService.login(email, password).subscribe(
-      () => {
+    this.authService.login(email, password).subscribe({
+      next: () =>  {
         this.isLoading = false;
         // Récupère l'URL de redirection ou redirige vers la page d'accueil
         const redirectUrl = this.authGuard.getRedirectUrl();
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         }
       },
-      error => {
+      error: (error) => {
         this.isLoading = false;
         // Affiche un message d'erreur
         if (error.status === 401) {
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
           this.errorMessage = 'Une erreur s\'est produite lors de la connexion';
         }
       }
-    );
+    });
   }
 
   /**

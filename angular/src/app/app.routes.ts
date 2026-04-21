@@ -1,7 +1,5 @@
-import { Routes } from '@angular/router';
-import { provideRouter } from '@angular/router';
+import { Routes, provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
 
 // Page Components
 import { HomeComponent } from './pages/home/home.component';
@@ -51,6 +49,6 @@ export const appProviders = [
   provideHttpClient(
     withInterceptors([authInterceptor, corsInterceptor])
   ),
-  provideAnimations(),
+//   provideAnimations(),
   AuthGuard
 ];
