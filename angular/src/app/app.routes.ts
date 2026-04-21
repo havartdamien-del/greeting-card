@@ -1,5 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
+// Page Components
 import { HomeComponent } from './pages/home/home.component';
 import { CardsComponent } from './pages/page_listing/cards/cards.component';
 import { CardDetailComponent } from './pages/page_detail/card-detail/card-detail.component';
@@ -12,9 +16,15 @@ import { ImageDetailComponent } from './pages/page_detail/image-detail/image-det
 import { UploadImageComponent } from './pages/page_edit/upload-image/upload-image.component';
 import { PageSettingsComponent } from './pages/page_settings/page-settings.component';
 import { LoginComponent } from './modules/auth/login/login.component';
+
+// Guards
 import { AuthGuard } from './services/auth/auth.guard';
 
-const routes: Routes = [
+// Interceptors
+import { authInterceptor } from './interceptors/auth.interceptor';
+import { corsInterceptor } from './interceptors/cors.interceptor';
+
+export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'cards', component: CardsComponent },
@@ -32,8 +42,15 @@ const routes: Routes = [
   { path: '**', redirectTo: '' }
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+/**
+ * Application-wide providers configuration
+ * Used with bootstrapApplication in main.ts
+ */
+export const appProviders = [
+  provideRouter(routes),
+  provideHttpClient(
+    withInterceptors([authInterceptor, corsInterceptor])
+  ),
+  provideAnimations(),
+  AuthGuard
+];

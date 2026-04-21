@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { MenuComponent } from './modules/menu/menu.component';
 import { ThemeService } from './services/theme.service';
 import { AuthService } from './services/auth/auth.service';
 
@@ -6,7 +8,8 @@ import { AuthService } from './services/auth/auth.service';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [MenuComponent, RouterOutlet]
 })
 export class AppComponent implements OnInit {
   title = 'Greeting Card AI';

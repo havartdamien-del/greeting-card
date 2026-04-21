@@ -1,14 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AppModule } from './app/app.module';
+import { AppComponent } from './app/app.component';
+import { appProviders } from './app/app.routes';
 
-describe('AppModule', () => {
-  it('should create the app module', () => {
-    const module = TestBed.configureTestingModule({
-      imports: [AppModule]
+describe('AppComponent (Standalone)', () => {
+  it('should create the app component', () => {
+    TestBed.configureTestingModule({
+      providers: appProviders,
+      imports: [AppComponent]
     }).compileComponents();
 
-    expect(module).toBeTruthy();
+    const component = TestBed.createComponent(AppComponent);
+    expect(component).toBeTruthy();
   });
 });
 

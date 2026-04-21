@@ -1,8 +1,11 @@
+import { bootstrapApplication } from '@angular/platform-browser';
 import { provideZoneChangeDetection } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppComponent } from './app/app.component';
+import { appProviders } from './app/app.routes';
 
-import { AppModule } from './app/app.module';
-
-platformBrowserDynamic()
-  .bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()] })
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    ...appProviders
+  ]
+}).catch(err => console.error(err));
