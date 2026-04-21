@@ -50,7 +50,7 @@ import { authInterceptor } from './interceptors/auth.interceptor';
         // ImagesListComponent,
         // UploadImageComponent,
         // ImageDetailComponent,
-        PageSettingsComponent
+        // PageSettingsComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

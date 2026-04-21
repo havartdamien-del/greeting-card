@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ThemeService, Theme } from '../../services/theme.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-page-settings',
   templateUrl: './page-settings.component.html',
   styleUrls: ['./page-settings.component.scss'],
-  standalone: false
+  // standalone: false
+  standalone: true,
+  imports: [CommonModule]
 })
 export class PageSettingsComponent implements OnInit, OnDestroy {
   currentTheme: Theme = 'default';
